@@ -1,15 +1,14 @@
 package ru.artempugachev.popularmovies;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView mMoviesGridRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,16 +16,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, BuildConfig.TMDB_API_KEY, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setUpViews();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
+    private void setUpViews() {
+        mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
