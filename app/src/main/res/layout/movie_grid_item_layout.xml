@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/test_poster"
-        />
+        android:layout_width="185dp"
+        android:layout_height="277dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/test_poster_w342"/>
 </FrameLayout>
