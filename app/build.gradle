@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def TMDB_API_KEY = '"' + TMDB_API_KEY_PROP + '"' ?: '"Define TMDB api key"';
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
