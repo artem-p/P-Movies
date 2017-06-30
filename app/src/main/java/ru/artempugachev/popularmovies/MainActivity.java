@@ -2,6 +2,7 @@ package ru.artempugachev.popularmovies;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,6 +10,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mMoviesGridRecyclerView;
+
+    // todo should be different in landscape mode
+    private final static int MOVIES_SPAN_COUNT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViews() {
         mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
+
+        GridLayoutManager moviesLayoutManager = new GridLayoutManager(this, MOVIES_SPAN_COUNT);
+        mMoviesGridRecyclerView.setLayoutManager(moviesLayoutManager);
+
+        mMoviesGridRecyclerView.setHasFixedSize(true);
+
+        MoviesGridAdapter moviesGridAdapter = new MoviesGridAdapter();
+        mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
     }
 
 
