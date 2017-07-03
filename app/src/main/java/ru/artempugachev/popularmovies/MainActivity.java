@@ -8,6 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.MoviesResponse;
+import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
+import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mMoviesGridRecyclerView;
 
@@ -21,6 +31,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setUpViews();
+
+        TmdbApiClient tmdbApiClient = new TmdbApiClient();
+        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
+
+        Call<MoviesResponse> call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
+
+        call.enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                List<Movie> movies = response.body().getResults();
+                Movie first = movies.get(0);
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
+                // todo onFailure
+            }
+
+        });
     }
 
 
