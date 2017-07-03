@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Call<MoviesResponse> call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
 
+        // todo add work with adapter as described here http://www.androidhive.info/2016/05/android-working-with-retrofit-http-library/
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
