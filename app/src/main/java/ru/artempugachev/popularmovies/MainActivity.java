@@ -19,10 +19,11 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mMoviesGridRecyclerView;
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
+    private MoviesGridAdapter moviesGridAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 List<Movie> movies = response.body().getResults();
-                Movie first = movies.get(0);
+                moviesGridAdapter.setData(movies);
             }
 
             @Override
@@ -63,14 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setUpViews() {
-        mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
+        RecyclerView mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
 
         GridLayoutManager moviesLayoutManager = new GridLayoutManager(this, MOVIES_SPAN_COUNT);
         mMoviesGridRecyclerView.setLayoutManager(moviesLayoutManager);
 
         mMoviesGridRecyclerView.setHasFixedSize(true);
 
-        MoviesGridAdapter moviesGridAdapter = new MoviesGridAdapter();
+        moviesGridAdapter = new MoviesGridAdapter(this);
         mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
     }
 

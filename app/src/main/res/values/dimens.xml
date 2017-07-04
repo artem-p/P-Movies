@@ -1,3 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="grid_poster_width">185dp</dimen>
+    <dimen name="grid_poster_height">277dp</dimen>
 </resources>

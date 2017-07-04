@@ -5,6 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import ru.artempugachev.popularmovies.data.Movie;
 
 /**
  * Adapter for movies grid
@@ -14,6 +22,19 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     // todo this is for debug, delete after implementing grid with real data
     private final static int POSTER_GRID_STUB_NUMBER = 30;
+
+    private List<Movie> movies;
+    private Context context;
+    private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
+
+    public MoviesGridAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<Movie> movies) {
+        this.movies = movies;
+        notifyDataSetChanged();
+    }
 
     @Override
     public MoviePosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,7 +49,11 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     @Override
     public void onBindViewHolder(MoviePosterViewHolder holder, int position) {
-
+        if (this.movies != null && !this.movies.isEmpty()) {
+            String posterPath = movies.get(position).getPosterPath();
+            String imageUrl = BASE_IMAGE_URL + posterPath;
+            Picasso.with(context).load(imageUrl).into(holder.movieImageView);
+        }
     }
 
     @Override
@@ -38,8 +63,10 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     }
 
     public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
+        public final ImageView movieImageView;
         public MoviePosterViewHolder(View itemView) {
             super(itemView);
+            movieImageView = (ImageView) itemView.findViewById(R.id.posterImage);
         }
     }
 }

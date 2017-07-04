@@ -4,8 +4,9 @@
     >
 
     <ImageView
-        android:layout_width="185dp"
-        android:layout_height="277dp"
+        android:id="@+id/posterImage"
+        android:layout_width="@dimen/grid_poster_width"
+        android:layout_height="@dimen/grid_poster_height"
         android:scaleType="fitXY"
         android:src="@drawable/test_poster_w342"/>
 </FrameLayout>
