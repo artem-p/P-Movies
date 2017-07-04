@@ -20,9 +20,6 @@ import ru.artempugachev.popularmovies.data.Movie;
 
 public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder> {
 
-    // todo this is for debug, delete after implementing grid with real data
-    private final static int POSTER_GRID_STUB_NUMBER = 30;
-
     private List<Movie> movies;
     private Context context;
     private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
@@ -58,8 +55,12 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     @Override
     public int getItemCount() {
-        // todo implement with real data
-        return POSTER_GRID_STUB_NUMBER;
+        if (movies != null) {
+            return movies.size();
+        } else {
+            return 0;
+        }
+
     }
 
     public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
