@@ -12,18 +12,15 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ru.artempugachev.popularmovies.data.Movie;
-import ru.artempugachev.popularmovies.data.MoviesResponse;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
+
+    private final static int MOVIES_GRID_LOADER_ID = 42;
+
     private MoviesGridAdapter moviesGridAdapter;
 
 
@@ -35,24 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setSupportActionBar(toolbar);
         setUpViews();
 
-        TmdbApiClient tmdbApiClient = new TmdbApiClient();
-        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
-
-        Call<MoviesResponse> call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
-
-        call.enqueue(new Callback<MoviesResponse>() {
-            @Override
-            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                List<Movie> movies = response.body().getResults();
-                moviesGridAdapter.setData(movies);
-            }
-
-            @Override
-            public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
-                // todo onFailure
-            }
-
-        });
+        getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, null, this);
     }
 
 
@@ -94,12 +74,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-        return null;
+        switch (id) {
+            case MOVIES_GRID_LOADER_ID:
+                return new MoviesGridLoader(this);
+            default:
+                throw new RuntimeException("Loader not implemented: " + id);
+        }
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
-
+    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movies) {
+        if (movies != null && !movies.isEmpty()) {
+            moviesGridAdapter.setData(movies);
+        } else {
+            // todo handle no data. Show error message
+        }
     }
 
     @Override
