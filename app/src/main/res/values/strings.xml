@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="details_year_default">2017</string>
     <string name="details_title_default">Interstellar</string>
+    <string name="details_rating_default">8.1/10</string>
+    <string name="details_synopsis_default">Jack Sparrow, a freewheeling 17th-century pirate who roams the Caribbean Sea, butts heads with a rival pirate bent on pillaging the village of Port Royal. When the governor\'s daughter is kidnapped, Sparrow decides to help the girl\'s love save her. But their seafaring mission is hardly simple.</string>
 </resources>
