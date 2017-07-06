@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final static int MOVIES_SPAN_COUNT = 2;
 
     private final static int MOVIES_GRID_LOADER_ID = 42;
+    public static final String MOVIE_EXTRA = "movie_extra";
 
     private MoviesGridAdapter moviesGridAdapter;
 
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Movie movie = moviesGridAdapter.getMovie(position);
         if (movie != null) {
             Intent movieDetailsActivityIntent = new Intent(MainActivity.this, MovieDetailsActivity.class);
+            movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
             startActivity(movieDetailsActivityIntent);
         }
     }
