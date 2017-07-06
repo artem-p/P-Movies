@@ -24,14 +24,17 @@
          />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/details_title_default"
+        android:scrollHorizontally="false"
         android:id="@+id/details_title"
         app:layout_constraintLeft_toRightOf="@+id/details_poster"
         app:layout_constraintTop_toTopOf="@+id/details_poster"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintWidth_default="wrap"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        />
 
     <TextView
         android:id="@+id/details_year"
