@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo do we really need all the getters and setters here?
 /**
  * Object for store movie information. Corresponds to TMDB JSON.
  */
@@ -64,25 +63,16 @@ public class Movie implements Parcelable{
         this.voteAverage = voteAverage;
     }
 
-    public String getPosterPath() {
-        return posterPath;
-    }
 
     public String getOverview() {
         return overview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
 
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
     public List<Integer> getGenreIds() {
         return genreIds;
@@ -105,13 +95,6 @@ public class Movie implements Parcelable{
         return title;
     }
 
-    public Integer getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
-    }
 
     public Boolean getVideo() {
         return video;
@@ -129,6 +112,11 @@ public class Movie implements Parcelable{
 
     public String getFullBackdropPath() {
         return BASE_IMAGE_URL + backdropPath;
+    }
+
+
+    public String getRating() {
+        return voteAverage.toString();
     }
 
 
