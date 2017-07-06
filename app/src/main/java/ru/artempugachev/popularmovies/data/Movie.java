@@ -1,16 +1,19 @@
 package ru.artempugachev.popularmovies.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// todo do we really needs getters and setters here?
+// todo do we really need all the getters and setters here?
 /**
- * Object for store movie information. Correspond to TMDB JSON.
+ * Object for store movie information. Corresponds to TMDB JSON.
  */
 
-public class Movie {
+public class Movie implements Parcelable{
     @SerializedName("poster_path")
     private String posterPath;
     @SerializedName("adult")
@@ -169,5 +172,32 @@ public class Movie {
 
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(title);
+        out.writeString(posterPath);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR
+            = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    private Movie (Parcel in) {
+        title = in.readString();
+        posterPath = in.readString();
     }
 }

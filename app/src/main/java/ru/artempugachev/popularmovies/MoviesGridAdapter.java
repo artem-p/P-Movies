@@ -35,6 +35,14 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         notifyDataSetChanged();
     }
 
+    public Movie getMovie(int position) {
+        if (movies != null && !movies.isEmpty()) {
+            return movies.get(position);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public MoviePosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
