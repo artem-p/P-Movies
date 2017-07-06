@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/details_backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/test_backdrop_w342"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/test_poster_w92"
+        android:id="@+id/details_poster"
+        app:layout_constraintTop_toBottomOf="@id/details_backdrop"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/details_title_default"
+        android:id="@+id/details_title"
+        app:layout_constraintLeft_toRightOf="@+id/details_poster"
+        app:layout_constraintTop_toTopOf="@id/details_poster"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:id="@+id/details_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/details_year_default"
+        app:layout_constraintLeft_toLeftOf="@id/details_title"
+        app:layout_constraintTop_toBottomOf="@+id/details_title" />
+
+    <TextView
+        android:id="@+id/details_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/details_rating_default"
+        app:layout_constraintLeft_toLeftOf="@id/details_title"
+        app:layout_constraintTop_toBottomOf="@+id/details_year" />
+
+    <TextView
+        android:id="@+id/details_synopsis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/details_synopsis_default"
+        app:layout_constraintLeft_toLeftOf="@id/details_poster"
+        app:layout_constraintTop_toBottomOf="@+id/details_poster" />
+
+</android.support.constraint.ConstraintLayout>

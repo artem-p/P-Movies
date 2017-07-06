@@ -23,9 +23,11 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     private List<Movie> movies;
     private Context context;
     private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
+    private final MoviesGridClickListener moviesClickListener;
 
-    public MoviesGridAdapter(Context context) {
+    public MoviesGridAdapter(Context context, MoviesGridClickListener moviesClickListener) {
         this.context = context;
+        this.moviesClickListener = moviesClickListener;
     }
 
     public void setData(List<Movie> movies) {
@@ -63,11 +65,24 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     }
 
-    public class MoviePosterViewHolder extends RecyclerView.ViewHolder {
+    public class MoviePosterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView movieImageView;
         public MoviePosterViewHolder(View itemView) {
             super(itemView);
             movieImageView = (ImageView) itemView.findViewById(R.id.posterImage);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            moviesClickListener.onMovieClick(getAdapterPosition());
         }
     }
+
+    public interface MoviesGridClickListener {
+        void onMovieClick(int position);
+    }
+
 }
+
+

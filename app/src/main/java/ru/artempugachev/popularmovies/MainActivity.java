@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -14,7 +15,8 @@ import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
+        MoviesGridAdapter.MoviesGridClickListener {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mMoviesGridRecyclerView.setHasFixedSize(true);
 
-        moviesGridAdapter = new MoviesGridAdapter(this);
+        moviesGridAdapter = new MoviesGridAdapter(this, this);
         mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
     }
 
@@ -94,5 +96,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
 
+    }
+
+    @Override
+    public void onMovieClick(int position) {
+        Intent movieDetailsActivityIntent = new Intent(MainActivity.this, MovieDetailsActivity.class);
+        startActivity(movieDetailsActivityIntent);
     }
 }
