@@ -110,11 +110,6 @@ public class Movie implements Parcelable{
     }
 
 
-    public String getFullBackdropPath() {
-        return BASE_IMAGE_URL + backdropPath;
-    }
-
-
     public String getRating() {
         return voteAverage.toString();
     }

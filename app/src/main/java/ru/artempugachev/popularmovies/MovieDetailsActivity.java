@@ -15,7 +15,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView yearTextView;
     private TextView overviewTextView;
     private TextView ratingTextView;
-    private ImageView backdropImageView;
     private ImageView posterImageView;
 
     @Override
@@ -38,7 +37,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         yearTextView = (TextView) findViewById(R.id.details_year);
         overviewTextView = (TextView) findViewById(R.id.details_overview);
         ratingTextView = (TextView) findViewById(R.id.details_rating);
-        backdropImageView = (ImageView) findViewById(R.id.details_backdrop);
         posterImageView = (ImageView) findViewById(R.id.details_poster);
     }
 
@@ -51,7 +49,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         overviewTextView.setText(movie.getOverview());
         ratingTextView.setText(movie.getRating());
 
-        Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
     }
 }

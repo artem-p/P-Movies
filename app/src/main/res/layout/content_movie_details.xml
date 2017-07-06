@@ -11,26 +11,13 @@
     >
 
     <ImageView
-        android:id="@+id/details_backdrop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minWidth="342dp"
-        android:minHeight="192dp"
-        android:src="@drawable/test_backdrop_w342"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
-
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/test_poster_w92"
         android:minWidth="92dp"
         android:minHeight="138dp"
-        android:id="@+id/de1tails_poster"
-        app:layout_constraintTop_toBottomOf="@+id/details_backdrop"
+        android:id="@+id/details_poster"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
