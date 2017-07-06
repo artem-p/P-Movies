@@ -22,7 +22,6 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
     private List<Movie> movies;
     private Context context;
-    private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
     private final MoviesGridClickListener moviesClickListener;
 
     public MoviesGridAdapter(Context context, MoviesGridClickListener moviesClickListener) {
@@ -57,8 +56,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     @Override
     public void onBindViewHolder(MoviePosterViewHolder holder, int position) {
         if (this.movies != null && !this.movies.isEmpty()) {
-            String posterPath = movies.get(position).getPosterPath();
-            String imageUrl = BASE_IMAGE_URL + posterPath;
+            String imageUrl = movies.get(position).getFullPosterPath();
             Picasso.with(context).load(imageUrl).into(holder.movieImageView);
         }
     }

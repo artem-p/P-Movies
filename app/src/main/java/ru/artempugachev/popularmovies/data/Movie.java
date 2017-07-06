@@ -43,6 +43,8 @@ public class Movie implements Parcelable{
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
+
     public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
                  Integer voteCount, Boolean video, Double voteAverage) {
@@ -64,18 +66,6 @@ public class Movie implements Parcelable{
 
     public String getPosterPath() {
         return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public boolean isAdult() {
-        return adult;
-    }
-
-    public void setAdult(boolean adult) {
-        this.adult = adult;
     }
 
     public String getOverview() {
@@ -110,44 +100,9 @@ public class Movie implements Parcelable{
         this.id = id;
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
-    }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
     }
 
     public Integer getVoteCount() {
@@ -166,13 +121,16 @@ public class Movie implements Parcelable{
         this.video = video;
     }
 
-    public Double getVoteAverage() {
-        return voteAverage;
+
+    public String getFullPosterPath() {
+        return BASE_IMAGE_URL + posterPath;
     }
 
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
+
+    public String getFullBackdropPath() {
+        return BASE_IMAGE_URL + backdropPath;
     }
+
 
     @Override
     public int describeContents() {
@@ -182,7 +140,11 @@ public class Movie implements Parcelable{
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(title);
+        out.writeString(releaseDate);
+        out.writeDouble(voteAverage);
+        out.writeString(overview);
         out.writeString(posterPath);
+        out.writeString(backdropPath);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR
@@ -198,6 +160,10 @@ public class Movie implements Parcelable{
 
     private Movie (Parcel in) {
         title = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+        overview = in.readString();
         posterPath = in.readString();
+        backdropPath = in.readString();
     }
 }
