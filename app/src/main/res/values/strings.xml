@@ -8,4 +8,5 @@
     <string name="title_activity_movie_details">Movie Detail</string>
     <string name="popular_label">Most popular</string>
     <string name="top_rated_label">Top rated</string>
+    <string name="action_sort">Sort order</string>
 </resources>
