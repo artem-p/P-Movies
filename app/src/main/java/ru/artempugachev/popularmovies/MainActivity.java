@@ -76,9 +76,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.action_sort:
                 SortOrderDialog sortOrderDialog = new SortOrderDialog();
                 sortOrderDialog.show(getFragmentManager(), SORT_ORDER_DIALOG_TAG);
-
                 return true;
         }
 
