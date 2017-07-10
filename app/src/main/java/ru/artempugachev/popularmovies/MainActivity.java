@@ -49,14 +49,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-//        MenuItem spinnerItem = menu.findItem(R.id.sortOrderSpinner);
-//        Spinner spinner = (Spinner) MenuItemCompat.getActionView(spinnerItem);
-//
-//        String[] sortOrders = {getString(R.string.popular_label), getString(R.string.top_rated_label)};
-//        ArrayAdapter sortOrderSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOrders);
-//        sortOrderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(sortOrderSpinnerAdapter);
         return true;
     }
 
