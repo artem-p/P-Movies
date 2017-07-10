@@ -6,6 +6,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,19 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
-        MoviesGridAdapter.MoviesGridClickListener {
+        MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
 
     private final static int MOVIES_GRID_LOADER_ID = 42;
     public static final String MOVIE_EXTRA = "movie_extra";
+    private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
 
     private MoviesGridAdapter moviesGridAdapter;
 
@@ -78,9 +81,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_sort:
+                SortOrderDialog sortOrderDialog = new SortOrderDialog();
+                sortOrderDialog.show(getFragmentManager(), SORT_ORDER_DIALOG_TAG);
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -118,5 +126,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
             startActivity(movieDetailsActivityIntent);
         }
+    }
+
+    @Override
+    public void onSortOrderChange(int which) {
+        Toast.makeText(this, String.valueOf(which), Toast.LENGTH_SHORT).show();
     }
 }
