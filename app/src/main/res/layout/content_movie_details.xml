@@ -30,6 +30,7 @@
         android:scrollHorizontally="false"
         android:id="@+id/details_title"
         app:layout_constraintLeft_toRightOf="@+id/details_poster"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/details_poster"
         app:layout_constraintWidth_default="wrap"
         android:layout_marginStart="16dp"
