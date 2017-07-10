@@ -2,6 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ru.artempugachev.popularmovies.MainActivity">
+    <item android:id="@+id/sortOrderSpinner"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.Spinner"
+        />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
