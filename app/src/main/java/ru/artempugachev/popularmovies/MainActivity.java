@@ -21,7 +21,7 @@ import java.util.List;
 import ru.artempugachev.popularmovies.data.Movie;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
-        MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener {
+        MoviesGridAdapter.MoviesGridClickListener {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
@@ -114,18 +114,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
             startActivity(movieDetailsActivityIntent);
         }
-    }
-
-    @Override
-    public void onSortOrderChange(int which) {
-        try {
-            String sortOrderId = getResources().getStringArray(R.array.sort_orders_id)[which];
-            if (sortOrderId.equals(getString(R.string.sort_order_id_popular))) {
-
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new RuntimeException("No id for sort order with position " + which);
-        }
-        Toast.makeText(this, String.valueOf(which), Toast.LENGTH_SHORT).show();
     }
 }
