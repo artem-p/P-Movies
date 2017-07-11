@@ -4,4 +4,9 @@
         <item>@string/sort_order_popular</item>
         <item>@string/sort_order_top_rated</item>
     </string-array>
+
+    <string-array name="sort_orders_id">
+        <item>@string/sort_order_id_popular</item>
+        <item>@string/sort_order_id_top_rated</item>
+    </string-array>
 </resources>

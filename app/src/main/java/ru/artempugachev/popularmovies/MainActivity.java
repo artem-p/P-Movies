@@ -118,6 +118,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onSortOrderChange(int which) {
+        try {
+            String sortOrderId = getResources().getStringArray(R.array.sort_orders_id)[which];
+            if (sortOrderId.equals(getString(R.string.sort_order_id_popular))) {
+
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new RuntimeException("No id for sort order with position " + which);
+        }
         Toast.makeText(this, String.valueOf(which), Toast.LENGTH_SHORT).show();
     }
 }

@@ -8,6 +8,8 @@
     <string name="title_activity_movie_details">Movie Detail</string>
     <string name="sort_order_popular">Most popular</string>
     <string name="sort_order_top_rated">Top rated</string>
+    <string name="sort_order_id_popular" translatable="false">popular</string>
+    <string name="sort_order_id_top_rated" translatable="false">top_rated</string>
     <string name="action_sort">Sort order</string>
     <string name="sort_order_dialog_title">Select sort order</string>
 </resources>

@@ -24,7 +24,7 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     private Context context;
     private final MoviesGridClickListener moviesClickListener;
 
-    public MoviesGridAdapter(Context context, MoviesGridClickListener moviesClickListener) {
+    public MoviesGridAdapter(Context context, MoviesGridClickListener moviesClickListener, String sortOrder) {
         this.context = context;
         this.moviesClickListener = moviesClickListener;
     }
