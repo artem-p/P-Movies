@@ -33,7 +33,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
     }
 
     private List<Movie> movies;
-    private String sortOrder = null;
+    private String sortOrderId = "top_rated";
 
     @Override
     protected void onStartLoading() {
@@ -55,25 +55,41 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
 
-        Call<MoviesResponse> call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
+        // todo to separate method
+        Call<MoviesResponse> call = null;
+        if (sortOrderId != null) {
+            if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_popular))) {
+                // load most popular
+                call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
+            } else if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_top_rated))) {
+                // load top rated
+                call = tmdbApiInterface.getTopRatedMovies(BuildConfig.TMDB_API_KEY);
+            }
+        } else {
+            // default sort order is popular
+            call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
+        }
 
-        call.enqueue(new Callback<MoviesResponse>() {
-            @Override
-            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                if (response.isSuccessful()) {
-                    List<Movie> movies = response.body().getResults();
-                    deliverResult(movies);
-                } else {
+        if (call != null) {
+            call.enqueue(new Callback<MoviesResponse>() {
+                @Override
+                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                    if (response.isSuccessful()) {
+                        List<Movie> movies = response.body().getResults();
+                        deliverResult(movies);
+                    } else {
+                        deliverResult(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
                     deliverResult(null);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
-                deliverResult(null);
-            }
+            });
+        }
 
-        });
         super.onForceLoad();
     }
 
