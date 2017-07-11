@@ -21,7 +21,7 @@ import java.util.List;
 import ru.artempugachev.popularmovies.data.Movie;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
-        MoviesGridAdapter.MoviesGridClickListener {
+        MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
@@ -114,5 +114,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
             startActivity(movieDetailsActivityIntent);
         }
+    }
+
+    @Override
+    public void onSortOrderChange(int which) {
+        // todo call some method in loader?
     }
 }

@@ -1,6 +1,7 @@
 package ru.artempugachev.popularmovies;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.content.Loader;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
     }
 
     private List<Movie> movies;
-    private String sortOrderId = "top_rated";
+    private String sortOrderId = "popular";
 
     @Override
     protected void onStartLoading() {
@@ -57,17 +58,12 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
 
         // todo to separate method
         Call<MoviesResponse> call = null;
-        if (sortOrderId != null) {
-            if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_popular))) {
-                // load most popular
-                call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
-            } else if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_top_rated))) {
-                // load top rated
-                call = tmdbApiInterface.getTopRatedMovies(BuildConfig.TMDB_API_KEY);
-            }
-        } else {
-            // default sort order is popular
+        if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_popular))) {
+            // load most popular
             call = tmdbApiInterface.getPopularMovies(BuildConfig.TMDB_API_KEY);
+        } else if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_top_rated))) {
+            // load top rated
+            call = tmdbApiInterface.getTopRatedMovies(BuildConfig.TMDB_API_KEY);
         }
 
         if (call != null) {
@@ -95,11 +91,11 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
 
     @Override
     public void onSortOrderChange(int which) {
+        // todo maybe not this
         try {
-            String sortOrderId = getContext().getResources().getStringArray(R.array.sort_orders_id)[which];
-            if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_popular))) {
-
-            }
+            Resources resources = getContext().getResources();
+            this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[which];
+            forceLoad();
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new RuntimeException("No id for sort order with position " + which);
         }
