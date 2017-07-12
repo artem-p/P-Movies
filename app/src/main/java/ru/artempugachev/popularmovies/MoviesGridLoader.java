@@ -59,12 +59,13 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
         super.deliverResult(movies);
     }
 
-    @Override
-    protected void onForceLoad() {
+    /**
+     * Get retrofit api call for movies
+     * */
+    private Call<MoviesResponse> getTmdbApiCall() {
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
 
-        // todo to separate method
         Call<MoviesResponse> call = null;
         if (sortOrderId.equals(getContext().getString(R.string.sort_order_id_popular))) {
             // load most popular
@@ -73,6 +74,13 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
             // load top rated
             call = tmdbApiInterface.getTopRatedMovies(BuildConfig.TMDB_API_KEY);
         }
+
+        return call;
+    }
+
+    @Override
+    protected void onForceLoad() {
+        Call<MoviesResponse> call = getTmdbApiCall();
 
         if (call != null) {
             moviesLoadListener.onStartLoadingMovies();
