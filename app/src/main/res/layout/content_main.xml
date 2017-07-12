@@ -14,4 +14,12 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+    
+    <ProgressBar
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:id="@+id/moviesGridProgressBar"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        />
 </FrameLayout>

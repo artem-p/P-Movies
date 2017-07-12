@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,7 +23,8 @@ import java.util.List;
 import ru.artempugachev.popularmovies.data.Movie;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
-        MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener {
+        MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener,
+        MoviesGridLoader.MoviesLoadListener {
 
     // todo should be different in landscape mode
     private final static int MOVIES_SPAN_COUNT = 2;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
 
     private MoviesGridAdapter moviesGridAdapter;
-
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         moviesGridAdapter = new MoviesGridAdapter(this, this);
         mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
+
+        progressBar = (ProgressBar) findViewById(R.id.moviesGridProgressBar);
     }
 
 
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case MOVIES_GRID_LOADER_ID:
-                return new MoviesGridLoader(this);
+                return new MoviesGridLoader(this, this);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }
@@ -103,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
-
     }
 
     @Override
@@ -121,5 +125,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
         MoviesGridLoader moviesGridLoader = (MoviesGridLoader) loader;
         moviesGridLoader.changeSortOrder(posInDialog);
+    }
+
+    @Override
+    public void onStartLoadingMovies() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onFinishLoadingMovies() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

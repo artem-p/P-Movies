@@ -19,6 +19,12 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
  */
 
 public class MoviesGridLoader extends Loader<List<Movie>> {
+    public interface MoviesLoadListener {
+        public void onStartLoadingMovies();
+        public void onFinishLoadingMovies();
+    }
+
+
     /**
      * Stores away the application context associated with context.
      * Since Loaders can be used across multiple activities it's dangerous to
@@ -29,12 +35,14 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
      *
      * @param context used to retrieve the application context.
      */
-    public MoviesGridLoader(Context context) {
+    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener) {
         super(context);
+        this.moviesLoadListener = moviesLoadListener;
     }
 
     private List<Movie> movies;
     private String sortOrderId = "popular";
+    private MoviesLoadListener moviesLoadListener;
 
     @Override
     protected void onStartLoading() {
@@ -67,9 +75,11 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
         }
 
         if (call != null) {
+            moviesLoadListener.onStartLoadingMovies();
             call.enqueue(new Callback<MoviesResponse>() {
                 @Override
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                    moviesLoadListener.onFinishLoadingMovies();
                     if (response.isSuccessful()) {
                         List<Movie> movies = response.body().getResults();
                         deliverResult(movies);
@@ -80,6 +90,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
 
                 @Override
                 public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
+                    moviesLoadListener.onFinishLoadingMovies();
                     deliverResult(null);
                 }
 
