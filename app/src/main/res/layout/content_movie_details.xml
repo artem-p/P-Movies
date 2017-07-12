@@ -29,6 +29,7 @@
         android:text="@string/details_title_default"
         android:scrollHorizontally="false"
         android:id="@+id/details_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintLeft_toRightOf="@+id/details_poster"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/details_poster"
@@ -42,6 +43,7 @@
         android:id="@+id/details_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
         android:text="@string/details_year_default"
         app:layout_constraintLeft_toLeftOf="@+id/details_title"
         app:layout_constraintTop_toBottomOf="@+id/details_title" />
@@ -50,6 +52,7 @@
         android:id="@+id/details_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         android:text="@string/details_rating_default"
         app:layout_constraintLeft_toLeftOf="@+id/details_title"
         app:layout_constraintTop_toBottomOf="@+id/details_year" />
@@ -58,6 +61,7 @@
         android:id="@+id/details_overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
         android:text="@string/details_synopsis_default"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_poster"
