@@ -117,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onSortOrderChange(int which) {
-        // todo call some method in loader?
+    public void onSortOrderChange(int posInDialog) {
+        Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
+        MoviesGridLoader moviesGridLoader = (MoviesGridLoader) loader;
+        moviesGridLoader.changeSortOrder(posInDialog);
     }
 }

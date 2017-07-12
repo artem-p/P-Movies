@@ -18,7 +18,7 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
  * We use loader to fetch tmdb data and load it to activity
  */
 
-public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDialog.SortOrderDialogListener{
+public class MoviesGridLoader extends Loader<List<Movie>> {
     /**
      * Stores away the application context associated with context.
      * Since Loaders can be used across multiple activities it's dangerous to
@@ -89,15 +89,13 @@ public class MoviesGridLoader extends Loader<List<Movie>> implements SortOrderDi
         super.onForceLoad();
     }
 
-    @Override
-    public void onSortOrderChange(int which) {
-        // todo maybe not this
+    public void changeSortOrder(int posInDialog) {
         try {
             Resources resources = getContext().getResources();
-            this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[which];
+            this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog];
             forceLoad();
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new RuntimeException("No id for sort order with position " + which);
+            throw new RuntimeException("No id for sort order with position " + posInDialog);
         }
     }
 }
