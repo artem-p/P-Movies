@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Data class for Movie json response. We need it as it have extra fields (like page number) that
- * we don't want in Movie data object.
+ * we don't want in Movie data object. See there: http://www.androidhive.info/2016/05/android-working-with-retrofit-http-library/
  */
 
 public class MoviesResponse {
