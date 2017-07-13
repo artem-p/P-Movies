@@ -20,8 +20,8 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 public class MoviesGridLoader extends Loader<List<Movie>> {
     public interface MoviesLoadListener {
-        public void onStartLoadingMovies();
-        public void onFinishLoadingMovies();
+        void onStartLoadingMovies();
+        void onFinishLoadingMovies();
     }
 
 
