@@ -25,6 +25,7 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/test_backdrop_w342"
                 android:layout_marginTop="?attr/actionBarSize"
+                android:id="@+id/movie_backdrop"
                 />
 
             <android.support.v7.widget.Toolbar
