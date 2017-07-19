@@ -21,6 +21,14 @@
             app:expandedTitleMarginEnd="64dp"
             android:fitsSystemWindows="true">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/test_backdrop_w342"
+                android:layout_marginTop="?attr/actionBarSize"
+                />
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
