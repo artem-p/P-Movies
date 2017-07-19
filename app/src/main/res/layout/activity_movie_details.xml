@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:src="@drawable/test_backdrop_w342"
+                android:minHeight="@dimen/backdrop_min_height"
                 android:layout_marginTop="?attr/actionBarSize"
                 android:id="@+id/movie_backdrop"
                 />
