@@ -59,7 +59,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         yearTextView.setText(movie.getReleaseDate());
         overviewTextView.setText(movie.getOverview());
         ratingTextView.setText(movie.getRating());
-        collapsingToolbarLayout.setTitle(movie.getTitle());
 
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
         Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
