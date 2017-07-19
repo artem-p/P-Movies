@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -29,9 +30,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final Movie movie = getIntent().getParcelableExtra(MainActivity.MOVIE_EXTRA);
-
         setUpViews();
+
+        Movie movie = null;
+        Intent intent = getIntent();
+        if (intent != null) {
+            movie = intent.getParcelableExtra(MainActivity.MOVIE_EXTRA);
+        }
+
         setData(movie);
     }
 
