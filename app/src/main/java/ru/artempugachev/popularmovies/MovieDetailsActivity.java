@@ -1,6 +1,8 @@
 package ru.artempugachev.popularmovies;
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView overviewTextView;
     private TextView ratingTextView;
     private ImageView posterImageView;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         overviewTextView = (TextView) findViewById(R.id.details_overview);
         ratingTextView = (TextView) findViewById(R.id.details_rating);
         posterImageView = (ImageView) findViewById(R.id.details_poster);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
     }
 
     /**
@@ -48,6 +52,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         yearTextView.setText(movie.getReleaseDate());
         overviewTextView.setText(movie.getOverview());
         ratingTextView.setText(movie.getRating());
+        collapsingToolbarLayout.setTitle(movie.getTitle());
 
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
     }
