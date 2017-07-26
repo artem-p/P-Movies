@@ -10,6 +10,7 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +26,6 @@ import ru.artempugachev.popularmovies.data.Movie;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
         MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener,
         MoviesGridLoader.MoviesLoadListener {
-
-    // todo should be different in landscape mode
-    private final static int MOVIES_SPAN_COUNT = 2;
 
     private final static int MOVIES_GRID_LOADER_ID = 42;
     public static final String MOVIE_EXTRA = "movie_extra";
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void setUpViews() {
         RecyclerView mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
 
-        GridLayoutManager moviesLayoutManager = new GridLayoutManager(this, MOVIES_SPAN_COUNT);
+        GridLayoutManager moviesLayoutManager = new GridLayoutManager(this, getNumberOfColumnsInGrid());
         mMoviesGridRecyclerView.setLayoutManager(moviesLayoutManager);
 
         mMoviesGridRecyclerView.setHasFixedSize(true);
@@ -135,5 +133,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onFinishLoadingMovies() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private int getNumberOfColumnsInGrid() {
+        /**
+         * Calculate number of columns in grid based on device width
+         * */
+
+        final int SCALING_FACTOR = 180;
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        int numberOfColumns = (int) (dpWidth / SCALING_FACTOR);
+
+        return numberOfColumns;
     }
 }
