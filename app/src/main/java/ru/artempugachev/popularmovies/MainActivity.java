@@ -62,6 +62,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mMoviesGridRecyclerView.setHasFixedSize(true);
 
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // todo add from submission
+                // todo add restart loader with bundle to load note
+                // todo endless scroll note
+            }
+        };
+
         moviesGridAdapter = new MoviesGridAdapter(this, this);
         mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
 
