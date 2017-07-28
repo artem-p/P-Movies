@@ -14,5 +14,6 @@ import ru.artempugachev.popularmovies.data.MoviesResponse;
 
 public interface TmdbApiInterface {
     @GET("movie/{sort}")
-    Call<MoviesResponse> getMovies(@Path("sort") String sortOrder, @Query("api_key") String apiKey);
+    Call<MoviesResponse> getMovies(@Path("sort") String sortOrder, @Query("api_key") String apiKey,
+                                   @Query("page") int pageNumber);
 }

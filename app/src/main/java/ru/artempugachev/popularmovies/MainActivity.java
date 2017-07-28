@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Bundle loaderBundle = new Bundle();
                 loaderBundle.putInt(PAGE_NUMBER_KEY, page);
                 getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
+                // todo for scroll view http://www.jayrambhia.com/blog/footer-loader
                 // todo add restart loader with bundle to load note
                 // todo endless scroll note
             }
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
                     pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
                 }
-                pageNumber++; // todo first page 0 or 1?
+                pageNumber++;
                 return new MoviesGridLoader(this, this, pageNumber);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);

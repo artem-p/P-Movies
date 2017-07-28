@@ -66,7 +66,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     protected void onForceLoad() {
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
-        Call<MoviesResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY);
+        Call<MoviesResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
 
         if (call != null) {
             moviesLoadListener.onStartLoadingMovies();
