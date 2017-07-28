@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final static int MOVIES_GRID_LOADER_ID = 42;
     public static final String MOVIE_EXTRA = "movie_extra";
     private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
+    private static final String PAGE_NUMBER_KEY = "page_number";
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
@@ -55,24 +56,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     private void setUpViews() {
-        RecyclerView mMoviesGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
+        RecyclerView mMovieGridRecyclerView = (RecyclerView) findViewById(R.id.rv_movies_grid);
 
         GridLayoutManager moviesLayoutManager = new GridLayoutManager(this, getNumberOfColumnsInGrid());
-        mMoviesGridRecyclerView.setLayoutManager(moviesLayoutManager);
+        mMovieGridRecyclerView.setLayoutManager(moviesLayoutManager);
 
-        mMoviesGridRecyclerView.setHasFixedSize(true);
+        mMovieGridRecyclerView.setHasFixedSize(true);
 
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // todo add from submission
+                Bundle loaderBundle = new Bundle();
+                loaderBundle.putInt(PAGE_NUMBER_KEY, page);
+                getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
                 // todo add restart loader with bundle to load note
                 // todo endless scroll note
             }
         };
 
+        mMovieGridRecyclerView.setOnScrollListener(scrollListener);
+
         moviesGridAdapter = new MoviesGridAdapter(this, this);
-        mMoviesGridRecyclerView.setAdapter(moviesGridAdapter);
+        mMovieGridRecyclerView.setAdapter(moviesGridAdapter);
 
         progressBar = (ProgressBar) findViewById(R.id.moviesGridProgressBar);
     }
@@ -98,7 +103,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case MOVIES_GRID_LOADER_ID:
-                return new MoviesGridLoader(this, this);
+                int pageNumber = 0;
+                if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
+                    pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                }
+                pageNumber++; // todo first page 0 or 1?
+                return new MoviesGridLoader(this, this, pageNumber);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }

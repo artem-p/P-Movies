@@ -35,14 +35,16 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
      *
      * @param context used to retrieve the application context.
      */
-    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener) {
+    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener, int pageNumber) {
         super(context);
         this.moviesLoadListener = moviesLoadListener;
+        this.pageNumber = pageNumber;
     }
 
     private List<Movie> movies;
     private String sortOrderId = "popular";
     private MoviesLoadListener moviesLoadListener;
+    private int pageNumber;
 
     @Override
     protected void onStartLoading() {
