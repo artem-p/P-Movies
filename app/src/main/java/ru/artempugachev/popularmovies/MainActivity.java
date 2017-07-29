@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         };
 
-        mMovieGridRecyclerView.setOnScrollListener(scrollListener);
+        mMovieGridRecyclerView.addOnScrollListener(scrollListener);
 
         moviesGridAdapter = new MoviesGridAdapter(this, this);
         mMovieGridRecyclerView.setAdapter(moviesGridAdapter);
@@ -104,11 +104,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case MOVIES_GRID_LOADER_ID:
-                int pageNumber = 0;
+                int pageNumber = 1;
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
                     pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
                 }
-                pageNumber++;
                 return new MoviesGridLoader(this, this, pageNumber);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
