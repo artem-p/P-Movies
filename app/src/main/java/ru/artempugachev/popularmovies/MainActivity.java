@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Bundle loaderBundle = new Bundle();
                 loaderBundle.putInt(PAGE_NUMBER_KEY, page);
                 getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
-                // todo for scroll view http://www.jayrambhia.com/blog/footer-loader
-                // todo add restart loader with bundle to load note
-                // todo endless scroll note
             }
         };
 
