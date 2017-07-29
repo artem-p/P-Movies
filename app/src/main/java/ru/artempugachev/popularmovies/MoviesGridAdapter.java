@@ -90,12 +90,12 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
 
         @Override
         public void onClick(View v) {
-            moviesClickListener.onMovieClick(getAdapterPosition());
+            moviesClickListener.onMovieClick(getAdapterPosition(), v);
         }
     }
 
     public interface MoviesGridClickListener {
-        void onMovieClick(int position);
+        void onMovieClick(int position, View v);
     }
 
 }

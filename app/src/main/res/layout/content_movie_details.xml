@@ -15,12 +15,13 @@
         >
 
         <ImageView
+            android:id="@+id/details_poster"
+            android:transitionName="@string/poster_transition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/test_poster_w92"
             android:minWidth="92dp"
             android:minHeight="138dp"
-            android:id="@+id/details_poster"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="16dp"

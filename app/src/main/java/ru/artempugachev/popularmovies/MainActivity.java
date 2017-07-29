@@ -2,6 +2,7 @@ package ru.artempugachev.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -128,12 +130,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onMovieClick(int position) {
+    public void onMovieClick(int position, View v) {
         Movie movie = moviesGridAdapter.getMovie(position);
         if (movie != null) {
             Intent movieDetailsActivityIntent = new Intent(MainActivity.this, MovieDetailsActivity.class);
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
-            startActivity(movieDetailsActivityIntent);
+
+            // todo note for transitions http://guides.codepath.com/android/shared-element-activity-transition
+            View ivPosterInGrid =  v.findViewById(R.id.posterImage);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    ivPosterInGrid, getString(R.string.poster_transition));
+            startActivity(movieDetailsActivityIntent, options.toBundle());
         }
     }
 

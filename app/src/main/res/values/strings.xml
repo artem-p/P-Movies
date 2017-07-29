@@ -13,4 +13,5 @@
     <string name="action_sort">Sort order</string>
     <string name="sort_order_dialog_title">Select sort order</string>
     <string name="no_data_message">Cannot load movies. Check your internet connection.</string>
+    <string name="poster_transition" translatable="false">poster_transition</string>
 </resources>
