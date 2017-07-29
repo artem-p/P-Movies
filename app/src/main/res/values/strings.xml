@@ -12,4 +12,5 @@
     <string name="sort_order_id_top_rated" translatable="false">top_rated</string>
     <string name="action_sort">Sort order</string>
     <string name="sort_order_dialog_title">Select sort order</string>
+    <string name="no_data_message">Cannot load movies. Check your internet connection.</string>
 </resources>

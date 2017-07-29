@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ProgressBar progressBar;
     EndlessRecyclerViewScrollListener scrollListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 moviesGridAdapter.setData(movies);
             }
         } else {
-            // todo handle no data. Show error message
+            Toast.makeText(this, R.string.no_data_message, Toast.LENGTH_SHORT).show();
         }
     }
 
