@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
             case R.id.action_sort:
                 SortOrderDialog sortOrderDialog = new SortOrderDialog();
                 sortOrderDialog.show(getFragmentManager(), SORT_ORDER_DIALOG_TAG);
