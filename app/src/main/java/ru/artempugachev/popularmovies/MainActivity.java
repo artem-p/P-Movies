@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
+    EndlessRecyclerViewScrollListener scrollListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mMovieGridRecyclerView.setHasFixedSize(true);
 
-        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Bundle loaderBundle = new Bundle();
@@ -138,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onSortOrderChange(int posInDialog) {
+        moviesGridAdapter.setData(null);
+        moviesGridAdapter.notifyDataSetChanged();
+        scrollListener.resetState();
+
         Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
         MoviesGridLoader moviesGridLoader = (MoviesGridLoader) loader;
         moviesGridLoader.changeSortOrder(posInDialog);
