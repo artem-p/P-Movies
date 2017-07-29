@@ -117,7 +117,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movies) {
         if (movies != null && !movies.isEmpty()) {
-            moviesGridAdapter.setData(movies);
+            if (moviesGridAdapter.getItemCount() != 0) {
+                moviesGridAdapter.addData(movies);
+            } else {
+                moviesGridAdapter.setData(movies);
+            }
         } else {
             // todo handle no data. Show error message
         }

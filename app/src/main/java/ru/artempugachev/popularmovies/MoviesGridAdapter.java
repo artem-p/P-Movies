@@ -33,6 +33,16 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
         notifyDataSetChanged();
     }
 
+    public void addData(List<Movie> newMovies) {
+        if (!newMovies.isEmpty()) {
+            int currentSize = movies.size();
+            int newMoviesSize = newMovies.size();
+
+            movies.addAll(newMovies);
+            notifyItemRangeInserted(currentSize, newMoviesSize);
+        }
+    }
+
     public Movie getMovie(int position) {
         if (movies != null && !movies.isEmpty()) {
             return movies.get(position);
