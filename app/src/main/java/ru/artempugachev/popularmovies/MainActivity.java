@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Intent movieDetailsActivityIntent = new Intent(MainActivity.this, MovieDetailsActivity.class);
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie);
 
-            // todo note for transitions http://guides.codepath.com/android/shared-element-activity-transition
             View ivPosterInGrid =  v.findViewById(R.id.posterImage);
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                     ivPosterInGrid, getString(R.string.poster_transition));
