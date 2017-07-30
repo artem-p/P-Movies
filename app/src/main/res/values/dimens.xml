@@ -4,4 +4,5 @@
     <dimen name="grid_poster_height">277dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="backdrop_min_height">192dp</dimen>
+    <dimen name="normal_margin">16dp</dimen>
 </resources>

@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies;
+package ru.artempugachev.popularmovies.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.data.Movie;
 
 /**

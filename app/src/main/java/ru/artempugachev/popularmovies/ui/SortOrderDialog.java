@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies;
+package ru.artempugachev.popularmovies.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import ru.artempugachev.popularmovies.R;
 
 /**
  * Dialog for select sort order. Popular or top rated movies
