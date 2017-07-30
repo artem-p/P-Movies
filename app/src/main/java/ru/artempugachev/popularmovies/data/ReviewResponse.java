@@ -17,4 +17,8 @@ public class ReviewResponse {
 
     @SerializedName("results")
     private List<Review> results;
+
+    public List<Review> getResults() {
+        return results;
+    }
 }

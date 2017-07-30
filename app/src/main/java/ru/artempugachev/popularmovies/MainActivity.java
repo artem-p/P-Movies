@@ -162,10 +162,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+
+    /**
+     * Calculate number of columns in grid based on device width
+     * */
     private int getNumberOfColumnsInGrid() {
-        /**
-         * Calculate number of columns in grid based on device width
-         * */
 
         final int SCALING_FACTOR = 180;
 

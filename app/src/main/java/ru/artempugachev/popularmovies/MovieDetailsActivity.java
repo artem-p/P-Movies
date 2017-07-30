@@ -3,16 +3,24 @@ package ru.artempugachev.popularmovies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import ru.artempugachev.popularmovies.data.Movie;
+import java.util.List;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.Review;
+import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
+import ru.artempugachev.popularmovies.ui.ReviewsLoader;
+
+public class MovieDetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Review>> {
     private TextView titleTextView;
     private TextView yearTextView;
     private TextView overviewTextView;
@@ -20,6 +28,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageView posterImageView;
     private ImageView backdropImageView;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private RecyclerView mReviewsRecyclerView;
+    private ReviewsAdapter mReviewsAdapter;
+
+    private final static int REVIEWS_LOADER_ID = 4242;
+    private final static String PAGE_NUMBER_KEY = "page_number";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +63,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         posterImageView = (ImageView) findViewById(R.id.details_poster);
         backdropImageView = (ImageView) findViewById(R.id.movie_backdrop);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        mReviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recycler);
+        mReviewsAdapter = new ReviewsAdapter(this);
+        mReviewsRecyclerView.setAdapter(mReviewsAdapter);
     }
 
     /**
@@ -62,5 +79,33 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
         Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
+    }
+
+
+    /**
+     * Loader methods
+     * */
+    @Override
+    public Loader<List<Review>> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case REVIEWS_LOADER_ID:
+                int pageNumber = 1;
+                if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
+                    pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                }
+                return new ReviewsLoader(this, pageNumber);
+            default:
+                throw new RuntimeException("Loader not implemented: " + id);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Review>> loader, List<Review> data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Review>> loader) {
+
     }
 }
