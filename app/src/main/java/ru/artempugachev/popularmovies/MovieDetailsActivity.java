@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +62,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
            reviewsLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
         }
 
-        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
+//        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
 
     }
 
@@ -87,6 +88,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         overviewTextView.setText(movie.getOverview());
         ratingTextView.setText(movie.getRating());
 
+        // todo there is no poster, at least on emulator
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
         Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
     }
@@ -118,7 +120,16 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Review>> loader, List<Review> data) {
+    public void onLoadFinished(Loader<List<Review>> loader, List<Review> reviews) {
+        if (reviews != null && !reviews.isEmpty()) {
+            if (mReviewsAdapter.getItemCount() != 0) {
+                mReviewsAdapter.addData(reviews);
+            } else {
+                mReviewsAdapter.setData(reviews);
+            }
+        } else {
+            Toast.makeText(this, R.string.no_reviews_data_message, Toast.LENGTH_SHORT).show();
+        }
 
     }
 

@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 moviesGridAdapter.setData(movies);
             }
         } else {
-            Toast.makeText(this, R.string.no_data_message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show();
         }
     }
 
