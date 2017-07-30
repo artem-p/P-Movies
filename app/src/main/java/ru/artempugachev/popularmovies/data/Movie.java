@@ -24,7 +24,7 @@ public class Movie implements Parcelable{
     @SerializedName("genre_ids")
     private List<Integer> genreIds = new ArrayList<Integer>();
     @SerializedName("id")
-    private Integer id;
+    private String id;
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("original_language")
@@ -44,7 +44,7 @@ public class Movie implements Parcelable{
 
     private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
 
-    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
+    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, String id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
                  Integer voteCount, Boolean video, Double voteAverage) {
         this.posterPath = posterPath;
@@ -82,11 +82,11 @@ public class Movie implements Parcelable{
         this.genreIds = genreIds;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -126,6 +126,7 @@ public class Movie implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(id);
         out.writeString(title);
         out.writeString(releaseDate);
         out.writeDouble(voteAverage);
@@ -146,6 +147,7 @@ public class Movie implements Parcelable{
     };
 
     private Movie (Parcel in) {
+        id = in.readString();
         title = in.readString();
         releaseDate = in.readString();
         voteAverage = in.readDouble();

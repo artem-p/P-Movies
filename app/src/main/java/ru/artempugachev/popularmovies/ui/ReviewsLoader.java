@@ -26,10 +26,12 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 public class ReviewsLoader extends Loader<List<Review>> {
     private int pageNumber;
     private List<Review> reviews;
+    private String movieId;
 
-    public ReviewsLoader(Context context, int pageNumber) {
+    public ReviewsLoader(Context context, int pageNumber, String movieId) {
         super(context);
         this.pageNumber = pageNumber;
+        this.movieId = movieId;
     }
 
     @Override
@@ -53,27 +55,31 @@ public class ReviewsLoader extends Loader<List<Review>> {
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
 
-        // todo we need id here. From bundle
-        Call<ReviewResponse> call = tmdbApiInterface.getReviews();
+        if (movieId != null) {
 
-        if (call != null) {
-            call.enqueue(new Callback<ReviewResponse>() {
-                @Override
-                public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
-                    if (response.isSuccessful()) {
-                        List<Review> reviews = response.body().getResults();
-                        deliverResult(reviews);
-                    } else {
+            Call<ReviewResponse> call = tmdbApiInterface.getReviews(movieId, BuildConfig.TMDB_API_KEY);
+
+            if (call != null) {
+                call.enqueue(new Callback<ReviewResponse>() {
+                    @Override
+                    public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                        if (response.isSuccessful()) {
+                            List<Review> reviews = response.body().getResults();
+                            deliverResult(reviews);
+                        } else {
+                            deliverResult(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReviewResponse> call, Throwable throwable) {
                         deliverResult(null);
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ReviewResponse> call, Throwable throwable) {
-                    deliverResult(null);
-                }
-
-            });
+                });
+            }
+        } else {
+            deliverResult(null);
         }
 
         super.onForceLoad();

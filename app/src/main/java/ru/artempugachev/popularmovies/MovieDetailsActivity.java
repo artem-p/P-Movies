@@ -33,6 +33,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
 
     private final static int REVIEWS_LOADER_ID = 4242;
     private final static String PAGE_NUMBER_KEY = "page_number";
+    private final static String MOVIE_ID_KEY = "movie_id";
 
 
     @Override
@@ -53,6 +54,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         }
 
         setData(movie);
+
+        Bundle reviewsLoaderBundle = new Bundle();
+        reviewsLoaderBundle.putInt(PAGE_NUMBER_KEY, 1);
+        if (movie != null) {
+           reviewsLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
+        }
+
+        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
+
     }
 
     private void setUpViews() {
@@ -90,10 +100,18 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         switch (id) {
             case REVIEWS_LOADER_ID:
                 int pageNumber = 1;
-                if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
-                    pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                String movieId = null;
+
+                if (args != null) {
+                    if (args.containsKey(PAGE_NUMBER_KEY)) {
+                        pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                    }
+
+                    if (args.containsKey(MOVIE_ID_KEY)) {
+                        movieId = args.getString(MOVIE_ID_KEY);
+                    }
                 }
-                return new ReviewsLoader(this, pageNumber);
+                return new ReviewsLoader(this, pageNumber, movieId);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }
