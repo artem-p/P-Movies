@@ -10,7 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.artempugachev.popularmovies.data.Movie;
-import ru.artempugachev.popularmovies.data.MoviesResponse;
+import ru.artempugachev.popularmovies.data.MovieResponse;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
@@ -66,13 +66,13 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     protected void onForceLoad() {
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
-        Call<MoviesResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
+        Call<MovieResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
 
         if (call != null) {
             moviesLoadListener.onStartLoadingMovies();
-            call.enqueue(new Callback<MoviesResponse>() {
+            call.enqueue(new Callback<MovieResponse>() {
                 @Override
-                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                     moviesLoadListener.onFinishLoadingMovies();
                     if (response.isSuccessful()) {
                         List<Movie> movies = response.body().getResults();
@@ -83,7 +83,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
                 }
 
                 @Override
-                public void onFailure(Call<MoviesResponse> call, Throwable throwable) {
+                public void onFailure(Call<MovieResponse> call, Throwable throwable) {
                     moviesLoadListener.onFinishLoadingMovies();
                     deliverResult(null);
                 }

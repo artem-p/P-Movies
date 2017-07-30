@@ -9,7 +9,7 @@ import java.util.List;
  * we don't want in Movie data object. See there: http://www.androidhive.info/2016/05/android-working-with-retrofit-http-library/
  */
 
-public class MoviesResponse {
+public class MovieResponse {
     @SerializedName("page")
     private int page;
     @SerializedName("results")

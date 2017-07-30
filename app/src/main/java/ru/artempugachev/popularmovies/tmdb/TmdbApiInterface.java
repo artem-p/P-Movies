@@ -1,12 +1,12 @@
 package ru.artempugachev.popularmovies.tmdb;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import ru.artempugachev.popularmovies.data.MoviesResponse;
+import ru.artempugachev.popularmovies.data.MovieResponse;
+import ru.artempugachev.popularmovies.data.ReviewResponse;
+import ru.artempugachev.popularmovies.data.VideoResponse;
 
 /**
  * Retrofit TMDB API Interface
@@ -14,6 +14,12 @@ import ru.artempugachev.popularmovies.data.MoviesResponse;
 
 public interface TmdbApiInterface {
     @GET("movie/{sort}")
-    Call<MoviesResponse> getMovies(@Path("sort") String sortOrder, @Query("api_key") String apiKey,
-                                   @Query("page") int pageNumber);
+    Call<MovieResponse> getMovies(@Path("sort") String sortOrder, @Query("api_key") String apiKey,
+                                  @Query("page") int pageNumber);
+
+    @GET("movie/{id}/videos")
+    Call<VideoResponse> getVideos(@Path("id") String id, @Query("api_key") String apiKey);
+
+    @GET("movie/{id}/reviews")
+    Call<ReviewResponse> getReviews(@Path("id") String id, @Query("api_key") String apiKey);
 }
