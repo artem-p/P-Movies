@@ -8,6 +8,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private RecyclerView mReviewsRecyclerView;
     private ReviewsAdapter mReviewsAdapter;
+    private TextView mNoReviewsTextView;
 
     private final static int REVIEWS_LOADER_ID = 4242;
     private final static String PAGE_NUMBER_KEY = "page_number";
@@ -62,7 +64,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
            reviewsLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
         }
 
-//        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
+        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
 
     }
 
@@ -77,6 +79,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         mReviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recycler);
         mReviewsAdapter = new ReviewsAdapter(this);
         mReviewsRecyclerView.setAdapter(mReviewsAdapter);
+        mNoReviewsTextView = (TextView) findViewById(R.id.no_reviews_text_view);
     }
 
     /**
@@ -88,7 +91,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         overviewTextView.setText(movie.getOverview());
         ratingTextView.setText(movie.getRating());
 
-        // todo there is no poster, at least on emulator
         Picasso.with(this).load(movie.getFullPosterPath()).into(posterImageView);
         Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
     }
@@ -121,17 +123,34 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<List<Review>> loader, List<Review> reviews) {
-        if (reviews != null && !reviews.isEmpty()) {
-            if (mReviewsAdapter.getItemCount() != 0) {
-                mReviewsAdapter.addData(reviews);
+        if (reviews != null) {
+            if (!reviews.isEmpty()) {
+                if (mReviewsAdapter.getItemCount() != 0) {
+                    mReviewsAdapter.addData(reviews);
+                } else {
+                    mReviewsAdapter.setData(reviews);
+                }
+                showReviewsRecyclerView();
             } else {
-                mReviewsAdapter.setData(reviews);
+                showNoReviewsText();
             }
-        } else {
+        }
+        else {
             Toast.makeText(this, R.string.no_reviews_data_message, Toast.LENGTH_SHORT).show();
         }
 
     }
+
+    private void showNoReviewsText() {
+        mNoReviewsTextView.setVisibility(View.VISIBLE);
+        mReviewsRecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showReviewsRecyclerView() {
+        mNoReviewsTextView.setVisibility(View.INVISIBLE);
+        mReviewsRecyclerView.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onLoaderReset(Loader<List<Review>> loader) {
