@@ -22,6 +22,7 @@ import ru.artempugachev.popularmovies.data.Movie;
 import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
 import ru.artempugachev.popularmovies.ui.ReviewsLoader;
+import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
 public class MovieDetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Review>> {
     private TextView titleTextView;
@@ -34,7 +35,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     private RecyclerView mReviewsRecyclerView;
     private ReviewsAdapter mReviewsAdapter;
     private TextView mNoReviewsTextView;
-    private LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager mReviewsLayoutManager;
+    private RecyclerView mTrailersRecyclerView;
+    private LinearLayoutManager mTrailersLayoutManager;
+    private TrailersAdapter mTrailersAdapter;
 
     private final static int REVIEWS_LOADER_ID = 4242;
     private final static String PAGE_NUMBER_KEY = "page_number";
@@ -78,12 +82,19 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         posterImageView = (ImageView) findViewById(R.id.details_poster);
         backdropImageView = (ImageView) findViewById(R.id.movie_backdrop);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+
         mReviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recycler);
         mReviewsAdapter = new ReviewsAdapter(this);
         mReviewsRecyclerView.setAdapter(mReviewsAdapter);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mReviewsRecyclerView.setLayoutManager(mLayoutManager);
+        mReviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviewsRecyclerView.setLayoutManager(mReviewsLayoutManager);
         mNoReviewsTextView = (TextView) findViewById(R.id.no_reviews_text_view);
+
+        mTrailersRecyclerView = (RecyclerView) findViewById(R.id.trailers_recycler_view);
+        mTrailersAdapter = new TrailersAdapter(this);
+        mTrailersRecyclerView.setAdapter(mTrailersAdapter);
+        mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mTrailersRecyclerView.setLayoutManager(mTrailersLayoutManager);
     }
 
     /**
