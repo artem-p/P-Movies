@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,6 +34,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     private RecyclerView mReviewsRecyclerView;
     private ReviewsAdapter mReviewsAdapter;
     private TextView mNoReviewsTextView;
+    private LinearLayoutManager mLayoutManager;
 
     private final static int REVIEWS_LOADER_ID = 4242;
     private final static String PAGE_NUMBER_KEY = "page_number";
@@ -79,6 +81,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         mReviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recycler);
         mReviewsAdapter = new ReviewsAdapter(this);
         mReviewsRecyclerView.setAdapter(mReviewsAdapter);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviewsRecyclerView.setLayoutManager(mLayoutManager);
         mNoReviewsTextView = (TextView) findViewById(R.id.no_reviews_text_view);
     }
 
