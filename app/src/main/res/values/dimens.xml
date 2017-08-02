@@ -5,4 +5,6 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="backdrop_min_height">192dp</dimen>
     <dimen name="normal_margin">16dp</dimen>
+    <dimen name="youtube_thumbnail_width">160dp</dimen>
+    <dimen name="youtube_thumbnail_height">90dp</dimen>
 </resources>
