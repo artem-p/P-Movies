@@ -16,7 +16,11 @@ public class Video {
     @SerializedName("type")
     private String type;
 
+    @SerializedName("key")
+    private String youtubeId;
+
     private final static String TRAILER_TAG = "Trailer";
+    private final String TRAILER_URL_FORMAT = "http://img.youtube.com/vi/%s/mqdefault.jpg";
 
 
     /**
@@ -28,5 +32,12 @@ public class Video {
 
     public String getName() {
         return name;
+    }
+
+    /**
+     * Get url for trailer thumbnail
+     * */
+    public String getThumbnailUrl() {
+        return String.format(TRAILER_URL_FORMAT, youtubeId);
     }
 }

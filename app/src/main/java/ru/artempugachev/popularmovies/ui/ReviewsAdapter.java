@@ -19,10 +19,8 @@ import ru.artempugachev.popularmovies.data.Review;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private List<Review> reviews;
-    private Context context;
 
-    public ReviewsAdapter(Context context) {
-        this.context = context;
+    public ReviewsAdapter() {
     }
 
     public void setData(List<Review> reviews) {
