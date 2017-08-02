@@ -20,11 +20,12 @@ import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
 import ru.artempugachev.popularmovies.data.Review;
+import ru.artempugachev.popularmovies.data.Video;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
 import ru.artempugachev.popularmovies.ui.ReviewsLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
-public class MovieDetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Review>> {
+public class MovieDetailsActivity extends AppCompatActivity {
     private TextView titleTextView;
     private TextView yearTextView;
     private TextView overviewTextView;
@@ -41,8 +42,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     private TrailersAdapter mTrailersAdapter;
 
     private final static int REVIEWS_LOADER_ID = 4242;
+    private final static int TRAILERS_LOADER_ID = 777;
     private final static String PAGE_NUMBER_KEY = "page_number";
     private final static String MOVIE_ID_KEY = "movie_id";
+    private LoaderManager.LoaderCallbacks<List<Review>> reviewLoader;
+    private LoaderManager.LoaderCallbacks<List<Video>> trailerLoader;
 
 
     @Override
@@ -64,13 +68,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
 
         setData(movie);
 
-        Bundle reviewsLoaderBundle = new Bundle();
-        reviewsLoaderBundle.putInt(PAGE_NUMBER_KEY, 1);
-        if (movie != null) {
-           reviewsLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
-        }
-
-        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, this);
+        initReviewLoader(movie);
+        initTrailerLoader(movie);
 
     }
 
@@ -84,7 +83,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
         mReviewsRecyclerView = (RecyclerView) findViewById(R.id.reviews_recycler);
-        mReviewsAdapter = new ReviewsAdapter(this);
+        mReviewsAdapter = new ReviewsAdapter();
         mReviewsRecyclerView.setAdapter(mReviewsAdapter);
         mReviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mReviewsRecyclerView.setLayoutManager(mReviewsLayoutManager);
@@ -110,50 +109,87 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
         Picasso.with(this).load(movie.getFullBackdropPath()).into(backdropImageView);
     }
 
+    private void initReviewLoader(Movie movie) {
+        reviewLoader = new LoaderManager.LoaderCallbacks<List<Review>>() {
+            @Override
+            public Loader<List<Review>> onCreateLoader(int id, Bundle args) {
+                switch (id) {
+                    case REVIEWS_LOADER_ID:
+                        int pageNumber = 1;
+                        String movieId = null;
 
-    /**
-     * Loader methods
-     * */
-    @Override
-    public Loader<List<Review>> onCreateLoader(int id, Bundle args) {
-        switch (id) {
-            case REVIEWS_LOADER_ID:
-                int pageNumber = 1;
-                String movieId = null;
+                        if (args != null) {
+                            if (args.containsKey(PAGE_NUMBER_KEY)) {
+                                pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                            }
 
-                if (args != null) {
-                    if (args.containsKey(PAGE_NUMBER_KEY)) {
-                        pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
-                    }
+                            if (args.containsKey(MOVIE_ID_KEY)) {
+                                movieId = args.getString(MOVIE_ID_KEY);
+                            }
+                        }
+                        return new ReviewsLoader(MovieDetailsActivity.this, pageNumber, movieId);
+                    default:
+                        throw new RuntimeException("Loader not implemented: " + id);
+                }
+            }
 
-                    if (args.containsKey(MOVIE_ID_KEY)) {
-                        movieId = args.getString(MOVIE_ID_KEY);
+            @Override
+            public void onLoadFinished(Loader<List<Review>> loader, List<Review> reviews) {
+                if (reviews != null) {
+                    if (!reviews.isEmpty()) {
+                        if (mReviewsAdapter.getItemCount() != 0) {
+                            mReviewsAdapter.addData(reviews);
+                        } else {
+                            mReviewsAdapter.setData(reviews);
+                        }
+                        showReviewsRecyclerView();
+                    } else {
+                        showNoReviewsText();
                     }
                 }
-                return new ReviewsLoader(this, pageNumber, movieId);
-            default:
-                throw new RuntimeException("Loader not implemented: " + id);
+                else {
+                    Toast.makeText(MovieDetailsActivity.this, R.string.no_reviews_data_message, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Review>> loader) {
+
+            }
+        };
+
+        Bundle reviewsLoaderBundle = new Bundle();
+        reviewsLoaderBundle.putInt(PAGE_NUMBER_KEY, 1);
+        if (movie != null) {
+            reviewsLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
         }
+
+        getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, reviewLoader);
     }
 
-    @Override
-    public void onLoadFinished(Loader<List<Review>> loader, List<Review> reviews) {
-        if (reviews != null) {
-            if (!reviews.isEmpty()) {
-                if (mReviewsAdapter.getItemCount() != 0) {
-                    mReviewsAdapter.addData(reviews);
-                } else {
-                    mReviewsAdapter.setData(reviews);
-                }
-                showReviewsRecyclerView();
-            } else {
-                showNoReviewsText();
+    private void initTrailerLoader(Movie movie) {
+        trailerLoader = new LoaderManager.LoaderCallbacks<List<Video>>() {
+            @Override
+            public Loader<List<Video>> onCreateLoader(int id, Bundle args) {
+                return null;
             }
-        }
-        else {
-            Toast.makeText(this, R.string.no_reviews_data_message, Toast.LENGTH_SHORT).show();
-        }
 
+            @Override
+            public void onLoadFinished(Loader<List<Video>> loader, List<Video> data) {
+
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Video>> loader) {
+
+            }
+        };
+
+        Bundle trailerLoaderBundle = new Bundle();
+        trailerLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
+
+        getSupportLoaderManager().initLoader(TRAILERS_LOADER_ID, trailerLoaderBundle, trailerLoader);
     }
 
     private void showNoReviewsText() {
@@ -164,11 +200,5 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     private void showReviewsRecyclerView() {
         mNoReviewsTextView.setVisibility(View.INVISIBLE);
         mReviewsRecyclerView.setVisibility(View.VISIBLE);
-    }
-
-
-    @Override
-    public void onLoaderReset(Loader<List<Review>> loader) {
-
     }
 }
