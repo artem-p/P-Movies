@@ -95,6 +95,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
     public void changeSortOrder(int posInDialog) {
+        this.pageNumber = 1;
         try {
             Resources resources = getContext().getResources();
             this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog];
