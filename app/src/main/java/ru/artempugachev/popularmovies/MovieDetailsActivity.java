@@ -23,6 +23,7 @@ import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.data.Video;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
 import ru.artempugachev.popularmovies.ui.ReviewsLoader;
+import ru.artempugachev.popularmovies.ui.TrailerLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -172,11 +173,36 @@ public class MovieDetailsActivity extends AppCompatActivity {
         trailerLoader = new LoaderManager.LoaderCallbacks<List<Video>>() {
             @Override
             public Loader<List<Video>> onCreateLoader(int id, Bundle args) {
-                return null;
+                switch (id) {
+                    case TRAILERS_LOADER_ID:
+                        String movieId = null;
+
+                        if (args != null) {
+                            if (args.containsKey(MOVIE_ID_KEY)) {
+                                movieId = args.getString(MOVIE_ID_KEY);
+                            }
+                        }
+
+                        return new TrailerLoader(MovieDetailsActivity.this, movieId);
+                    default:
+                        throw new RuntimeException("Loader not implemented: " + id);
+                }
             }
 
             @Override
-            public void onLoadFinished(Loader<List<Video>> loader, List<Video> data) {
+            public void onLoadFinished(Loader<List<Video>> loader, List<Video> trailers) {
+                if (trailers != null) {
+                    if (!trailers.isEmpty()) {
+                        if (mTrailersAdapter.getItemCount() != 0) {
+                            mTrailersAdapter.addData(trailers);
+                        } else {
+                            mTrailersAdapter.setData(trailers);
+                        }
+                    }
+                }
+                else {
+                    Toast.makeText(MovieDetailsActivity.this, R.string.no_trailers_data_message, Toast.LENGTH_SHORT).show();
+                }
 
             }
 
