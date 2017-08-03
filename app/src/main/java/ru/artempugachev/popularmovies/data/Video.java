@@ -20,7 +20,8 @@ public class Video {
     private String youtubeId;
 
     private final static String TRAILER_TAG = "Trailer";
-    private final String TRAILER_URL_FORMAT = "http://img.youtube.com/vi/%s/mqdefault.jpg";
+    private final String THUMBNAIL_URL_FORMAT = "http://img.youtube.com/vi/%s/mqdefault.jpg";
+    private final String TRAILER_URL_FORMAT = "https://www.youtube.com/watch?v=%s";
 
 
     /**
@@ -38,6 +39,10 @@ public class Video {
      * Get url for trailer thumbnail
      * */
     public String getThumbnailUrl() {
+        return String.format(THUMBNAIL_URL_FORMAT, youtubeId);
+    }
+
+    public String getVideoUrl() {
         return String.format(TRAILER_URL_FORMAT, youtubeId);
     }
 }

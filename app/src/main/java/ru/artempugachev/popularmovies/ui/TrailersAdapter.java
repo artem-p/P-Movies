@@ -21,9 +21,11 @@ import ru.artempugachev.popularmovies.data.Video;
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
     private List<Video> mTrailers;
     private Context mContext;
+    private TrailerClickListener mTrailerClickListener;
 
-    public TrailersAdapter(Context context) {
+    public TrailersAdapter(Context context, TrailerClickListener trailerClickListener) {
         this.mContext = context;
+        this.mTrailerClickListener = trailerClickListener;
     }
 
     public void setData(List<Video> trailers) {
@@ -67,15 +69,25 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         return mTrailers != null ? mTrailers.size() : 0;
     }
 
-    class TrailerViewHolder extends RecyclerView.ViewHolder {
+    class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView thumbnail;
 
         public TrailerViewHolder(View itemView) {
             super(itemView);
             thumbnail = (ImageView) itemView.findViewById(R.id.trailer_thumbnail);
+            itemView.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View v) {
+            Video trailer = mTrailers.get(getAdapterPosition());
+            String urlStr = trailer.getVideoUrl();
+            mTrailerClickListener.onTrailerClick(urlStr);
+        }
     }
 
+    public interface TrailerClickListener {
+        void onTrailerClick(String urlStr);
+    }
 }

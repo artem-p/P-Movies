@@ -1,6 +1,7 @@
 package ru.artempugachev.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
@@ -26,7 +27,7 @@ import ru.artempugachev.popularmovies.ui.ReviewsLoader;
 import ru.artempugachev.popularmovies.ui.TrailerLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener {
     private TextView titleTextView;
     private TextView yearTextView;
     private TextView overviewTextView;
@@ -91,7 +92,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mNoReviewsTextView = (TextView) findViewById(R.id.no_reviews_text_view);
 
         mTrailersRecyclerView = (RecyclerView) findViewById(R.id.trailers_recycler_view);
-        mTrailersAdapter = new TrailersAdapter(this);
+        mTrailersAdapter = new TrailersAdapter(this, this);
         mTrailersRecyclerView.setAdapter(mTrailersAdapter);
         mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mTrailersRecyclerView.setLayoutManager(mTrailersLayoutManager);
@@ -226,5 +227,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void showReviewsRecyclerView() {
         mNoReviewsTextView.setVisibility(View.INVISIBLE);
         mReviewsRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onTrailerClick(String urlStr) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr)));
     }
 }
