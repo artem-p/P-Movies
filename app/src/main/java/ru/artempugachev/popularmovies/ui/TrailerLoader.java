@@ -3,6 +3,7 @@ package ru.artempugachev.popularmovies.ui;
 import android.content.Context;
 import android.support.v4.content.Loader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -72,7 +73,14 @@ public class TrailerLoader extends Loader<List<Video>> {
                     public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
                         if (response.isSuccessful()) {
                             List<Video> videos = response.body().getResults();
-                            deliverResult(videos);
+
+                            // not every video is trailer, so filter them
+                            List<Video> trailers = new ArrayList<Video>();
+                            for (Video video : videos) {
+                                if (video.isTrailer()) trailers.add(video);
+                            }
+
+                            deliverResult(trailers);
                         } else {
                             deliverResult(null);
                         }
