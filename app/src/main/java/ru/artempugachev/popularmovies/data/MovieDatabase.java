@@ -7,7 +7,7 @@ import net.simonvt.schematic.annotation.Table;
  * Database description.
  */
 
-@Database(version = MovieDatabase.VERSION)
+@Database(version = MovieDatabase.VERSION, packageName = "ru.artempugachev.popularmovies.data.gen")
 public class MovieDatabase {
     public static final int VERSION = 1;
 

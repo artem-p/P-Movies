@@ -29,6 +29,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
+
+        <provider
+            android:authorities="ru.artempugachev.popularmovies"
+            android:name="ru.artempugachev.popularmovies.data.gen.MoviesProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>
