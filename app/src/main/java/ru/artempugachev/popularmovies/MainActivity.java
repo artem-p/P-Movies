@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
     EndlessRecyclerViewScrollListener scrollListener;
+
+    /**
+     * */
+    private List<String> favoritesId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mMovieGridRecyclerView.setAdapter(moviesGridAdapter);
 
         progressBar = (ProgressBar) findViewById(R.id.moviesGridProgressBar);
+
+        Button addToFavButton = (Button) findViewById(R.id.add_to_favorites);
+        addToFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
