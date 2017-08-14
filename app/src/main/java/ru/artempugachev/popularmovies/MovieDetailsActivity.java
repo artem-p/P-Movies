@@ -1,10 +1,12 @@
 package ru.artempugachev.popularmovies;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +30,8 @@ import ru.artempugachev.popularmovies.ui.ReviewsLoader;
 import ru.artempugachev.popularmovies.ui.TrailerLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
-public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener {
+public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener,
+        LoaderManager.LoaderCallbacks<Cursor> {
     private TextView titleTextView;
     private TextView yearTextView;
     private TextView overviewTextView;
@@ -46,12 +49,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
     private final static int REVIEWS_LOADER_ID = 4242;
     private final static int TRAILERS_LOADER_ID = 777;
+    private final static int IS_FAVORITE_LOADER_ID = 999;
     private final static String PAGE_NUMBER_KEY = "page_number";
     private final static String MOVIE_ID_KEY = "movie_id";
     private LoaderManager.LoaderCallbacks<List<Review>> reviewLoader;
     private LoaderManager.LoaderCallbacks<List<Video>> trailerLoader;
-
-    private List<String> favoritesId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,5 +244,20 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     @Override
     public void onTrailerClick(String urlStr) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr)));
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
