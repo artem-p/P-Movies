@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private LoaderManager.LoaderCallbacks<List<Review>> reviewLoader;
     private LoaderManager.LoaderCallbacks<List<Video>> trailerLoader;
 
+    private List<String> favoritesId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         mTrailersRecyclerView.setAdapter(mTrailersAdapter);
         mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mTrailersRecyclerView.setLayoutManager(mTrailersLayoutManager);
+
+        Button addToFavButton = (Button) findViewById(R.id.add_to_favorites);
+        addToFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**

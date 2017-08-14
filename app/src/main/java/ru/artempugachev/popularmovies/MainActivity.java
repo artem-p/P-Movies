@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ProgressBar progressBar;
     EndlessRecyclerViewScrollListener scrollListener;
 
-    /**
-     * */
-    private List<String> favoritesId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +81,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mMovieGridRecyclerView.setAdapter(moviesGridAdapter);
 
         progressBar = (ProgressBar) findViewById(R.id.moviesGridProgressBar);
-
-        Button addToFavButton = (Button) findViewById(R.id.add_to_favorites);
-        addToFavButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
 
