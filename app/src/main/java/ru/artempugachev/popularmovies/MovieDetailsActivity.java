@@ -56,6 +56,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private LoaderManager.LoaderCallbacks<List<Review>> reviewLoader;
     private LoaderManager.LoaderCallbacks<List<Video>> trailerLoader;
     private Movie mMovie;
+    private Button mAddToFavButton;
+    private Boolean mIsInFavorites;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +105,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         mTrailersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mTrailersRecyclerView.setLayoutManager(mTrailersLayoutManager);
 
-        Button addToFavButton = (Button) findViewById(R.id.add_to_favorites);
-        addToFavButton.setOnClickListener(new View.OnClickListener() {
+        mAddToFavButton = (Button) findViewById(R.id.add_to_favorites);
+        mAddToFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -249,6 +252,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+        /**
+         * This loader checks if current movie is in favorites
+         * Use it to set state of add to favorites button
+         * Try to load movie from db. If result is not empty, the movie is in favorites
+         * Otherwise it isn't.
+         * Set caption on add to favorites button respectively.
+         * */
         switch (loaderId) {
             case IS_FAVORITE_LOADER_ID:
                 Uri uri = MoviesProvider.Movies.withId(mMovie.getId());
@@ -261,8 +271,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+    public void onLoadFinished(Loader<Cursor> loader, Cursor movie) {
+        if (movie != null && movie.getCount() > 0) {
+            // Movie in favorites
+            mIsInFavorites = true;
+            mAddToFavButton.setText(R.string.remove_from_favorites);
+        } else {
+            mIsInFavorites = false;
+            mAddToFavButton.setText(R.string.add_to_favorites);
+        }
     }
 
     @Override
