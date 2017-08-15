@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.data.Video;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
@@ -54,6 +55,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     private final static String MOVIE_ID_KEY = "movie_id";
     private LoaderManager.LoaderCallbacks<List<Review>> reviewLoader;
     private LoaderManager.LoaderCallbacks<List<Video>> trailerLoader;
+    private Movie mMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +68,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
         setUpViews();
 
-        Movie movie = null;
         Intent intent = getIntent();
         if (intent != null) {
-            movie = intent.getParcelableExtra(MainActivity.MOVIE_EXTRA);
+            mMovie = intent.getParcelableExtra(MainActivity.MOVIE_EXTRA);
         }
 
-        setData(movie);
+        setData(mMovie);
 
-        initReviewLoader(movie);
-        initTrailerLoader(movie);
+        initReviewLoader(mMovie);
+        initTrailerLoader(mMovie);
 
     }
 
@@ -247,8 +248,16 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+        switch (loaderId) {
+            case IS_FAVORITE_LOADER_ID:
+                Uri uri = MoviesProvider.Movies.withId(mMovie.getId());
+                return new CursorLoader(this, uri, null, null, null, null);
+
+            default:
+                throw new RuntimeException("Loader not implemented: " + loaderId);
+        }
+
     }
 
     @Override

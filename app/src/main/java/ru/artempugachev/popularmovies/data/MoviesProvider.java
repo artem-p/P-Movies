@@ -36,7 +36,7 @@ public class MoviesProvider {
                 whereColumn = MovieContract.MovieEntry._ID,
                 pathSegment = 1)
 
-        public static Uri withId(long id) {
+        public static Uri withId(String id) {
             return Uri.parse("content://" + AUTHORITY + "/" + PATH_MOVIES + "/" + id);
         }
     }
