@@ -1,11 +1,13 @@
 package ru.artempugachev.popularmovies.data;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,6 +65,16 @@ public class Movie implements Parcelable{
         this.voteAverage = voteAverage;
     }
 
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+
+        cv.put(MovieContract.MovieEntry._ID, this.id);
+        cv.put(MovieContract.MovieEntry.TITLE, this.title);
+        cv.put(MovieContract.MovieEntry.RELEASE_DATE, this.releaseDate);
+        cv.put(MovieContract.MovieEntry.DATE_ADDED, Calendar.getInstance().getTimeInMillis());
+
+        return cv;
+    }
 
     public String getOverview() {
         return overview;

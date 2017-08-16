@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.data.Video;
@@ -109,7 +111,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         mAddToFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Uri moviesUri = MoviesProvider.Movies.MOVIES;
+                getContentResolver().insert(moviesUri, mMovie.toContentValues());
             }
         });
     }

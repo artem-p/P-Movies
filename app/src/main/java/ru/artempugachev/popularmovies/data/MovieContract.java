@@ -1,5 +1,8 @@
 package ru.artempugachev.popularmovies.data;
 
+import android.content.ContentValues;
+import android.net.Uri;
+
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
