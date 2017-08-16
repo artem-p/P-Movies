@@ -82,7 +82,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
         initReviewLoader(mMovie);
         initTrailerLoader(mMovie);
-
+        getSupportLoaderManager().initLoader(IS_FAVORITE_LOADER_ID, null, this);
     }
 
     private void setUpViews() {
