@@ -111,10 +111,25 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         mAddToFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri moviesUri = MoviesProvider.Movies.MOVIES;
-                getContentResolver().insert(moviesUri, mMovie.toContentValues());
+                // add to favorites or remove is movie already favorite
+                if (!mIsInFavorites) {
+                    addToFavorites();
+                } else {
+                    removeFromFavorites();
+                }
             }
         });
+    }
+
+
+    public void addToFavorites() {
+        Uri moviesUri = MoviesProvider.Movies.MOVIES;
+        getContentResolver().insert(moviesUri, mMovie.toContentValues());
+    }
+
+
+    private void removeFromFavorites() {
+        getContentResolver().delete(MoviesProvider.Movies.withId(mMovie.getId()), null, null);
     }
 
     /**
