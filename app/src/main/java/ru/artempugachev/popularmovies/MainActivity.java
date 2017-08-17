@@ -13,20 +13,20 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
 
 import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.TmdbMoviesLoader;
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener;
 import ru.artempugachev.popularmovies.ui.MoviesGridAdapter;
 import ru.artempugachev.popularmovies.ui.SortOrderDialog;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>,
         MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener,
-        MoviesGridLoader.MoviesLoadListener {
+        TmdbMoviesLoader.MoviesLoadListener {
 
     private final static int MOVIES_GRID_LOADER_ID = 42;
     public static final String MOVIE_EXTRA = "movie_extra";
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
                     pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
                 }
-                return new MoviesGridLoader(this, this, pageNumber);
+                return new TmdbMoviesLoader(this, this, pageNumber);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }
@@ -150,8 +150,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         scrollListener.resetState();
 
         Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
-        MoviesGridLoader moviesGridLoader = (MoviesGridLoader) loader;
-        moviesGridLoader.changeSortOrder(posInDialog);
+        TmdbMoviesLoader tmdbMoviesLoader = (TmdbMoviesLoader) loader;
+        tmdbMoviesLoader.changeSortOrder(posInDialog);
     }
 
     @Override
