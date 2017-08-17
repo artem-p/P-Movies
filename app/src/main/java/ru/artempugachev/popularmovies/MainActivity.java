@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ru.artempugachev.popularmovies.data.FavoritesLoader;
 import ru.artempugachev.popularmovies.data.Movie;
 import ru.artempugachev.popularmovies.data.TmdbMoviesLoader;
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener,
         TmdbMoviesLoader.MoviesLoadListener {
 
-    private final static int MOVIES_GRID_LOADER_ID = 42;
+    private final static int TMDB_MOVIES_LOADER_ID = 42;
+    private final static int FAVORITE_MOVIES_LOADER_ID = 4242;
     public static final String MOVIE_EXTRA = "movie_extra";
     private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
     private static final String PAGE_NUMBER_KEY = "page_number";
@@ -36,6 +38,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
     EndlessRecyclerViewScrollListener scrollListener;
+
+    private final static int SORT_ORDER_POS_POPULAR = 0;
+    private final static int SORT_ORDER_POS_TOP_RATED = 1;
+    private final static int SORT_ORDER_POS_FAVORITE = 2;
 
 
     @Override
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setSupportActionBar(toolbar);
         setUpViews();
 
-        getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER_ID, null, this);
     }
 
 
@@ -71,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Bundle loaderBundle = new Bundle();
                 loaderBundle.putInt(PAGE_NUMBER_KEY, page);
-                getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
+                getSupportLoaderManager().restartLoader(TMDB_MOVIES_LOADER_ID, loaderBundle, MainActivity.this);
             }
         };
 
@@ -101,12 +107,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         switch (id) {
-            case MOVIES_GRID_LOADER_ID:
+            case TMDB_MOVIES_LOADER_ID:
                 int pageNumber = 1;
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
                     pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
                 }
                 return new TmdbMoviesLoader(this, this, pageNumber);
+
+            case FAVORITE_MOVIES_LOADER_ID:
+                return new FavoritesLoader(this, this);
+
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }
@@ -121,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 moviesGridAdapter.setData(movies);
             }
         } else {
+            // todo separate message for tmdb and local loader
             Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show();
         }
     }
@@ -149,9 +160,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         moviesGridAdapter.notifyDataSetChanged();
         scrollListener.resetState();
 
-        Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
-        TmdbMoviesLoader tmdbMoviesLoader = (TmdbMoviesLoader) loader;
-        tmdbMoviesLoader.changeSortOrder(posInDialog);
+        if (posInDialog == SORT_ORDER_POS_FAVORITE) {
+            if (getSupportLoaderManager().getLoader(FAVORITE_MOVIES_LOADER_ID) == null) {
+                getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER_ID, null, this);
+            } else {
+                // loader already started, do nothing
+            }
+        } else {
+            if (getSupportLoaderManager().getLoader(FAVORITE_MOVIES_LOADER_ID) != null) {
+                getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER_ID);
+            }
+
+            Loader loader = getSupportLoaderManager().getLoader(TMDB_MOVIES_LOADER_ID);
+            TmdbMoviesLoader tmdbMoviesLoader = (TmdbMoviesLoader) loader;
+            tmdbMoviesLoader.changeSortOrder(posInDialog);
+        }
     }
 
     @Override

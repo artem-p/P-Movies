@@ -31,6 +31,7 @@ public class TmdbMoviesLoader extends MoviesLoader {
 
 
     private int pageNumber;
+    private String sortOrderId = "popular";
 
 
     @Override

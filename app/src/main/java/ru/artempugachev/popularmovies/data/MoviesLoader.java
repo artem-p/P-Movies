@@ -18,7 +18,6 @@ public abstract class MoviesLoader extends Loader<List<Movie>> {
     }
 
     protected List<Movie> movies;
-    protected String sortOrderId = "popular";
     protected MoviesLoadListener moviesLoadListener;
 
     public MoviesLoader(Context context) {
