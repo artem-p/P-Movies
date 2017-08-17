@@ -68,10 +68,9 @@ public class Movie implements Parcelable{
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
 
-        cv.put(MovieContract.MovieEntry._ID, this.id);
+        cv.put(MovieContract.MovieEntry.MOVIE_ID, this.id);
         cv.put(MovieContract.MovieEntry.TITLE, this.title);
         cv.put(MovieContract.MovieEntry.RELEASE_DATE, this.releaseDate);
-        cv.put(MovieContract.MovieEntry.DATE_ADDED, Calendar.getInstance().getTimeInMillis());
 
         return cv;
     }

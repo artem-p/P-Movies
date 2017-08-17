@@ -3,6 +3,7 @@ package ru.artempugachev.popularmovies.data;
 import android.content.ContentValues;
 import android.net.Uri;
 
+import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
@@ -18,6 +19,7 @@ public class MovieContract {
     public interface MovieEntry {
         @DataType(INTEGER)
         @PrimaryKey
+        @AutoIncrement
         String _ID = "_id";
 
         @DataType(TEXT)
@@ -28,8 +30,8 @@ public class MovieContract {
         @NotNull
         String RELEASE_DATE = "release_date";
 
-        @DataType(INTEGER)
+        @DataType(TEXT)
         @NotNull
-        String DATE_ADDED = "date_added";
+        String MOVIE_ID = "movie_id";
     }
 }

@@ -25,7 +25,7 @@ public class MoviesProvider {
         @ContentUri(
                 path = PATH_MOVIES,
                 type = TYPE_DIR,
-                defaultSort = MovieContract.MovieEntry.DATE_ADDED + " DESC")
+                defaultSort = MovieContract.MovieEntry._ID + " DESC")
         public static final Uri MOVIES = Uri.parse("content://" + AUTHORITY + "/" + PATH_MOVIES);
 
 
@@ -33,11 +33,11 @@ public class MoviesProvider {
                 path = PATH_MOVIES + "/#",
                 name = "MOVIE_ID",
                 type = TYPE_ITEM,
-                whereColumn = MovieContract.MovieEntry._ID,
+                whereColumn = MovieContract.MovieEntry.MOVIE_ID,
                 pathSegment = 1)
 
-        public static Uri withId(String id) {
-            return Uri.parse("content://" + AUTHORITY + "/" + PATH_MOVIES + "/" + id);
+        public static Uri withId(String movieId) {
+            return Uri.parse("content://" + AUTHORITY + "/" + PATH_MOVIES + "/" + movieId);
         }
     }
 }
