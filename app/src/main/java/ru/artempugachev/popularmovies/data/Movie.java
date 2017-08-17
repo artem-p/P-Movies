@@ -71,6 +71,10 @@ public class Movie implements Parcelable{
         cv.put(MovieContract.MovieEntry.MOVIE_ID, this.id);
         cv.put(MovieContract.MovieEntry.TITLE, this.title);
         cv.put(MovieContract.MovieEntry.RELEASE_DATE, this.releaseDate);
+        cv.put(MovieContract.MovieEntry.OVERVIEW, this.overview);
+        cv.put(MovieContract.MovieEntry.POSTER_PATH, this.posterPath);
+        cv.put(MovieContract.MovieEntry.BACKDROP_PATH, this.backdropPath);
+        cv.put(MovieContract.MovieEntry.VOTE_AVERAGE, this.voteAverage);
 
         return cv;
     }
