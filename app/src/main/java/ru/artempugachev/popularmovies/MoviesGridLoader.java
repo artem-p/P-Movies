@@ -2,15 +2,21 @@ package ru.artempugachev.popularmovies;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.v4.content.Loader;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.data.MovieResponse;
+import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
@@ -19,6 +25,8 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
  */
 
 public class MoviesGridLoader extends Loader<List<Movie>> {
+    private static final String TAG = MoviesGridLoader.class.getSimpleName();
+
     public interface MoviesLoadListener {
         void onStartLoadingMovies();
         void onFinishLoadingMovies();
@@ -66,7 +74,51 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
     private void loadFromLocalDb() {
+        moviesLoadListener.onStartLoadingMovies();
 
+        AsyncTask<Void, Void, List<Movie>> getFavoriteMoviesTask = new AsyncTask<Void, Void, List<Movie>>() {
+            @Override
+            protected List<Movie> doInBackground(Void... params) {
+                List<Movie> movies = new ArrayList<Movie>();
+
+                try {
+                    Cursor cursor = getContext().getContentResolver().query(MoviesProvider.Movies.MOVIES,
+                            null, null, null, MovieContract.MovieEntry._ID);
+
+                    if (cursor != null) {
+                        while (cursor.moveToNext()) {
+                            String tmbdId = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_ID));
+                            String title = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.TITLE));
+                            String overview = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.OVERVIEW));
+                            String posterPath = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.POSTER_PATH));
+                            String backdropPath = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.BACKDROP_PATH));
+
+
+//                            Movie movie = new Movie();
+                        }
+
+                        cursor.close();
+                    }
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Cannot get favorite movies from db");
+                }
+
+                return movies;
+            }
+
+            @Override
+            protected void onPostExecute(List<Movie> movies) {
+                moviesLoadListener.onFinishLoadingMovies();
+                super.onPostExecute(movies);
+            }
+
+            @Override
+            protected void onCancelled() {
+                moviesLoadListener.onFinishLoadingMovies();
+                super.onCancelled();
+            }
+        };
     }
 
 
