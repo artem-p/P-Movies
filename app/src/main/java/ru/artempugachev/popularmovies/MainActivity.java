@@ -71,10 +71,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Bundle loaderBundle = new Bundle();
-                loaderBundle.putInt(PAGE_NUMBER_KEY, page);
-                loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
-                getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
+                if (!sortOrderId.equals(getString(R.string.sort_order_id_favorites))) {
+                    Bundle loaderBundle = new Bundle();
+                    loaderBundle.putInt(PAGE_NUMBER_KEY, page);
+                    loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
+                    getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
+                } else {
+                    // do nothing, don't use endless scroll in favorites
+                }
             }
         };
 
