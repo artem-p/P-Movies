@@ -54,6 +54,23 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
 
     @Override
     protected void onForceLoad() {
+        if (this.sortOrderId.equals(getContext().getResources().getString(R.string.sort_order_id_favorites))) {
+            // Favorites
+            loadFromLocalDb();
+        } else {
+            // Popular or top rated
+            loadFromTmdb();
+        }
+
+        super.onForceLoad();
+    }
+
+    private void loadFromLocalDb() {
+
+    }
+
+
+    private void loadFromTmdb() {
         TmdbApiClient tmdbApiClient = new TmdbApiClient();
         TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
         Call<MovieResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
@@ -80,9 +97,8 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
 
             });
         }
-
-        super.onForceLoad();
     }
+
 
     public void changeSortOrder(int posInDialog) {
         this.pageNumber = 1;
