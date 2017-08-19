@@ -13,7 +13,6 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static final String MOVIE_EXTRA = "movie_extra";
     private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
     private static final String PAGE_NUMBER_KEY = "page_number";
+    private static final String SORT_ORDER_KEY = "sorting";
+    public static final String DEFAULT_SORT_ORDER_ID = "popular";
+    private String sortOrderId = DEFAULT_SORT_ORDER_ID;
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Bundle loaderBundle = new Bundle();
                 loaderBundle.putInt(PAGE_NUMBER_KEY, page);
+                loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
                 getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
             }
         };
@@ -103,10 +106,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (id) {
             case MOVIES_GRID_LOADER_ID:
                 int pageNumber = 1;
+                String sortOrder = getResources().getString(R.string.sort_order_id_popular);
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
                     pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
                 }
-                return new MoviesGridLoader(this, this, pageNumber);
+
+                if (args != null && args.containsKey(SORT_ORDER_KEY)) {
+                    sortOrder = args.getString(SORT_ORDER_KEY, getResources().getString(R.string.sort_order_id_popular));
+                }
+
+                return new MoviesGridLoader(this, this, pageNumber, sortOrder);
             default:
                 throw new RuntimeException("Loader not implemented: " + id);
         }
@@ -149,9 +158,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         moviesGridAdapter.notifyDataSetChanged();
         scrollListener.resetState();
 
+        this.sortOrderId = getResources().getStringArray(R.array.sort_orders_id)[posInDialog];
+
         Loader loader = getSupportLoaderManager().getLoader(MOVIES_GRID_LOADER_ID);
         MoviesGridLoader moviesGridLoader = (MoviesGridLoader) loader;
-        moviesGridLoader.changeSortOrder(posInDialog);
+        moviesGridLoader.changeSortOrder(this.sortOrderId);
     }
 
     @Override

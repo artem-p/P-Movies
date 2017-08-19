@@ -33,14 +33,15 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
 
-    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener, int pageNumber) {
+    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener, int pageNumber, String sortOrderId) {
         super(context);
         this.moviesLoadListener = moviesLoadListener;
         this.pageNumber = pageNumber;
+        this.sortOrderId = sortOrderId;
     }
 
     private List<Movie> movies;
-    private String sortOrderId = "popular";
+    private String sortOrderId = MainActivity.DEFAULT_SORT_ORDER_ID;
     private MoviesLoadListener moviesLoadListener;
     private int pageNumber;
 
@@ -70,13 +71,18 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
             loadFromTmdb();
         }
 
-        super.onForceLoad();
+//        super.onForceLoad();
     }
 
     private void loadFromLocalDb() {
-        moviesLoadListener.onStartLoadingMovies();
 
         AsyncTask<Void, Void, List<Movie>> getFavoriteMoviesTask = new AsyncTask<Void, Void, List<Movie>>() {
+            @Override
+            protected void onPreExecute() {
+                moviesLoadListener.onStartLoadingMovies();
+                super.onPreExecute();
+            }
+
             @Override
             protected List<Movie> doInBackground(Void... params) {
                 List<Movie> movies = new ArrayList<Movie>();
@@ -95,7 +101,9 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
                             String releaseDate = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.RELEASE_DATE));
                             Double voteAverage = cursor.getDouble(cursor.getColumnIndex(MovieContract.MovieEntry.VOTE_AVERAGE));
 
-//                            Movie movie = new Movie();
+                            Movie movie = new Movie(posterPath, overview, releaseDate, tmbdId, title, backdropPath, voteAverage);
+
+                            movies.add(movie);
                         }
 
                         cursor.close();
@@ -111,6 +119,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
             @Override
             protected void onPostExecute(List<Movie> movies) {
                 moviesLoadListener.onFinishLoadingMovies();
+                deliverResult(movies);
                 super.onPostExecute(movies);
             }
 
@@ -120,6 +129,8 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
                 super.onCancelled();
             }
         };
+
+        getFavoriteMoviesTask.execute();
     }
 
 
@@ -153,14 +164,14 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
 
-    public void changeSortOrder(int posInDialog) {
+    public void changeSortOrder(String sortOrderId) {
         this.pageNumber = 1;
         try {
             Resources resources = getContext().getResources();
-            this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog];
+            this.sortOrderId = sortOrderId;
             forceLoad();
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new RuntimeException("No id for sort order with position " + posInDialog);
+            throw new RuntimeException("No id for sort order with id " + sortOrderId);
         }
     }
 }
