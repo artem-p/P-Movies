@@ -17,51 +17,29 @@ import java.util.List;
 public class Movie implements Parcelable{
     @SerializedName("poster_path")
     private String posterPath;
-    @SerializedName("adult")
-    private boolean adult;
     @SerializedName("overview")
     private String overview;
     @SerializedName("release_date")
     private String releaseDate;
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<Integer>();
     @SerializedName("id")
     private String id;
-    @SerializedName("original_title")
-    private String originalTitle;
-    @SerializedName("original_language")
-    private String originalLanguage;
     @SerializedName("title")
     private String title;
     @SerializedName("backdrop_path")
     private String backdropPath;
-    @SerializedName("popularity")
-    private Double popularity;
-    @SerializedName("vote_count")
-    private Integer voteCount;
-    @SerializedName("video")
-    private Boolean video;
     @SerializedName("vote_average")
     private Double voteAverage;
 
     private final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
 
-    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, String id,
-                 String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
-                 Integer voteCount, Boolean video, Double voteAverage) {
+    public Movie(String posterPath, String overview, String releaseDate, String id,
+                 String title, String backdropPath,  Double voteAverage) {
         this.posterPath = posterPath;
-        this.adult = adult;
         this.overview = overview;
         this.releaseDate = releaseDate;
-        this.genreIds = genreIds;
         this.id = id;
-        this.originalTitle = originalTitle;
-        this.originalLanguage = originalLanguage;
         this.title = title;
         this.backdropPath = backdropPath;
-        this.popularity = popularity;
-        this.voteCount = voteCount;
-        this.video = video;
         this.voteAverage = voteAverage;
     }
 
@@ -89,14 +67,6 @@ public class Movie implements Parcelable{
     }
 
 
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
-    }
-
     public String getId() {
         return id;
     }
@@ -108,15 +78,6 @@ public class Movie implements Parcelable{
 
     public String getTitle() {
         return title;
-    }
-
-
-    public Boolean getVideo() {
-        return video;
-    }
-
-    public void setVideo(Boolean video) {
-        this.video = video;
     }
 
 

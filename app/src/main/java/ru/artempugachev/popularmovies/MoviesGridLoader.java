@@ -92,7 +92,8 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
                             String overview = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.OVERVIEW));
                             String posterPath = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.POSTER_PATH));
                             String backdropPath = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.BACKDROP_PATH));
-
+                            String releaseDate = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.RELEASE_DATE));
+                            Double voteAverage = cursor.getDouble(cursor.getColumnIndex(MovieContract.MovieEntry.VOTE_AVERAGE));
 
 //                            Movie movie = new Movie();
                         }
