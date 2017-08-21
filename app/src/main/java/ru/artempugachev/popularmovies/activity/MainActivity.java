@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies;
+package ru.artempugachev.popularmovies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ru.artempugachev.popularmovies.loader.MoviesGridLoader;
+import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.data.Movie;
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener;
 import ru.artempugachev.popularmovies.ui.MoviesGridAdapter;

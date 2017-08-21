@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.ui;
+package ru.artempugachev.popularmovies.loader;
 
 import android.content.Context;
 import android.support.v4.content.Loader;

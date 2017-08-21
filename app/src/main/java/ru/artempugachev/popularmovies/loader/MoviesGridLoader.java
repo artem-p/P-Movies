@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies;
+package ru.artempugachev.popularmovies.loader;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.artempugachev.popularmovies.BuildConfig;
+import ru.artempugachev.popularmovies.R;
+import ru.artempugachev.popularmovies.activity.MainActivity;
 import ru.artempugachev.popularmovies.data.Movie;
 import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.data.MovieResponse;

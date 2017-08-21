@@ -1,7 +1,6 @@
-package ru.artempugachev.popularmovies.ui;
+package ru.artempugachev.popularmovies.loader;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.content.Loader;
 
 import java.util.List;
@@ -10,10 +9,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.artempugachev.popularmovies.BuildConfig;
-import ru.artempugachev.popularmovies.MovieDetailsActivity;
-import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.data.Movie;
-import ru.artempugachev.popularmovies.data.MovieResponse;
 import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.data.ReviewResponse;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;

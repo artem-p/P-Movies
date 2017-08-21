@@ -1,6 +1,5 @@
-package ru.artempugachev.popularmovies;
+package ru.artempugachev.popularmovies.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,14 +22,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.data.Movie;
-import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.data.Review;
 import ru.artempugachev.popularmovies.data.Video;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
-import ru.artempugachev.popularmovies.ui.ReviewsLoader;
-import ru.artempugachev.popularmovies.ui.TrailerLoader;
+import ru.artempugachev.popularmovies.loader.ReviewsLoader;
+import ru.artempugachev.popularmovies.loader.TrailerLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
 public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener,
