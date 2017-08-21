@@ -16,7 +16,11 @@ import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
  * Contract for storing movies in db
  */
 
-public class MovieContract {
+public final class MovieContract {
+    private MovieContract() {
+
+    }
+
     public interface MovieEntry {
         @DataType(INTEGER)
         @PrimaryKey
