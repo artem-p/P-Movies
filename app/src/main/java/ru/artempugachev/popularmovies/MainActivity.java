@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
-    EndlessRecyclerViewScrollListener scrollListener;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
 
     @Override
