@@ -23,10 +23,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.model.Movie;
 import ru.artempugachev.popularmovies.data.MoviesProvider;
-import ru.artempugachev.popularmovies.data.Review;
-import ru.artempugachev.popularmovies.data.Video;
+import ru.artempugachev.popularmovies.model.Review;
+import ru.artempugachev.popularmovies.model.Video;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
 import ru.artempugachev.popularmovies.loader.ReviewsLoader;
 import ru.artempugachev.popularmovies.loader.TrailerLoader;

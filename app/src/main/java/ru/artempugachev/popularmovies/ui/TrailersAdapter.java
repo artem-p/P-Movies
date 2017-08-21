@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.data.Video;
+import ru.artempugachev.popularmovies.model.Video;
 
 /**
  * Adapter for trailers grid

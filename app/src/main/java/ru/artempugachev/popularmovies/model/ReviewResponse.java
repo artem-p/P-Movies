@@ -1,8 +1,10 @@
-package ru.artempugachev.popularmovies.data;
+package ru.artempugachev.popularmovies.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import ru.artempugachev.popularmovies.model.Review;
 
 /**
  * Data class for review response

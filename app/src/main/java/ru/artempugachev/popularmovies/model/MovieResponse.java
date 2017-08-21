@@ -1,8 +1,10 @@
-package ru.artempugachev.popularmovies.data;
+package ru.artempugachev.popularmovies.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import ru.artempugachev.popularmovies.model.Movie;
 
 /**
  * Data class for Movie json response. We need it as it have extra fields (like page number) that

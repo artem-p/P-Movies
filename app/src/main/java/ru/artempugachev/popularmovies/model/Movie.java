@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.data;
+package ru.artempugachev.popularmovies.model;
 
 import android.content.ContentValues;
 import android.os.Parcel;
@@ -6,9 +6,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import ru.artempugachev.popularmovies.data.MovieContract;
 
 /**
  * Object for store movie information. Corresponds to TMDB JSON.

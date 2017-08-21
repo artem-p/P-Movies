@@ -4,9 +4,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import ru.artempugachev.popularmovies.data.MovieResponse;
-import ru.artempugachev.popularmovies.data.ReviewResponse;
-import ru.artempugachev.popularmovies.data.VideoResponse;
+import ru.artempugachev.popularmovies.model.MovieResponse;
+import ru.artempugachev.popularmovies.model.ReviewResponse;
+import ru.artempugachev.popularmovies.model.VideoResponse;
 
 /**
  * Retrofit TMDB API Interface

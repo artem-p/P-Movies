@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.model.Movie;
 
 /**
  * Adapter for movies grid

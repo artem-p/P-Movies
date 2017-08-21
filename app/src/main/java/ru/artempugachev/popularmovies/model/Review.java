@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.data;
+package ru.artempugachev.popularmovies.model;
 
 import com.google.gson.annotations.SerializedName;
 

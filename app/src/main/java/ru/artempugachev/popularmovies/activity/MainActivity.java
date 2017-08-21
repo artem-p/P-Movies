@@ -20,7 +20,7 @@ import java.util.List;
 
 import ru.artempugachev.popularmovies.loader.MoviesGridLoader;
 import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.data.Movie;
+import ru.artempugachev.popularmovies.model.Movie;
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener;
 import ru.artempugachev.popularmovies.ui.MoviesGridAdapter;
 import ru.artempugachev.popularmovies.ui.SortOrderDialog;

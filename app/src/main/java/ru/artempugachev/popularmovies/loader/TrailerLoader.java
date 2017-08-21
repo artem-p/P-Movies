@@ -10,11 +10,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.artempugachev.popularmovies.BuildConfig;
-import ru.artempugachev.popularmovies.data.Movie;
-import ru.artempugachev.popularmovies.data.Review;
-import ru.artempugachev.popularmovies.data.ReviewResponse;
-import ru.artempugachev.popularmovies.data.Video;
-import ru.artempugachev.popularmovies.data.VideoResponse;
+import ru.artempugachev.popularmovies.model.Video;
+import ru.artempugachev.popularmovies.model.VideoResponse;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
