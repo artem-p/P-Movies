@@ -26,7 +26,7 @@ public final class MovieContract {
         public static final String VOTE_AVERAGE = "vote_average";
     }
 
-    public static final String CREATE_TABLE_SQL = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
+    public static final String SQL_CREATE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
             MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             MovieEntry.MOVIE_ID + TEXT_NOT_NULL +
             MovieEntry.TITLE + TEXT_NOT_NULL +
@@ -35,4 +35,7 @@ public final class MovieContract {
             MovieEntry.OVERVIEW + TEXT_NOT_NULL +
             MovieEntry.BACKDROP_PATH + TEXT_NOT_NULL +
             MovieEntry.VOTE_AVERAGE + " REAL NOT NULL" + ");";
+
+    public static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + MovieEntry.TABLE_NAME;
 }

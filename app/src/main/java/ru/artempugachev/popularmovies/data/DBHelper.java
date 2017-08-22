@@ -15,11 +15,12 @@ public final class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(MovieContract.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // don't really update db in this project, simple drop and recreate
+        db.execSQL(MovieContract.SQL_DELETE_ENTRIES);
     }
 }
