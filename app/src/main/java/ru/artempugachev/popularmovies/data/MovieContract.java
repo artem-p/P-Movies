@@ -42,6 +42,6 @@ public final class MovieContract {
 
     public static final String AUTHORITY = "ru.artempugachev.popularmovies";
     private static final Uri BASE_MOVIES_URI = Uri.parse("content://" + AUTHORITY);
-    private static final String PATH_MOVIES = "movies";
+    public static final String PATH_MOVIES = "movies";
     public static final Uri MOVIES_URI = BASE_MOVIES_URI.buildUpon().appendPath(PATH_MOVIES).build();
 }

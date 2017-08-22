@@ -2,6 +2,7 @@ package ru.artempugachev.popularmovies.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,7 +15,17 @@ import android.support.annotation.Nullable;
 
 public class MoviesProvider extends ContentProvider {
     private DBHelper mDbHelper;
+    public static final int MOVIES = 100;
+    public static final int MOVIE_WITH_ID = 101;
 
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
+
+    private static UriMatcher buildUriMatcher() {
+        UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(MovieContract.AUTHORITY, MovieContract.PATH_MOVIES, MOVIES);
+        uriMatcher.addURI(MovieContract.AUTHORITY, MovieContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
+        return uriMatcher;
+    }
 
     @Override
     public boolean onCreate() {
