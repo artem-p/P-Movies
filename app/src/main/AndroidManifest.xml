@@ -33,7 +33,7 @@
 
         <provider
             android:authorities="ru.artempugachev.popularmovies"
-            android:name="ru.artempugachev.popularmovies.data.gen.MoviesProvider"
+            android:name="ru.artempugachev.popularmovies.data.MoviesProvider"
             android:exported="false">
         </provider>
     </application>

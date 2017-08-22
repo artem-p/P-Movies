@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 
@@ -38,4 +39,9 @@ public final class MovieContract {
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MovieEntry.TABLE_NAME;
+
+    public static final String AUTHORITY = "ru.artempugachev.popularmovies";
+    private static final Uri BASE_MOVIES_URI = Uri.parse("content://" + AUTHORITY);
+    private static final String PATH_MOVIES = "movies";
+    public static final Uri MOVIES_URI = BASE_MOVIES_URI.buildUpon().appendPath(PATH_MOVIES).build();
 }
