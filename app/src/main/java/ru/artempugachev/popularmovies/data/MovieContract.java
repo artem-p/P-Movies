@@ -16,7 +16,7 @@ public final class MovieContract {
     private static final String TEXT_NOT_NULL = " TEXT NOT NULL, ";
 
     public static final class MovieEntry implements BaseColumns {
-        private static final String TABLE_NAME = "movies";
+        public static final String TABLE_NAME = "movies";
         public static final String _ID = "_id";
         public static final String TITLE = "title";
         public static final String RELEASE_DATE = "release_date";
