@@ -74,7 +74,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         setUpViews();
 
         Intent intent = getIntent();
-        if (intent != null) {
+        if (intent != null && intent.hasExtra(MainActivity.MOVIE_EXTRA)) {
             mMovie = intent.getParcelableExtra(MainActivity.MOVIE_EXTRA);
         }
 
