@@ -2,6 +2,7 @@ package ru.artempugachev.popularmovies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String PAGE_NUMBER_KEY = "page_number";
     private static final String SORT_ORDER_KEY = "sorting";
     public static final String DEFAULT_SORT_ORDER_ID = "popular";
+    public static final int DEFAULT_PAGE_NUMBER = 1;
     private String sortOrderId = DEFAULT_SORT_ORDER_ID;
+    private int pageNumber = DEFAULT_PAGE_NUMBER;
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
@@ -52,9 +55,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setSupportActionBar(toolbar);
         setUpViews();
 
-        getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, null, this);
+        Bundle loaderBundle = new Bundle();
+        if (savedInstanceState != null) {
+            pageNumber = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER);
+            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID);
+
+            loaderBundle.putInt(PAGE_NUMBER_KEY, pageNumber);
+            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
+        }
+        getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SORT_ORDER_KEY, sortOrderId);
+        outState.putInt(PAGE_NUMBER_KEY, pageNumber);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 if (!sortOrderId.equals(getString(R.string.sort_order_id_favorites))) {
+                    pageNumber = page;
                     Bundle loaderBundle = new Bundle();
                     loaderBundle.putInt(PAGE_NUMBER_KEY, page);
                     loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
@@ -118,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 int pageNumber = 1;
                 String sortOrder = getResources().getString(R.string.sort_order_id_popular);
                 if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
-                    pageNumber = args.getInt(PAGE_NUMBER_KEY, 1);
+                    pageNumber = args.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER);
                 }
 
                 if (args != null && args.containsKey(SORT_ORDER_KEY)) {
