@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
+import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.model.Movie;
 import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.model.Review;
@@ -122,13 +123,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
 
 
     public void addToFavorites() {
-        Uri moviesUri = MoviesProvider.Movies.MOVIES;
+        Uri moviesUri = MovieContract.MOVIES_URI;
         getContentResolver().insert(moviesUri, mMovie.toContentValues());
     }
 
 
     private void removeFromFavorites() {
-        getContentResolver().delete(MoviesProvider.Movies.withId(mMovie.getId()), null, null);
+        getContentResolver().delete(MovieContract.uriWithId(mMovie.getId()), null, null);
     }
 
     /**
@@ -278,7 +279,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
          * */
         switch (loaderId) {
             case IS_FAVORITE_LOADER_ID:
-                Uri uri = MoviesProvider.Movies.withId(mMovie.getId());
+                Uri uri = MovieContract.uriWithId(mMovie.getId());
                 return new CursorLoader(this, uri, null, null, null, null);
 
             default:

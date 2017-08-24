@@ -15,6 +15,10 @@ public final class MovieContract {
 
     private static final String TEXT_NOT_NULL = " TEXT NOT NULL, ";
 
+    public static Uri uriWithId(String id) {
+        return Uri.parse(MOVIES_URI + "/" + id);
+    }
+
     public static final class MovieEntry implements BaseColumns {
         public static final String TABLE_NAME = "movies";
         public static final String _ID = "_id";

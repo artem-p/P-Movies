@@ -91,7 +91,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
                 List<Movie> movies = new ArrayList<Movie>();
 
                 try {
-                    Cursor cursor = getContext().getContentResolver().query(MoviesProvider.Movies.MOVIES,
+                    Cursor cursor = getContext().getContentResolver().query(MovieContract.MOVIES_URI,
                             null, null, null, MovieContract.MovieEntry._ID);
 
                     if (cursor != null) {
