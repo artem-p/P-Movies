@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
+    private TextView noFavoritesTextView;
     private EndlessRecyclerViewScrollListener scrollListener;
 
 
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mMovieGridRecyclerView.setAdapter(moviesGridAdapter);
 
         progressBar = (ProgressBar) findViewById(R.id.moviesGridProgressBar);
+        noFavoritesTextView = (TextView) findViewById(R.id.no_favorites_text_view);
     }
 
 
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
+        noFavoritesTextView.setVisibility(View.INVISIBLE);
         switch (id) {
             case MOVIES_GRID_LOADER_ID:
                 int pageNumber = 1;
@@ -129,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movies) {
+
+
         if (movies != null && !movies.isEmpty()) {
             if (moviesGridAdapter.getItemCount() != 0) {
                 moviesGridAdapter.addData(movies);
@@ -136,13 +142,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 moviesGridAdapter.setData(movies);
             }
         } else {
-            Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show();
+            if (!this.sortOrderId.equals(getString(R.string.sort_order_id_favorites))) {
+                // popular, top rated. Just toast
+                Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show();
+            } else {
+                // favorites. Show message about no favorites
+                noFavoritesTextView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
+
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
+        noFavoritesTextView.setVisibility(View.INVISIBLE);
     }
+
 
     @Override
     public void onMovieClick(int position, View v) {
@@ -157,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             startActivity(movieDetailsActivityIntent, options.toBundle());
         }
     }
+
 
     @Override
     public void onSortOrderChange(int posInDialog) {
@@ -173,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onStartLoadingMovies() {
+        noFavoritesTextView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
 

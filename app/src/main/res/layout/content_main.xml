@@ -22,4 +22,15 @@
         android:layout_gravity="center"
         android:visibility="invisible"
         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_favorites_text_view"
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="@string/no_favorites_text"
+        android:visibility="invisible"
+        android:layout_margin="@dimen/normal_margin"
+        />
 </FrameLayout>
