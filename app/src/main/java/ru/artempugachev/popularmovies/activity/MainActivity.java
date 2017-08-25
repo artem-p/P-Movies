@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String SORT_ORDER_DIALOG_TAG = "sort_order_dialog";
     private static final String PAGE_NUMBER_KEY = "page_number";
     private static final String SORT_ORDER_KEY = "sorting";
+    private static final String MOVIES_LIST_KEY = "movies";
     public static final String DEFAULT_SORT_ORDER_ID = "popular";
     public static final int DEFAULT_PAGE_NUMBER = 1;
     private String sortOrderId = DEFAULT_SORT_ORDER_ID;
@@ -56,13 +57,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setUpViews();
 
         Bundle loaderBundle = new Bundle();
+
         if (savedInstanceState != null) {
             pageNumber = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER);
             sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID);
 
             loaderBundle.putInt(PAGE_NUMBER_KEY, pageNumber);
             loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
+
+            List<Movie> savedMovies = savedInstanceState.getParcelableArrayList(MOVIES_LIST_KEY);
+
+            if (savedMovies != null) {
+                moviesGridAdapter.setData(savedMovies);
+            }
         }
+
         getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this);
     }
 
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onSaveInstanceState(outState);
         outState.putString(SORT_ORDER_KEY, sortOrderId);
         outState.putInt(PAGE_NUMBER_KEY, pageNumber);
+        outState.putParcelableArrayList(MOVIES_LIST_KEY, moviesGridAdapter.getMovies());
     }
 
 

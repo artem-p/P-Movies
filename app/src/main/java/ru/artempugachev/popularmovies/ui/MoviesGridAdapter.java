@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
@@ -51,6 +52,12 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
             return null;
         }
     }
+
+
+    public ArrayList<Movie> getMovies() {
+        return new ArrayList<Movie>(movies);
+    }
+
 
     @Override
     public MoviePosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
