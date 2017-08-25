@@ -2,7 +2,6 @@ package ru.artempugachev.popularmovies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static final String DEFAULT_SORT_ORDER_ID = "popular";
     public static final int DEFAULT_PAGE_NUMBER = 1;
     private String sortOrderId = DEFAULT_SORT_ORDER_ID;
-    private int pageNumber = DEFAULT_PAGE_NUMBER;
+    private int currentPage = DEFAULT_PAGE_NUMBER;
 
     private MoviesGridAdapter moviesGridAdapter;
     private ProgressBar progressBar;
@@ -59,17 +58,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Bundle loaderBundle = new Bundle();
 
         if (savedInstanceState != null) {
-            pageNumber = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER);
+            currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER);
             sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID);
 
-            loaderBundle.putInt(PAGE_NUMBER_KEY, pageNumber);
+            loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage);
             loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
 
             List<Movie> savedMovies = savedInstanceState.getParcelableArrayList(MOVIES_LIST_KEY);
 
-            if (savedMovies != null) {
-                moviesGridAdapter.setData(savedMovies);
-            }
+            moviesGridAdapter.setData(null);
+            moviesGridAdapter.setData(savedMovies);
+            scrollListener.resetState();
         }
 
         getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this);
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SORT_ORDER_KEY, sortOrderId);
-        outState.putInt(PAGE_NUMBER_KEY, pageNumber);
+        outState.putInt(PAGE_NUMBER_KEY, currentPage);
         outState.putParcelableArrayList(MOVIES_LIST_KEY, moviesGridAdapter.getMovies());
     }
 
@@ -116,11 +115,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         scrollListener = new EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+            public void onLoadMore(int nextPage, int totalItemsCount, RecyclerView view) {
                 if (!sortOrderId.equals(getString(R.string.sort_order_id_favorites))) {
-                    pageNumber = page;
+
+                    // after rotation maybe problem with pagination.
+                    // if pages are the same, load next
+                    if (nextPage == currentPage) {
+                        nextPage++;
+                    }
+
+                    currentPage = nextPage;
                     Bundle loaderBundle = new Bundle();
-                    loaderBundle.putInt(PAGE_NUMBER_KEY, page);
+                    loaderBundle.putInt(PAGE_NUMBER_KEY, nextPage);
                     loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
                     getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, MainActivity.this);
                 } else {

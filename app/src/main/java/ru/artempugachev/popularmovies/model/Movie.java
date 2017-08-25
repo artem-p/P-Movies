@@ -41,6 +41,18 @@ public class Movie implements Parcelable{
         this.voteAverage = voteAverage;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(id);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this.getClass() != other.getClass()) return false;
+        boolean equals = this.id.equals(((Movie) other).getId());
+        return equals;
+    }
+
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
@@ -38,10 +39,14 @@ public class MoviesGridAdapter extends RecyclerView.Adapter<MoviesGridAdapter.Mo
     public void addData(List<Movie> newMovies) {
         if (!newMovies.isEmpty()) {
             int currentSize = movies.size();
-            int newMoviesSize = newMovies.size();
 
-            movies.addAll(newMovies);
-            notifyItemRangeInserted(currentSize, newMoviesSize);
+            LinkedHashSet<Movie> moviesSet = new LinkedHashSet<Movie>(movies);
+
+            moviesSet.addAll(newMovies);
+            int addedSize = moviesSet.size();
+            movies = new ArrayList<Movie>(moviesSet);
+
+            notifyItemRangeInserted(currentSize, addedSize);
         }
     }
 
