@@ -66,12 +66,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this);
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SORT_ORDER_KEY, sortOrderId);
         outState.putInt(PAGE_NUMBER_KEY, pageNumber);
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // if sort order is favorite, restart loader to maintain possible changes in favorites
+        if (sortOrderId.equals(getString(R.string.sort_order_id_favorites))) {
+            moviesGridAdapter.setData(null);
+            Bundle loaderBundle = new Bundle();
+            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId);
+            getSupportLoaderManager().restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
