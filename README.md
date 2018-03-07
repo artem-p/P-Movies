@@ -2,7 +2,7 @@ Popular Movies
 ==============
 Most of us can relate to kicking back on the couch and enjoying a movie with friends and family.
 
-![screenshots](https://raw.githubusercontent.com/artem-p/PopularMovies/master/images/popular%20movies_small.png)
+![screenshots](https://raw.githubusercontent.com/artem-p/PopularMovies/master/images/popular_movies_small.png)
 
 Features
 --------
