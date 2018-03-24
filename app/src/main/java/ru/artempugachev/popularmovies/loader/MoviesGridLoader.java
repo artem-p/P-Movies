@@ -44,7 +44,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
     private List<Movie> movies;
-    private String sortOrderId = MainActivity.DEFAULT_SORT_ORDER_ID;
+    private String sortOrderId = MainActivity.Companion.getDEFAULT_SORT_ORDER_ID();
     private MoviesLoadListener moviesLoadListener;
     private int pageNumber;
 

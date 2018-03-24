@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 def TMDB_API_KEY = '"' + TMDB_API_KEY_PROP + '"' ?: '"Define TMDB api key"';
 
@@ -42,4 +44,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
     implementation 'com.facebook.stetho:stetho:1.5.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
