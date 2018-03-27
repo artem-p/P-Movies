@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies.tmdb;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -18,7 +19,7 @@ public interface TmdbApiInterface {
                                   @Query("page") int pageNumber);
 
     @GET("movie/{id}/videos")
-    Call<VideoResponse> getVideos(@Path("id") String id, @Query("api_key") String apiKey);
+    Observable<VideoResponse> getVideos(@Path("id") String id, @Query("api_key") String apiKey);
 
     @GET("movie/{id}/reviews")
     Call<ReviewResponse> getReviews(@Path("id") String id, @Query("api_key") String apiKey);
