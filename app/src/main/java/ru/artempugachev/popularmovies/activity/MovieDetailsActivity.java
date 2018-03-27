@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,16 +23,22 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import ru.artempugachev.popularmovies.BuildConfig;
 import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.model.Movie;
-import ru.artempugachev.popularmovies.data.MoviesProvider;
 import ru.artempugachev.popularmovies.model.Review;
 import ru.artempugachev.popularmovies.model.Video;
+import ru.artempugachev.popularmovies.model.VideoResponse;
+import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
+import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
 import ru.artempugachev.popularmovies.loader.ReviewsLoader;
-import ru.artempugachev.popularmovies.loader.TrailerLoader;
 import ru.artempugachev.popularmovies.ui.TrailersAdapter;
+
 
 public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -81,7 +88,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         setData(mMovie);
 
         initReviewLoader(mMovie);
-        initTrailerLoader(mMovie);
+        loadTrailers(mMovie);
         getSupportLoaderManager().initLoader(IS_FAVORITE_LOADER_ID, null, this);
     }
 
@@ -204,53 +211,66 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, reviewsLoaderBundle, reviewLoader);
     }
 
-    private void initTrailerLoader(Movie movie) {
-        trailerLoader = new LoaderManager.LoaderCallbacks<List<Video>>() {
-            @Override
-            public Loader<List<Video>> onCreateLoader(int id, Bundle args) {
-                switch (id) {
-                    case TRAILERS_LOADER_ID:
-                        String movieId = null;
+    private void loadTrailers(Movie movie) {
+        TmdbApiClient tmdbApiClient = new TmdbApiClient();
+        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
 
-                        if (args != null) {
-                            if (args.containsKey(MOVIE_ID_KEY)) {
-                                movieId = args.getString(MOVIE_ID_KEY);
-                            }
-                        }
+        if (movie.getId() != null) {
+            Observable<VideoResponse> trailers = tmdbApiInterface.getVideos(movie.getId(), BuildConfig.TMDB_API_KEY);
 
-                        return new TrailerLoader(MovieDetailsActivity.this, movieId);
-                    default:
-                        throw new RuntimeException("Loader not implemented: " + id);
-                }
-            }
+            trailers.subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(trailerResponse -> {
+                        Log.e("Trailers", trailerResponse.getResults().get(0).getName());
+                    });
+        }
 
-            @Override
-            public void onLoadFinished(Loader<List<Video>> loader, List<Video> trailers) {
-                if (trailers != null) {
-                    if (!trailers.isEmpty()) {
-                        if (mTrailersAdapter.getItemCount() != 0) {
-                            mTrailersAdapter.addData(trailers);
-                        } else {
-                            mTrailersAdapter.setData(trailers);
-                        }
-                    }
-                }
-                else {
-                    Toast.makeText(MovieDetailsActivity.this, R.string.no_trailers_data_message, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onLoaderReset(Loader<List<Video>> loader) {
-
-            }
-        };
-
-        Bundle trailerLoaderBundle = new Bundle();
-        trailerLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
-
-        getSupportLoaderManager().initLoader(TRAILERS_LOADER_ID, trailerLoaderBundle, trailerLoader);
+//        trailerLoader = new LoaderManager.LoaderCallbacks<List<Video>>() {
+//            @Override
+//            public Loader<List<Video>> onCreateLoader(int id, Bundle args) {
+//                switch (id) {
+//                    case TRAILERS_LOADER_ID:
+//                        String movieId = null;
+//
+//                        if (args != null) {
+//                            if (args.containsKey(MOVIE_ID_KEY)) {
+//                                movieId = args.getString(MOVIE_ID_KEY);
+//                            }
+//                        }
+//
+//                        return new TrailerLoader(MovieDetailsActivity.this, movieId);
+//                    default:
+//                        throw new RuntimeException("Loader not implemented: " + id);
+//                }
+//            }
+//
+//            @Override
+//            public void onLoadFinished(Loader<List<Video>> loader, List<Video> trailers) {
+//                if (trailers != null) {
+//                    if (!trailers.isEmpty()) {
+//                        if (mTrailersAdapter.getItemCount() != 0) {
+//                            mTrailersAdapter.addData(trailers);
+//                        } else {
+//                            mTrailersAdapter.setData(trailers);
+//                        }
+//                    }
+//                }
+//                else {
+//                    Toast.makeText(MovieDetailsActivity.this, R.string.no_trailers_data_message, Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onLoaderReset(Loader<List<Video>> loader) {
+//
+//            }
+//        };
+//
+//        Bundle trailerLoaderBundle = new Bundle();
+//        trailerLoaderBundle.putString(MOVIE_ID_KEY, movie.getId());
+//
+//        getSupportLoaderManager().initLoader(TRAILERS_LOADER_ID, trailerLoaderBundle, trailerLoader);
     }
 
     private void showNoReviewsText() {
