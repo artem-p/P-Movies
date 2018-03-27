@@ -62,34 +62,34 @@ public class TrailerLoader extends Loader<List<Video>> {
 
         if (movieId != null) {
 
-            Call<VideoResponse> call = tmdbApiInterface.getVideos(movieId, BuildConfig.TMDB_API_KEY);
-
-            if (call != null) {
-                call.enqueue(new Callback<VideoResponse>() {
-                    @Override
-                    public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
-                        if (response.isSuccessful()) {
-                            List<Video> videos = response.body().getResults();
-
-                            // not every video is trailer, so filter them
-                            List<Video> trailers = new ArrayList<Video>();
-                            for (Video video : videos) {
-                                if (video.isTrailer()) trailers.add(video);
-                            }
-
-                            deliverResult(trailers);
-                        } else {
-                            deliverResult(null);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<VideoResponse> call, Throwable throwable) {
-                        deliverResult(null);
-                    }
-
-                });
-            }
+//            Call<VideoResponse> call = tmdbApiInterface.getVideos(movieId, BuildConfig.TMDB_API_KEY);
+//
+//            if (call != null) {
+//                call.enqueue(new Callback<VideoResponse>() {
+//                    @Override
+//                    public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            List<Video> videos = response.body().getResults();
+//
+//                            // not every video is trailer, so filter them
+//                            List<Video> trailers = new ArrayList<Video>();
+//                            for (Video video : videos) {
+//                                if (video.isTrailer()) trailers.add(video);
+//                            }
+//
+//                            deliverResult(trailers);
+//                        } else {
+//                            deliverResult(null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<VideoResponse> call, Throwable throwable) {
+//                        deliverResult(null);
+//                    }
+//
+//                });
+//            }
         } else {
             deliverResult(null);
         }
