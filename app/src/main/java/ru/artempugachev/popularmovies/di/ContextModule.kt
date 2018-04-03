@@ -8,8 +8,7 @@ import dagger.Provides
  * Provides context
  * */
 @Module
-class ContextModule(context: Context) {
-    private lateinit var context: Context
+class ContextModule(val context: Context) {
 
     @Provides
     fun context(): Context {

@@ -17,9 +17,13 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.squareup.picasso.Picasso
 
 import ru.artempugachev.popularmovies.loader.MoviesGridLoader
 import ru.artempugachev.popularmovies.R
+import ru.artempugachev.popularmovies.di.ContextModule
+import ru.artempugachev.popularmovies.di.DaggerMovieComponent
+import ru.artempugachev.popularmovies.di.MovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener
 import ru.artempugachev.popularmovies.ui.MoviesGridAdapter
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
     private var noFavoritesTextView: TextView? = null
     private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
+    private lateinit var picasso: Picasso
 
     /**
      * Calculate number of columns in grid based on device width
@@ -57,6 +62,14 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+
+        val movieComponent = DaggerMovieComponent.builder()
+                .contextModule(ContextModule(this))
+                .build()
+
+        picasso = movieComponent.getPicasso()
+
         setUpViews()
 
         val loaderBundle = Bundle()
@@ -139,7 +152,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
         mMovieGridRecyclerView.addOnScrollListener(scrollListener)
 
-        moviesGridAdapter = MoviesGridAdapter(this, this)
+        moviesGridAdapter = MoviesGridAdapter(this, this, picasso)
         mMovieGridRecyclerView.adapter = moviesGridAdapter
 
         progressBar = findViewById<View>(R.id.moviesGridProgressBar) as ProgressBar

@@ -13,13 +13,15 @@ import java.util.ArrayList
 import java.util.LinkedHashSet
 
 import ru.artempugachev.popularmovies.R
+import ru.artempugachev.popularmovies.di.MovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 
 /**
  * Adapter for movies grid
  */
 
-class MoviesGridAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener) : RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder>() {
+class MoviesGridAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
+                            private val picasso: Picasso) : RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder>() {
 
     private lateinit var movies: List<Movie>
 
@@ -69,7 +71,8 @@ class MoviesGridAdapter(private val context: Context, private val moviesClickLis
     override fun onBindViewHolder(holder: MoviePosterViewHolder, position: Int) {
         if (!this.movies.isEmpty()) {
             val imageUrl = movies[position].fullPosterPath
-            Picasso.with(context).load(imageUrl).into(holder.movieImageView)
+
+            picasso.load(imageUrl).into(holder.movieImageView)
         }
     }
 
