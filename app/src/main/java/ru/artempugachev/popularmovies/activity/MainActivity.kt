@@ -40,56 +40,17 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
     private lateinit var picasso: Picasso
 
-    /**
-     * Calculate number of columns in grid based on device width
-     */
-    private val numberOfColumnsInGrid: Int
-        get() {
-
-            val SCALING_FACTOR = 180
-
-            val displayMetrics = resources.displayMetrics
-            val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-
-            val numberOfColumns = (dpWidth / SCALING_FACTOR).toInt()
-
-            return (dpWidth / SCALING_FACTOR).toInt()
-        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
 
-
-        val movieComponent = DaggerMovieComponent.builder()
-                .contextModule(ContextModule(this))
-                .build()
-
-        picasso = movieComponent.getPicasso()
+        setUpComponents()
 
         setUpViews()
 
-        val loaderBundle = Bundle()
-
-        moviesGridAdapter!!.setData(ArrayList())
-
-        if (savedInstanceState != null) {
-            currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
-            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID)
-
-            loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage)
-            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-
-            val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
-
-            moviesGridAdapter!!.setData(savedMovies)
-            scrollListener!!.resetState()
-        }
-
-        supportLoaderManager.initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
+        setUpLoader(savedInstanceState)
     }
 
 
@@ -121,9 +82,29 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
 
     private fun setUpViews() {
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+
+        setUpRecycler()
+
+        progressBar = findViewById<View>(R.id.moviesGridProgressBar) as ProgressBar
+        noFavoritesTextView = findViewById<View>(R.id.no_favorites_text_view) as TextView
+    }
+
+
+    private fun setUpComponents() {
+        val movieComponent = DaggerMovieComponent.builder()
+                .contextModule(ContextModule(this))
+                .build()
+
+        picasso = movieComponent.getPicasso()
+    }
+
+
+    private fun setUpRecycler() {
         val mMovieGridRecyclerView = findViewById<View>(R.id.rv_movies_grid) as RecyclerView
 
-        val moviesLayoutManager = GridLayoutManager(this, numberOfColumnsInGrid)
+        val moviesLayoutManager = GridLayoutManager(this, getNumberOfColumnsInGrid())
         mMovieGridRecyclerView.layoutManager = moviesLayoutManager
 
         mMovieGridRecyclerView.setHasFixedSize(true)
@@ -155,8 +136,28 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
         moviesGridAdapter = MoviesGridAdapter(this, this, picasso)
         mMovieGridRecyclerView.adapter = moviesGridAdapter
 
-        progressBar = findViewById<View>(R.id.moviesGridProgressBar) as ProgressBar
-        noFavoritesTextView = findViewById<View>(R.id.no_favorites_text_view) as TextView
+    }
+
+
+    private fun setUpLoader(savedInstanceState: Bundle?) {
+        val loaderBundle = Bundle()
+
+        moviesGridAdapter!!.setData(ArrayList())
+
+        if (savedInstanceState != null) {
+            currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
+            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID)
+
+            loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage)
+            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
+
+            val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
+
+            moviesGridAdapter!!.setData(savedMovies)
+            scrollListener!!.resetState()
+        }
+
+        supportLoaderManager.initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
     }
 
 
@@ -173,6 +174,22 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
         return super.onOptionsItemSelected(item)
     }
+
+    /**
+     * Calculate number of columns in grid based on device width
+     */
+    private fun getNumberOfColumnsInGrid(): Int {
+
+        val SCALING_FACTOR = 180
+
+        val displayMetrics = resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+
+        val numberOfColumns = (dpWidth / SCALING_FACTOR).toInt()
+
+        return (dpWidth / SCALING_FACTOR).toInt()
+    }
+
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<Movie>> {
         noFavoritesTextView!!.visibility = View.INVISIBLE
