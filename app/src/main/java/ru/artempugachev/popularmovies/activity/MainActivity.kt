@@ -2,6 +2,7 @@ package ru.artempugachev.popularmovies.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
@@ -60,6 +61,8 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
         val loaderBundle = Bundle()
 
+        moviesGridAdapter!!.setData(ArrayList())
+
         if (savedInstanceState != null) {
             currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
             sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID)
@@ -69,7 +72,6 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
             val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
 
-            moviesGridAdapter!!.setData(null)
             moviesGridAdapter!!.setData(savedMovies)
             scrollListener!!.resetState()
         }
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
         super.onSaveInstanceState(outState)
         outState!!.putString(SORT_ORDER_KEY, sortOrderId)
         outState.putInt(PAGE_NUMBER_KEY, currentPage)
-        outState.putParcelableArrayList(MOVIES_LIST_KEY, moviesGridAdapter!!.movies)
+        outState.putParcelableArrayList(MOVIES_LIST_KEY, moviesGridAdapter!!.getMovies())
     }
 
 
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
         super.onResume()
         // if sort order is favorite, restart loader to maintain possible changes in favorites
         if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
-            moviesGridAdapter!!.setData(null)
+            moviesGridAdapter!!.setData(ArrayList())
             val loaderBundle = Bundle()
             loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
             supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
@@ -220,7 +222,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
 
 
     override fun onSortOrderChange(posInDialog: Int) {
-        moviesGridAdapter!!.setData(null)
+        moviesGridAdapter!!.setData(ArrayList())
         moviesGridAdapter!!.notifyDataSetChanged()
         scrollListener!!.resetState()
 
