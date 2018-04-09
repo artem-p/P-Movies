@@ -6,6 +6,7 @@ import dagger.Component
 /**
  * Provides dependencies for loading movies
  * */
+@AppScope
 @Component(modules=[PicassoModule::class])
 interface MovieComponent {
     fun getPicasso(): Picasso

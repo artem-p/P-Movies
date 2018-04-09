@@ -10,6 +10,7 @@ import dagger.Provides
  * */
 @Module(includes = [(ContextModule::class)])
 class PicassoModule {
+    @AppScope
     @Provides
     fun picasso(context: Context): Picasso {
         return Picasso.Builder(context)
