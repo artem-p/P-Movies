@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.movies
+package ru.artempugachev.popularmovies.movielist
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.movies;
+package ru.artempugachev.popularmovies.movielist;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

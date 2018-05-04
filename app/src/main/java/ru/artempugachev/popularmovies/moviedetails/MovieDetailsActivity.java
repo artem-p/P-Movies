@@ -33,7 +33,7 @@ import ru.artempugachev.popularmovies.model.Movie;
 import ru.artempugachev.popularmovies.model.Review;
 import ru.artempugachev.popularmovies.model.Video;
 import ru.artempugachev.popularmovies.model.VideoResponse;
-import ru.artempugachev.popularmovies.movies.MainActivity;
+import ru.artempugachev.popularmovies.movielist.MainActivity;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 

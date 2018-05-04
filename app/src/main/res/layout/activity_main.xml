@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.artempugachev.popularmovies.movies.MainActivity">
+    tools:context="ru.artempugachev.popularmovies.movielist.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main_activity_app_bar_layout"

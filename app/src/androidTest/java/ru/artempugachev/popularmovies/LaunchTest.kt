@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Rule
-import ru.artempugachev.popularmovies.movies.MainActivity
+import ru.artempugachev.popularmovies.movielist.MainActivity
 
 /**
  * Launch app and check if views appear
