@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.ui;
+package ru.artempugachev.popularmovies.moviedetails;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

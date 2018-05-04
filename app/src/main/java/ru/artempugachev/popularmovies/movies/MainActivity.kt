@@ -17,15 +17,11 @@ import android.widget.TextView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 
-import ru.artempugachev.popularmovies.loader.MoviesGridLoader
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
 import ru.artempugachev.popularmovies.di.ContextModule
 import ru.artempugachev.popularmovies.di.DaggerMovieComponent
 import ru.artempugachev.popularmovies.model.Movie
-import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener
-import ru.artempugachev.popularmovies.ui.MoviesGridAdapter
-import ru.artempugachev.popularmovies.ui.SortOrderDialog
 
 class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Movie>>, MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener, MoviesGridLoader.MoviesLoadListener {
     private var sortOrderId = DEFAULT_SORT_ORDER_ID

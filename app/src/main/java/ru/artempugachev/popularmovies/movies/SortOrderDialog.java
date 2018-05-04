@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.ui;
+package ru.artempugachev.popularmovies.movies;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

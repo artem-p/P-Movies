@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.ui
+package ru.artempugachev.popularmovies.movies
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -13,7 +13,6 @@ import java.util.ArrayList
 import java.util.LinkedHashSet
 
 import ru.artempugachev.popularmovies.R
-import ru.artempugachev.popularmovies.di.MovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 
 /**
@@ -21,7 +20,7 @@ import ru.artempugachev.popularmovies.model.Movie
  */
 
 class MoviesGridAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
-                            private val picasso: Picasso) : RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder>() {
+                        private val picasso: Picasso) : RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder>() {
 
     private lateinit var movies: List<Movie>
 

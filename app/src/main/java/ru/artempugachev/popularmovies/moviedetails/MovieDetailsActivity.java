@@ -36,9 +36,6 @@ import ru.artempugachev.popularmovies.model.VideoResponse;
 import ru.artempugachev.popularmovies.movies.MainActivity;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
-import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
-import ru.artempugachev.popularmovies.loader.ReviewsLoader;
-import ru.artempugachev.popularmovies.ui.TrailersAdapter;
 
 
 public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener,
