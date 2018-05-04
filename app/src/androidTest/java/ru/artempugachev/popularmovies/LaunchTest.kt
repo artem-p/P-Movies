@@ -1,7 +1,5 @@
 package ru.artempugachev.popularmovies
 
-import android.content.Context
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -13,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Rule
-import ru.artempugachev.popularmovies.activity.MainActivity
+import ru.artempugachev.popularmovies.movies.MainActivity
 
 /**
  * Launch app and check if views appear

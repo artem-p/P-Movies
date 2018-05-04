@@ -1,8 +1,7 @@
-package ru.artempugachev.popularmovies.activity
+package ru.artempugachev.popularmovies.movies
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.DisplayMetrics
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,9 +19,9 @@ import com.squareup.picasso.Picasso
 
 import ru.artempugachev.popularmovies.loader.MoviesGridLoader
 import ru.artempugachev.popularmovies.R
+import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
 import ru.artempugachev.popularmovies.di.ContextModule
 import ru.artempugachev.popularmovies.di.DaggerMovieComponent
-import ru.artempugachev.popularmovies.di.MovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 import ru.artempugachev.popularmovies.ui.EndlessRecyclerViewScrollListener
 import ru.artempugachev.popularmovies.ui.MoviesGridAdapter

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.artempugachev.popularmovies.activity.MovieDetailsActivity"
+    tools:context="ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity"
     android:id="@+id/coordinatorLayout"
     >
 

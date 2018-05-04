@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.activity;
+package ru.artempugachev.popularmovies.moviedetails;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -33,6 +33,7 @@ import ru.artempugachev.popularmovies.model.Movie;
 import ru.artempugachev.popularmovies.model.Review;
 import ru.artempugachev.popularmovies.model.Video;
 import ru.artempugachev.popularmovies.model.VideoResponse;
+import ru.artempugachev.popularmovies.movies.MainActivity;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 import ru.artempugachev.popularmovies.ui.ReviewsAdapter;
