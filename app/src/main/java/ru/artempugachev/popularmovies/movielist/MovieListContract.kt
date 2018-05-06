@@ -16,7 +16,6 @@ interface MovieListContract {
 
 
     interface UserActionListener {
-        fun loadMovies()
         fun openMovieDetails()
     }
 }
