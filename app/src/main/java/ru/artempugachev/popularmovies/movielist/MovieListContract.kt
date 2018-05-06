@@ -13,4 +13,10 @@ interface MovieListContract {
         fun showProgress()
         fun showMovieDetail()
     }
+
+
+    interface UserActionListener {
+        fun loadMovies()
+        fun openMovieDetails()
+    }
 }
