@@ -23,7 +23,14 @@ import ru.artempugachev.popularmovies.di.ContextModule
 import ru.artempugachev.popularmovies.di.DaggerMovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 
-class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Movie>>, MoviesGridAdapter.MoviesGridClickListener, SortOrderDialog.SortOrderDialogListener, MoviesGridLoader.MoviesLoadListener {
+class MainActivity : AppCompatActivity(),
+        LoaderManager.LoaderCallbacks<List<Movie>>,
+        MoviesGridAdapter.MoviesGridClickListener,
+        SortOrderDialog.SortOrderDialogListener,
+        MoviesGridLoader.MoviesLoadListener,
+        MovieListContract.View {
+
+
     private var sortOrderId = DEFAULT_SORT_ORDER_ID
     private var currentPage = DEFAULT_PAGE_NUMBER
 
@@ -45,6 +52,17 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<Mov
         setUpViews()
 
         setUpLoader(savedInstanceState)
+    }
+
+
+    // implement view methods
+    override fun showMovies() {
+    }
+
+    override fun showProgress() {
+    }
+
+    override fun showMovieDetail() {
     }
 
 
