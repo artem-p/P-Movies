@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies.movielist
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
@@ -16,6 +17,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
+import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
@@ -105,11 +107,7 @@ class MainActivity : AppCompatActivity(),
 
 
     private fun setUpComponents() {
-        val movieComponent = DaggerMovieComponent.builder()
-                .contextModule(ContextModule(this))
-                .build()
-
-        picasso = movieComponent.getPicasso()
+        picasso = (application as MoviesApplication).getComponent().getPicasso()
     }
 
 
