@@ -16,12 +16,20 @@ interface MovieListMvpContract {
         fun showMovies()
         fun showProgress()
         fun showMovieDetail()
+        fun showErrorLoadingMovies()
     }
 
 
     interface Presenter {
         fun bindView(view: View)
-        fun loadMovies()
+
+        /**
+         * Load movies from Tmdb
+         * @param sort How movies are sorted: popular or top rated
+         * @param page Page number
+         * */
+        fun loadMovies(sort: String, page: Int)
+
         fun unsubscribeRx()
     }
 

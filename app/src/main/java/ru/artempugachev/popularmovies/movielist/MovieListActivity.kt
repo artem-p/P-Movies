@@ -74,6 +74,16 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
+    override fun showErrorLoadingMovies() {
+        showToast(getString(R.string.error_loading_movies))
+    }
+
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
     public override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState!!.putString(SORT_ORDER_KEY, sortOrderId)
