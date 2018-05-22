@@ -1,6 +1,5 @@
 package ru.artempugachev.popularmovies.movielist
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
@@ -21,8 +20,6 @@ import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
-import ru.artempugachev.popularmovies.di.ContextModule
-import ru.artempugachev.popularmovies.di.DaggerMovieComponent
 import ru.artempugachev.popularmovies.model.Movie
 
 class MainActivity : AppCompatActivity(),
@@ -30,7 +27,7 @@ class MainActivity : AppCompatActivity(),
         MoviesGridAdapter.MoviesGridClickListener,
         SortOrderDialog.SortOrderDialogListener,
         MoviesGridLoader.MoviesLoadListener,
-        MovieListContract.View {
+        MovieListMvpContract.View {
 
 
     private var sortOrderId = DEFAULT_SORT_ORDER_ID

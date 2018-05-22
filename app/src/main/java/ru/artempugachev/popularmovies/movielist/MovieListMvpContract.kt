@@ -4,7 +4,7 @@ package ru.artempugachev.popularmovies.movielist
  * Contract for movie list MVP
  * */
 
-interface MovieListContract {
+interface MovieListMvpContract {
     /**
      * Define functions we exposed from the view layer
      * */
