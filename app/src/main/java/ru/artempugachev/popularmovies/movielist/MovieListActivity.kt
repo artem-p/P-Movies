@@ -30,6 +30,7 @@ class MovieListActivity : AppCompatActivity(),
         MovieListMvpContract.View {
 
 
+
     private var sortOrderId = DEFAULT_SORT_ORDER_ID
     private var currentPage = DEFAULT_PAGE_NUMBER
 
@@ -55,13 +56,21 @@ class MovieListActivity : AppCompatActivity(),
 
 
     // implement view methods
+    override fun updateMovies(movies: List<Movie>) {
+
+    }
+
+
     override fun showMovies() {
     }
+
 
     override fun showProgress() {
     }
 
+
     override fun showMovieDetail() {
+
     }
 
 
