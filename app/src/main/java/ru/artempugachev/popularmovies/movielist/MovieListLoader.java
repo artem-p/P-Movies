@@ -25,8 +25,8 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
  * Fetch data from tmdb or local db and load it to activity
  */
 
-public class MoviesGridLoader extends Loader<List<Movie>> {
-    private static final String TAG = MoviesGridLoader.class.getSimpleName();
+public class MovieListLoader extends Loader<List<Movie>> {
+    private static final String TAG = MovieListLoader.class.getSimpleName();
 
     public interface MoviesLoadListener {
         void onStartLoadingMovies();
@@ -34,7 +34,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
 
-    public MoviesGridLoader(Context context, MoviesLoadListener moviesLoadListener, int pageNumber, String sortOrderId) {
+    public MovieListLoader(Context context, MoviesLoadListener moviesLoadListener, int pageNumber, String sortOrderId) {
         super(context);
         this.moviesLoadListener = moviesLoadListener;
         this.pageNumber = pageNumber;
@@ -42,7 +42,7 @@ public class MoviesGridLoader extends Loader<List<Movie>> {
     }
 
     private List<Movie> movies;
-    private String sortOrderId = MainActivity.Companion.getDEFAULT_SORT_ORDER_ID();
+    private String sortOrderId = MovieListActivity.Companion.getDEFAULT_SORT_ORDER_ID();
     private MoviesLoadListener moviesLoadListener;
     private int pageNumber;
 

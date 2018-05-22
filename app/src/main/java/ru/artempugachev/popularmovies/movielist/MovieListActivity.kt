@@ -22,18 +22,18 @@ import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
-class MainActivity : AppCompatActivity(),
+class MovieListActivity : AppCompatActivity(),
         LoaderManager.LoaderCallbacks<List<Movie>>,
-        MoviesGridAdapter.MoviesGridClickListener,
+        MovieListAdapter.MoviesGridClickListener,
         SortOrderDialog.SortOrderDialogListener,
-        MoviesGridLoader.MoviesLoadListener,
+        MovieListLoader.MoviesLoadListener,
         MovieListMvpContract.View {
 
 
     private var sortOrderId = DEFAULT_SORT_ORDER_ID
     private var currentPage = DEFAULT_PAGE_NUMBER
 
-    private var moviesGridAdapter: MoviesGridAdapter? = null
+    private var movieListAdapter: MovieListAdapter? = null
     private var progressBar: ProgressBar? = null
     private var noFavoritesTextView: TextView? = null
     private var scrollListener: EndlessRecyclerViewScrollListener? = null
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(),
         super.onSaveInstanceState(outState)
         outState!!.putString(SORT_ORDER_KEY, sortOrderId)
         outState.putInt(PAGE_NUMBER_KEY, currentPage)
-        outState.putParcelableArrayList(MOVIES_LIST_KEY, moviesGridAdapter!!.getMovies())
+        outState.putParcelableArrayList(MOVIES_LIST_KEY, movieListAdapter!!.getMovies())
     }
 
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(),
         super.onResume()
         // if sort order is favorite, restart loader to maintain possible changes in favorites
         if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
-            moviesGridAdapter!!.setData(ArrayList())
+            movieListAdapter!!.setData(ArrayList())
             val loaderBundle = Bundle()
             loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
             supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(),
                     val loaderBundle = Bundle()
                     loaderBundle.putInt(PAGE_NUMBER_KEY, nextPage)
                     loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-                    supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this@MainActivity)
+                    supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this@MovieListActivity)
                 } else {
                     // do nothing, don't use endless scroll in favorites
                 }
@@ -140,8 +140,8 @@ class MainActivity : AppCompatActivity(),
 
         mMovieGridRecyclerView.addOnScrollListener(scrollListener)
 
-        moviesGridAdapter = MoviesGridAdapter(this, this, picasso)
-        mMovieGridRecyclerView.adapter = moviesGridAdapter
+        movieListAdapter = MovieListAdapter(this, this, picasso)
+        mMovieGridRecyclerView.adapter = movieListAdapter
 
     }
 
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity(),
     private fun setUpLoader(savedInstanceState: Bundle?) {
         val loaderBundle = Bundle()
 
-        moviesGridAdapter!!.setData(ArrayList())
+        movieListAdapter!!.setData(ArrayList())
 
         if (savedInstanceState != null) {
             currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(),
 
             val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
 
-            moviesGridAdapter!!.setData(savedMovies)
+            movieListAdapter!!.setData(savedMovies)
             scrollListener!!.resetState()
         }
 
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity(),
                     sortOrder = args.getString(SORT_ORDER_KEY, resources.getString(R.string.sort_order_id_popular))
                 }
 
-                return MoviesGridLoader(this, this, pageNumber, sortOrder)
+                return MovieListLoader(this, this, pageNumber, sortOrder)
             }
             else -> throw RuntimeException("Loader not implemented: $id")
         }
@@ -222,10 +222,10 @@ class MainActivity : AppCompatActivity(),
 
 
         if (movies != null && !movies.isEmpty()) {
-            if (moviesGridAdapter!!.itemCount != 0) {
-                moviesGridAdapter!!.addData(movies)
+            if (movieListAdapter!!.itemCount != 0) {
+                movieListAdapter!!.addData(movies)
             } else {
-                moviesGridAdapter!!.setData(movies)
+                movieListAdapter!!.setData(movies)
             }
         } else {
             if (this.sortOrderId != getString(R.string.sort_order_id_favorites)) {
@@ -245,9 +245,9 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onMovieClick(position: Int, v: View) {
-        val movie = moviesGridAdapter!!.getMovie(position)
+        val movie = movieListAdapter!!.getMovie(position)
         if (movie != null) {
-            val movieDetailsActivityIntent = Intent(this@MainActivity, MovieDetailsActivity::class.java)
+            val movieDetailsActivityIntent = Intent(this@MovieListActivity, MovieDetailsActivity::class.java)
             movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie)
 
             val ivPosterInGrid = v.findViewById<View>(R.id.posterImage)
@@ -259,14 +259,14 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onSortOrderChange(posInDialog: Int) {
-        moviesGridAdapter!!.setData(ArrayList())
-        moviesGridAdapter!!.notifyDataSetChanged()
+        movieListAdapter!!.setData(ArrayList())
+        movieListAdapter!!.notifyDataSetChanged()
         scrollListener!!.resetState()
 
         this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
 
         val loader: Loader<Any>? = supportLoaderManager.getLoader(MOVIES_GRID_LOADER_ID)
-        val moviesGridLoader = loader as MoviesGridLoader
+        val moviesGridLoader = loader as MovieListLoader
         moviesGridLoader.changeSortOrder(this.sortOrderId)
     }
 

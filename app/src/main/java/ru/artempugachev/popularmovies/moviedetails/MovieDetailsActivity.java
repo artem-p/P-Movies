@@ -33,7 +33,7 @@ import ru.artempugachev.popularmovies.movielist.api.Movie;
 import ru.artempugachev.popularmovies.movielist.api.Review;
 import ru.artempugachev.popularmovies.movielist.api.Video;
 import ru.artempugachev.popularmovies.movielist.api.VideoResponse;
-import ru.artempugachev.popularmovies.movielist.MainActivity;
+import ru.artempugachev.popularmovies.movielist.MovieListActivity;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
@@ -79,8 +79,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
         setUpViews();
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(MainActivity.Companion.getMOVIE_EXTRA())) {
-            mMovie = intent.getParcelableExtra(MainActivity.Companion.getMOVIE_EXTRA());
+        if (intent != null && intent.hasExtra(MovieListActivity.Companion.getMOVIE_EXTRA())) {
+            mMovie = intent.getParcelableExtra(MovieListActivity.Companion.getMOVIE_EXTRA());
         }
 
         setData(mMovie);

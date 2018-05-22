@@ -19,8 +19,8 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
  * Adapter for movies grid
  */
 
-class MoviesGridAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
-                        private val picasso: Picasso) : RecyclerView.Adapter<MoviesGridAdapter.MoviePosterViewHolder>() {
+class MovieListAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
+                       private val picasso: Picasso) : RecyclerView.Adapter<MovieListAdapter.MoviePosterViewHolder>() {
 
     private lateinit var movies: List<Movie>
 

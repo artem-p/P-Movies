@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Rule
-import ru.artempugachev.popularmovies.movielist.MainActivity
+import ru.artempugachev.popularmovies.movielist.MovieListActivity
 
 /**
  * Launch app and check if views appear
@@ -20,7 +20,7 @@ import ru.artempugachev.popularmovies.movielist.MainActivity
 class LaunchTest {
     @Rule
     @JvmField
-    var activityRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    var activityRule = ActivityTestRule<MovieListActivity>(MovieListActivity::class.java)
 
     @Test
     fun views_appear() {

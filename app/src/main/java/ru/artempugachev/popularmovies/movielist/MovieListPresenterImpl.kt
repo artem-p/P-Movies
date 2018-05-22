@@ -1,4 +1,4 @@
 package ru.artempugachev.popularmovies.movielist
 
-class MovieListPresenter {
+class MovieListPresenterImpl {
 }
