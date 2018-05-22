@@ -10,8 +10,8 @@
 //import retrofit2.Callback;
 //import retrofit2.Response;
 //import ru.artempugachev.popularmovies.BuildConfig;
-//import ru.artempugachev.popularmovies.model.Video;
-//import ru.artempugachev.popularmovies.model.VideoResponse;
+//import ru.artempugachev.popularmovies.movielist.api.Video;
+//import ru.artempugachev.popularmovies.movielist.api.VideoResponse;
 //import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 //import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 //

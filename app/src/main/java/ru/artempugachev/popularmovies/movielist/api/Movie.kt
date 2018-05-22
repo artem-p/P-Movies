@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.model
+package ru.artempugachev.popularmovies.movielist.api
 
 import android.content.ContentValues
 import android.os.Parcel

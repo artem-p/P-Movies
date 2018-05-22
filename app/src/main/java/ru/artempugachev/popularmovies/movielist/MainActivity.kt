@@ -20,7 +20,7 @@ import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
-import ru.artempugachev.popularmovies.model.Movie
+import ru.artempugachev.popularmovies.movielist.api.Movie
 
 class MainActivity : AppCompatActivity(),
         LoaderManager.LoaderCallbacks<List<Movie>>,

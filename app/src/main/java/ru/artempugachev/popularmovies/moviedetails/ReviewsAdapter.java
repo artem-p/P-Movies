@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.artempugachev.popularmovies.R;
-import ru.artempugachev.popularmovies.model.Review;
+import ru.artempugachev.popularmovies.movielist.api.Review;
 
 /**
  * Adapter for reviews recycler

@@ -13,7 +13,7 @@ import java.util.ArrayList
 import java.util.LinkedHashSet
 
 import ru.artempugachev.popularmovies.R
-import ru.artempugachev.popularmovies.model.Movie
+import ru.artempugachev.popularmovies.movielist.api.Movie
 
 /**
  * Adapter for movies grid
