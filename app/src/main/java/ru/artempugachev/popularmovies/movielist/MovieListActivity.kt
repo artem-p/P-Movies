@@ -41,6 +41,7 @@ class MovieListActivity : AppCompatActivity(),
 
     private lateinit var picasso: Picasso
 
+    private var presenter: MovieListMvpContract.Presenter = MovieListPresenterImpl(MovieModelImpl())
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
