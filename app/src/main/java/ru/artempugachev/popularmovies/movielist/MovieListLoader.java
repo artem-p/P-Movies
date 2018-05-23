@@ -135,32 +135,32 @@ public class MovieListLoader extends Loader<List<Movie>> {
 
 
     private void loadFromTmdb() {
-        TmdbApiClient tmdbApiClient = new TmdbApiClient();
-        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
-        Call<MovieResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
-
-        if (call != null) {
-            moviesLoadListener.onStartLoadingMovies();
-            call.enqueue(new Callback<MovieResponse>() {
-                @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                    moviesLoadListener.onFinishLoadingMovies();
-                    if (response.isSuccessful()) {
-                        List<Movie> movies = response.body().getResults();
-                        deliverResult(movies);
-                    } else {
-                        deliverResult(null);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<MovieResponse> call, Throwable throwable) {
-                    moviesLoadListener.onFinishLoadingMovies();
-                    deliverResult(null);
-                }
-
-            });
-        }
+//        TmdbApiClient tmdbApiClient = new TmdbApiClient();
+//        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
+//        Call<MovieResponse> call = tmdbApiInterface.getMovies(sortOrderId, BuildConfig.TMDB_API_KEY, pageNumber);
+//
+//        if (call != null) {
+//            moviesLoadListener.onStartLoadingMovies();
+//            call.enqueue(new Callback<MovieResponse>() {
+//                @Override
+//                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+//                    moviesLoadListener.onFinishLoadingMovies();
+//                    if (response.isSuccessful()) {
+//                        List<Movie> movies = response.body().getResults();
+//                        deliverResult(movies);
+//                    } else {
+//                        deliverResult(null);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<MovieResponse> call, Throwable throwable) {
+//                    moviesLoadListener.onFinishLoadingMovies();
+//                    deliverResult(null);
+//                }
+//
+//            });
+//        }
     }
 
 

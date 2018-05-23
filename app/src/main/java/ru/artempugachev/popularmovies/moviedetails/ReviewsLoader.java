@@ -46,35 +46,35 @@ public class ReviewsLoader extends Loader<List<Review>> {
 
     @Override
     protected void onForceLoad() {
-        TmdbApiClient tmdbApiClient = new TmdbApiClient();
-        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
+//        TmdbApiClient tmdbApiClient = new TmdbApiClient();
+//        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
 
-        if (movieId != null) {
+//        if (movieId != null) {
 
-            Call<ReviewResponse> call = tmdbApiInterface.getReviews(movieId, BuildConfig.TMDB_API_KEY);
-
-            if (call != null) {
-                call.enqueue(new Callback<ReviewResponse>() {
-                    @Override
-                    public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
-                        if (response.isSuccessful()) {
-                            List<Review> reviews = response.body().getResults();
-                            deliverResult(reviews);
-                        } else {
-                            deliverResult(null);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ReviewResponse> call, Throwable throwable) {
-                        deliverResult(null);
-                    }
-
-                });
-            }
-        } else {
-            deliverResult(null);
-        }
+//            Call<ReviewResponse> call = tmdbApiInterface.getReviews(movieId, BuildConfig.TMDB_API_KEY);
+//
+//            if (call != null) {
+//                call.enqueue(new Callback<ReviewResponse>() {
+//                    @Override
+//                    public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            List<Review> reviews = response.body().getResults();
+//                            deliverResult(reviews);
+//                        } else {
+//                            deliverResult(null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ReviewResponse> call, Throwable throwable) {
+//                        deliverResult(null);
+//                    }
+//
+//                });
+//            }
+//        } else {
+//            deliverResult(null);
+//        }
 
         super.onForceLoad();
     }

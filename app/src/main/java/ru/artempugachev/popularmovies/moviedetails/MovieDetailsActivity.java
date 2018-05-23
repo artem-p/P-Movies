@@ -209,18 +209,18 @@ public class MovieDetailsActivity extends AppCompatActivity implements TrailersA
     }
 
     private void loadTrailers(Movie movie) {
-        TmdbApiClient tmdbApiClient = new TmdbApiClient();
-        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
-
-        if (movie.getId() != null) {
-            Observable<VideoResponse> trailers = tmdbApiInterface.getVideos(movie.getId(), BuildConfig.TMDB_API_KEY);
-
-            trailers.subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(trailerResponse -> {
-                        Log.e("Trailers", trailerResponse.getResults().get(0).getName());
-                    });
-        }
+//        TmdbApiClient tmdbApiClient = new TmdbApiClient();
+//        TmdbApiInterface tmdbApiInterface = tmdbApiClient.buildApiInterface();
+//
+//        if (movie.getId() != null) {
+//            Observable<VideoResponse> trailers = tmdbApiInterface.getVideos(movie.getId(), BuildConfig.TMDB_API_KEY);
+//
+//            trailers.subscribeOn(Schedulers.newThread())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(trailerResponse -> {
+//                        Log.e("Trailers", trailerResponse.getResults().get(0).getName());
+//                    });
+//        }
 
 //        trailerLoader = new LoaderManager.LoaderCallbacks<List<Video>>() {
 //            @Override

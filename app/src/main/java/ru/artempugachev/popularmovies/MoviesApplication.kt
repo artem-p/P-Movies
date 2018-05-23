@@ -6,7 +6,10 @@ import com.facebook.stetho.Stetho
 import ru.artempugachev.popularmovies.di.ContextModule
 import ru.artempugachev.popularmovies.di.DaggerMovieComponent
 import ru.artempugachev.popularmovies.di.MovieComponent
+import ru.artempugachev.popularmovies.movielist.di.DaggerMovieListComponent
 import ru.artempugachev.popularmovies.movielist.di.MovieListComponent
+import ru.artempugachev.popularmovies.movielist.di.MovieListModule
+import ru.artempugachev.popularmovies.tmdb.TmdbModule
 
 
 class MoviesApplication : Application() {
@@ -18,8 +21,8 @@ class MoviesApplication : Application() {
         Stetho.initializeWithDefaults(this)
 
         movieListComponent = DaggerMovieListComponent.builder()
-                .tmdbModule(BuildConfig.TMDB_API_KEY)
-                .movieListModule()
+                .tmdbModule(TmdbModule(BuildConfig.TMDB_API_KEY))
+                .movieListModule(MovieListModule())
                 .build()
 
         movieComponent = DaggerMovieComponent.builder()
