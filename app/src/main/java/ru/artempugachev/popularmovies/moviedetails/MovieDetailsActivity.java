@@ -34,7 +34,6 @@ import ru.artempugachev.popularmovies.movielist.api.Review;
 import ru.artempugachev.popularmovies.movielist.api.Video;
 import ru.artempugachev.popularmovies.movielist.api.VideoResponse;
 import ru.artempugachev.popularmovies.movielist.MovieListActivity;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 

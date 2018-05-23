@@ -18,7 +18,6 @@ import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.movielist.api.Movie;
 import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.movielist.api.MovieResponse;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 /**

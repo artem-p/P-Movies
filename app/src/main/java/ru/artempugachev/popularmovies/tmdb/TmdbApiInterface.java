@@ -15,12 +15,12 @@ import ru.artempugachev.popularmovies.movielist.api.VideoResponse;
 
 public interface TmdbApiInterface {
     @GET("movie/{sort}")
-    Call<MovieResponse> getMovies(@Path("sort") String sortOrder, @Query("api_key") String apiKey,
+    Call<MovieResponse> getMovies(@Path("sort") String sortOrder,
                                   @Query("page") int pageNumber);
 
     @GET("movie/{id}/videos")
-    Observable<VideoResponse> getVideos(@Path("id") String id, @Query("api_key") String apiKey);
+    Observable<VideoResponse> getVideos(@Path("id") String id);
 
     @GET("movie/{id}/reviews")
-    Call<ReviewResponse> getReviews(@Path("id") String id, @Query("api_key") String apiKey);
+    Call<ReviewResponse> getReviews(@Path("id") String id);
 }

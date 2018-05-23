@@ -11,7 +11,6 @@ import retrofit2.Response;
 import ru.artempugachev.popularmovies.BuildConfig;
 import ru.artempugachev.popularmovies.movielist.api.Review;
 import ru.artempugachev.popularmovies.movielist.api.ReviewResponse;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiClient;
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 /**
