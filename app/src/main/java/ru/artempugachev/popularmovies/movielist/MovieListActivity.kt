@@ -21,6 +21,7 @@ import ru.artempugachev.popularmovies.MoviesApplication
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
 import ru.artempugachev.popularmovies.movielist.api.Movie
+import javax.inject.Inject
 
 class MovieListActivity : AppCompatActivity(),
         LoaderManager.LoaderCallbacks<List<Movie>>,
@@ -41,7 +42,8 @@ class MovieListActivity : AppCompatActivity(),
 
     private lateinit var picasso: Picasso
 
-    private var presenter: MovieListMvpContract.Presenter = MovieListPresenterImpl(MovieModelImpl())
+    @Inject
+    lateinit var presenter: MovieListMvpContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,7 +137,9 @@ class MovieListActivity : AppCompatActivity(),
 
 
     private fun setUpComponents() {
-        picasso = (application as MoviesApplication).getComponent().getPicasso()
+        picasso = (application as MoviesApplication).getMovieComponent().getPicasso()
+
+        (application as MoviesApplication).getMovieListComponent().inject(this)
     }
 
 
