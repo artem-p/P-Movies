@@ -42,7 +42,7 @@ public class MovieListLoader extends Loader<List<Movie>> {
     }
 
     private List<Movie> movies;
-    private String sortOrderId = MovieListActivity.Companion.getDEFAULT_SORT_ORDER_ID();
+    private String sortOrderId = MovieListActivity.Companion.getDEFAULT_SORT_ORDER();
     private MoviesLoadListener moviesLoadListener;
     private int pageNumber;
 

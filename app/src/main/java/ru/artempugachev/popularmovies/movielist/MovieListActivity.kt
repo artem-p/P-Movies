@@ -31,7 +31,7 @@ class MovieListActivity : AppCompatActivity(),
 
 
 
-    private var sortOrderId = DEFAULT_SORT_ORDER_ID
+    private var sortOrderId = DEFAULT_SORT_ORDER
     private var currentPage = DEFAULT_PAGE_NUMBER
 
     private var movieListAdapter: MovieListAdapter? = null
@@ -52,13 +52,36 @@ class MovieListActivity : AppCompatActivity(),
 
         setUpViews()
 
-        setUpLoader(savedInstanceState)
+//        setUpLoader(savedInstanceState)
     }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        presenter.bindView(this)
+        presenter.loadMovies(DEFAULT_SORT_ORDER, 1)
+
+        // if sort order is favorite, restart loader to maintain possible changes in favorites
+        if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
+            movieListAdapter!!.setData(ArrayList())
+            val loaderBundle = Bundle()
+            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
+            supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribeRx()
+    }
+
 
 
     // implement view methods
     override fun updateMovies(movies: List<Movie>) {
-
+        movieListAdapter?.setData(movies)
     }
 
 
@@ -90,18 +113,6 @@ class MovieListActivity : AppCompatActivity(),
         outState!!.putString(SORT_ORDER_KEY, sortOrderId)
         outState.putInt(PAGE_NUMBER_KEY, currentPage)
         outState.putParcelableArrayList(MOVIES_LIST_KEY, movieListAdapter!!.getMovies())
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        // if sort order is favorite, restart loader to maintain possible changes in favorites
-        if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
-            movieListAdapter!!.setData(ArrayList())
-            val loaderBundle = Bundle()
-            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-            supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
-        }
     }
 
 
@@ -173,7 +184,7 @@ class MovieListActivity : AppCompatActivity(),
 
         if (savedInstanceState != null) {
             currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
-            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER_ID)
+            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER)
 
             loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage)
             loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
@@ -307,7 +318,7 @@ class MovieListActivity : AppCompatActivity(),
         private val PAGE_NUMBER_KEY = "page_number"
         private val SORT_ORDER_KEY = "sorting"
         private val MOVIES_LIST_KEY = "movies"
-        val DEFAULT_SORT_ORDER_ID = "popular"
+        val DEFAULT_SORT_ORDER = "popular"
         val DEFAULT_PAGE_NUMBER = 1
     }
 }
