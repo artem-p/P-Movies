@@ -2,8 +2,9 @@ package ru.artempugachev.popularmovies.movielist
 
 import io.reactivex.Observable
 import ru.artempugachev.popularmovies.movielist.api.Movie
+import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
 
-class RepositoryImpl: Repository {
+class RepositoryImpl(tmdbApiInterface: TmdbApiInterface): Repository {
     override fun getPopularMoviesFromMemory(): Observable<List<Movie>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
