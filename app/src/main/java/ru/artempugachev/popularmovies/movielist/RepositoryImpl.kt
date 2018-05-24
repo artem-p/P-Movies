@@ -49,7 +49,7 @@ class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
 
 
     override fun getPopularMovies(): Observable<Movie> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return getPopularMoviesFromMemory().switchIfEmpty(getPopularMoviesFromNetwork())
     }
 
 
