@@ -322,7 +322,9 @@ class MovieListActivity : AppCompatActivity(),
         private val PAGE_NUMBER_KEY = "page_number"
         private val SORT_ORDER_KEY = "sorting"
         private val MOVIES_LIST_KEY = "movies"
-        val DEFAULT_SORT_ORDER = "popular"
+        const val SORT_ORDER_POPULAR = "popular"
+        const val SORT_ORDER_TOP_RATED = "top_rated"
+        val DEFAULT_SORT_ORDER = SORT_ORDER_POPULAR
         val DEFAULT_PAGE_NUMBER = 1
     }
 }

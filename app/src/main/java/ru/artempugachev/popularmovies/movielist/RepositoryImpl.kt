@@ -1,13 +1,14 @@
 package ru.artempugachev.popularmovies.movielist
 
 import io.reactivex.Observable
+import ru.artempugachev.popularmovies.movielist.MovieListActivity.Companion.SORT_ORDER_POPULAR
 import ru.artempugachev.popularmovies.movielist.api.Movie
+import ru.artempugachev.popularmovies.movielist.api.MovieResponse
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
 
-class RepositoryImpl(tmdbApiInterface: TmdbApiInterface): Repository {
-    private val lastUpdateTime = System.currentTimeMillis()
-    private val popularMovies = ArrayList<Movie>()
-    private val topRatedMovies = ArrayList<Movie>()
+class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
+    private var lastUpdateTime = System.currentTimeMillis()
+    private var popularMovies = ArrayList<Movie>()
 
 
     /**
@@ -18,27 +19,33 @@ class RepositoryImpl(tmdbApiInterface: TmdbApiInterface): Repository {
     }
 
 
+    /**
+     * Return cached popular movies
+     * */
     override fun getPopularMoviesFromMemory(): Observable<List<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return if (isUpToDate()) {
+            Observable.just(popularMovies)
+        } else {
+            lastUpdateTime = System.currentTimeMillis()
+            popularMovies.clear()
+            Observable.empty()
+        }
     }
 
-    override fun getTopRatedMoviesFromMemory(): Observable<List<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     override fun getPopularMoviesFromNetwork(): Observable<List<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val popularObservable = tmdbApiInterface.getMovies(SORT_ORDER_POPULAR, 1)
+
+        return popularObservable.concatMap {
+            tmdbResponse: MovieResponse -> Observable.just(tmdbResponse.results)
+        }.doOnNext {
+//            popularMovies.
+        }
     }
 
-    override fun getTopRatedMoviesFromNetwork(): Observable<List<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun getPopularMovies(): Observable<List<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getTopRatedMovies(): Observable<List<Movie>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
