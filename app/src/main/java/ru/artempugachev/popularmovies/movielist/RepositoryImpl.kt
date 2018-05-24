@@ -33,7 +33,6 @@ class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
     }
 
 
-
     override fun getPopularMoviesFromNetwork(): Observable<Movie> {
         val popularObservable = tmdbApiInterface.getMovies(SORT_ORDER_POPULAR, 1)
 

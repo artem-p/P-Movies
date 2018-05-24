@@ -22,10 +22,10 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
 class MovieListAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
                        private val picasso: Picasso) : RecyclerView.Adapter<MovieListAdapter.MoviePosterViewHolder>() {
 
-    private lateinit var movies: MutableList<Movie>
+    private var movies: MutableList<Movie> = ArrayList()
 
-    fun setData(movies: MutableList<Movie>) {
-        this.movies = movies
+    fun setData(movies: List<Movie>) {
+        this.movies = movies.toMutableList()
         notifyDataSetChanged()
     }
 
