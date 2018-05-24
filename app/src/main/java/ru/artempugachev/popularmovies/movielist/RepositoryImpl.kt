@@ -3,7 +3,7 @@ package ru.artempugachev.popularmovies.movielist
 import io.reactivex.Observable
 import ru.artempugachev.popularmovies.movielist.MovieListActivity.Companion.SORT_ORDER_POPULAR
 import ru.artempugachev.popularmovies.movielist.api.Movie
-import ru.artempugachev.popularmovies.movielist.api.MovieResponse
+import ru.artempugachev.popularmovies.movielist.api.TmdbResponse
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
 
 class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
@@ -22,9 +22,9 @@ class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
     /**
      * Return cached popular movies
      * */
-    override fun getPopularMoviesFromMemory(): Observable<List<Movie>> {
+    override fun getPopularMoviesFromMemory(): Observable<Movie> {
         return if (isUpToDate()) {
-            Observable.just(popularMovies)
+            Observable.fromIterable(popularMovies)
         } else {
             lastUpdateTime = System.currentTimeMillis()
             popularMovies.clear()
@@ -34,18 +34,21 @@ class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
 
 
 
-    override fun getPopularMoviesFromNetwork(): Observable<List<Movie>> {
+    override fun getPopularMoviesFromNetwork(): Observable<Movie> {
         val popularObservable = tmdbApiInterface.getMovies(SORT_ORDER_POPULAR, 1)
 
+        // extract movies from response
+        // use concat map to preserve order
         return popularObservable.concatMap {
-            tmdbResponse: MovieResponse -> Observable.just(tmdbResponse.results)
+            tmdbResponse: TmdbResponse -> Observable.fromIterable(tmdbResponse.results)
         }.doOnNext {
-//            popularMovies.
+            // save movies to the cache
+            movie: Movie -> popularMovies.add(movie)
         }
     }
 
 
-    override fun getPopularMovies(): Observable<List<Movie>> {
+    override fun getPopularMovies(): Observable<Movie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

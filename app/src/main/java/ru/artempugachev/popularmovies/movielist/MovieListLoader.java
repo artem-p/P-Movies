@@ -10,15 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import ru.artempugachev.popularmovies.BuildConfig;
 import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.movielist.api.Movie;
 import ru.artempugachev.popularmovies.data.MovieContract;
-import ru.artempugachev.popularmovies.movielist.api.MovieResponse;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 /**
  * Fetch data from tmdb or local db and load it to activity

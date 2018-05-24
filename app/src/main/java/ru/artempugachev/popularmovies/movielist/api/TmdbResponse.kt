@@ -8,7 +8,7 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
  * Data class for Movie json response.
  */
 
-data class MovieResponse (
+data class TmdbResponse (
         @SerializedName("page")
     var page: Int,
 
