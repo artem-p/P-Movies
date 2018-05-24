@@ -18,9 +18,9 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
         subscription = model.getMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableObserver<List<Movie>>() {
-                    override fun onNext(movies: List<Movie>) {
-                        view?.updateMovies(movies)
+                .subscribeWith(object : DisposableObserver<Movie>() {
+                    override fun onNext(movie: Movie) {
+                        view?.updateMovies(movie)
                     }
 
 

@@ -22,9 +22,9 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
 class MovieListAdapter(private val context: Context, private val moviesClickListener: MoviesGridClickListener,
                        private val picasso: Picasso) : RecyclerView.Adapter<MovieListAdapter.MoviePosterViewHolder>() {
 
-    private lateinit var movies: List<Movie>
+    private lateinit var movies: MutableList<Movie>
 
-    fun setData(movies: List<Movie>) {
+    fun setData(movies: MutableList<Movie>) {
         this.movies = movies
         notifyDataSetChanged()
     }
@@ -77,6 +77,12 @@ class MovieListAdapter(private val context: Context, private val moviesClickList
 
     override fun getItemCount(): Int {
         return movies.size
+    }
+
+
+    fun addMovie(movie: Movie) {
+        movies.add(movie)
+        notifyItemInserted(movies.size - 1)
     }
 
 

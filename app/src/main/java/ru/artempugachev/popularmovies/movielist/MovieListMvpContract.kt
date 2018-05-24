@@ -12,7 +12,7 @@ interface MovieListMvpContract {
      * Define functions we exposed from the view layer
      * */
     interface View {
-        fun updateMovies(movies: List<Movie>)
+        fun updateMovies(movie: Movie)
         fun showMovies()
         fun showProgress()
         fun showMovieDetail()
@@ -35,7 +35,7 @@ interface MovieListMvpContract {
 
 
     interface Model {
-        fun getMovies(): Observable<List<Movie>>
+        fun getMovies(): Observable<Movie>
     }
 
 

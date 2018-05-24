@@ -82,8 +82,8 @@ class MovieListActivity : AppCompatActivity(),
 
 
     // implement view methods
-    override fun updateMovies(movies: List<Movie>) {
-        movieListAdapter?.setData(movies)
+    override fun updateMovies(movie: Movie) {
+        movieListAdapter?.addMovie(movie)
     }
 
 
