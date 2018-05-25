@@ -64,15 +64,8 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
         // clean list
         view?.emptyMovies()
 
-
-        movieListAdapter!!.notifyDataSetChanged()
-        scrollListener!!.resetState()
-
-        this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
-
-        val loader: Loader<Any>? = supportLoaderManager.getLoader(MovieListActivity.MOVIES_GRID_LOADER_ID)
-        val moviesGridLoader = loader as MovieListLoader
-        moviesGridLoader.changeSortOrder(this.sortOrderId)
+        sortOrder = newSortOrder
+        loadMovies(sortOrder, DEFAULT_PAGE_NUMBER)
     }
 
 
@@ -92,5 +85,6 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
         const val SORT_ORDER_POPULAR = "popular"
         const val SORT_ORDER_TOP_RATED = "top_rated"
         const val DEFAULT_SORT_ORDER = SORT_ORDER_POPULAR
+        const val DEFAULT_PAGE_NUMBER = 1
     }
 }

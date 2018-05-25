@@ -30,9 +30,6 @@ class MovieListActivity : AppCompatActivity(),
         SortOrderDialog.SortOrderDialogListener,
         MovieListMvpContract.View {
 
-    private var sortOrderId = DEFAULT_SORT_ORDER
-    private var currentPage = DEFAULT_PAGE_NUMBER
-
     private var movieListAdapter: MovieListAdapter? = null
     private var progressBar: ProgressBar? = null
     private var noFavoritesTextView: TextView? = null
@@ -80,6 +77,7 @@ class MovieListActivity : AppCompatActivity(),
     // implement view methods
     override fun emptyMovies() {
         movieListAdapter?.empty()
+        scrollListener?.resetState()
     }
 
 
@@ -122,9 +120,9 @@ class MovieListActivity : AppCompatActivity(),
 
     public override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState!!.putString(SORT_ORDER_KEY, sortOrderId)
-        outState.putInt(PAGE_NUMBER_KEY, currentPage)
-        outState.putParcelableArrayList(MOVIES_LIST_KEY, movieListAdapter!!.getMovies())
+//        outState!!.putString(SORT_ORDER_KEY, sortOrderId)
+//        outState.putInt(PAGE_NUMBER_KEY, currentPage)
+//        outState.putParcelableArrayList(MOVIES_LIST_KEY, movieListAdapter!!.getMovies())
     }
 
 
@@ -336,6 +334,5 @@ class MovieListActivity : AppCompatActivity(),
         private val PAGE_NUMBER_KEY = "page_number"
         private val SORT_ORDER_KEY = "sorting"
         private val MOVIES_LIST_KEY = "movies"
-        val DEFAULT_PAGE_NUMBER = 1
     }
 }

@@ -1,7 +1,6 @@
 package ru.artempugachev.popularmovies.movielist
 
 import io.reactivex.Observable
-import ru.artempugachev.popularmovies.movielist.MovieListActivity.Companion.SORT_ORDER_POPULAR
 import ru.artempugachev.popularmovies.movielist.api.Movie
 import ru.artempugachev.popularmovies.movielist.api.TmdbResponse
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
