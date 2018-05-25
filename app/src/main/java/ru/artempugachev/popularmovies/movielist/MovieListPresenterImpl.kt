@@ -37,6 +37,11 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
     }
 
 
+    override fun loadMore(sort: String, page: Int) {
+
+    }
+
+
     override fun bindView(view: MovieListMvpContract.View) {
         this.view = view
     }

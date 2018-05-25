@@ -30,6 +30,15 @@ interface MovieListMvpContract {
          * */
         fun loadMovies(sort: String, page: Int)
 
+
+        /**
+         * We implement endless scroll
+         * Call this method when need to load more movies
+         * @param sort How movies are sorted: popular or top rated
+         * @param page Page number
+         * */
+        fun loadMore(sort: String, page: Int)
+
         fun unsubscribeRx()
     }
 
