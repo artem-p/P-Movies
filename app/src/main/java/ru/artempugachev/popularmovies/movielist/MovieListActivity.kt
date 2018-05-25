@@ -153,23 +153,25 @@ class MovieListActivity : AppCompatActivity(),
 
         scrollListener = object : EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             override fun onLoadMore(nextPage: Int, totalItemsCount: Int, view: RecyclerView) {
-                var nextPage = nextPage
-                if (sortOrderId != getString(R.string.sort_order_id_favorites)) {
+                presenter.loadMore(DEFAULT_SORT_ORDER, nextPage)
 
-                    // after rotation maybe problem with pagination.
-                    // if pages are the same, load next
-                    if (nextPage == currentPage) {
-                        nextPage++
-                    }
-
-                    currentPage = nextPage
-                    val loaderBundle = Bundle()
-                    loaderBundle.putInt(PAGE_NUMBER_KEY, nextPage)
-                    loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-                    supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this@MovieListActivity)
-                } else {
-                    // do nothing, don't use endless scroll in favorites
-                }
+//                var nextPage = nextPage
+//                if (sortOrderId != getString(R.string.sort_order_id_favorites)) {
+//
+//                    // after rotation maybe problem with pagination.
+//                    // if pages are the same, load next
+//                    if (nextPage == currentPage) {
+//                        nextPage++
+//                    }
+//
+//                    currentPage = nextPage
+//                    val loaderBundle = Bundle()
+//                    loaderBundle.putInt(PAGE_NUMBER_KEY, nextPage)
+//                    loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
+//                    supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this@MovieListActivity)
+//                } else {
+//                    // do nothing, don't use endless scroll in favorites
+//                }
             }
         }
 

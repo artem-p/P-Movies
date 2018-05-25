@@ -1,15 +1,17 @@
 package ru.artempugachev.popularmovies.movielist
 
+import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : MovieListMvpContract.Presenter {
     private var subscription: Disposable? = null
     private var view: MovieListMvpContract.View? = null
-
+    private var currentPage = 0
 
     /**
      * Load movies from Tmdb
@@ -37,8 +39,17 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
     }
 
 
-    override fun loadMore(sort: String, page: Int) {
+    override fun loadMore(sort: String, nextPage: Int) {
+        var nextPage = nextPage
+            // after rotation maybe problem with pagination.
+            // if pages are the same, load next
+            if (nextPage == currentPage) {
+                nextPage++
+            }
 
+            currentPage = nextPage
+
+        loadMovies(sort, nextPage)
     }
 
 
