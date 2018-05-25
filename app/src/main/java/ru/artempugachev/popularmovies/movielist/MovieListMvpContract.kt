@@ -44,7 +44,7 @@ interface MovieListMvpContract {
 
 
     interface Model {
-        fun getMovies(): Observable<Movie>
+        fun getMovies(sort: String, page: Int): Observable<Movie>
     }
 
 

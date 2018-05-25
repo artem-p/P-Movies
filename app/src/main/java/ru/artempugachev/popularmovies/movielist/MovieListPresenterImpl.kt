@@ -1,23 +1,21 @@
 package ru.artempugachev.popularmovies.movielist
 
-import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : MovieListMvpContract.Presenter {
     private var subscription: Disposable? = null
     private var view: MovieListMvpContract.View? = null
-    private var currentPage = 0
+    private var currentPage = 1
 
     /**
      * Load movies from Tmdb
      * */
     override fun loadMovies(sort: String, page: Int) {
-        subscription = model.getMovies()
+        subscription = model.getMovies(sort, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableObserver<Movie>() {

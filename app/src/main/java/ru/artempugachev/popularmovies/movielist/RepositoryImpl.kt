@@ -6,53 +6,18 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
 import ru.artempugachev.popularmovies.movielist.api.TmdbResponse
 import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
 
+
+/**
+ * Implement {@link Repository}
+ * */
 class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
-    private var lastUpdateTime = System.currentTimeMillis()
-    private var popularMovies = ArrayList<Movie>()
-
-
-    /**
-     * Check if cache is up to date
-     * */
-    private fun isUpToDate(): Boolean {
-        return System.currentTimeMillis() - lastUpdateTime < VALID_TIME
-    }
-
-
-    /**
-     * Return cached popular movies
-     * */
-    override fun getPopularMoviesFromMemory(): Observable<Movie> {
-        return if (isUpToDate()) {
-            Observable.fromIterable(popularMovies)
-        } else {
-            lastUpdateTime = System.currentTimeMillis()
-            popularMovies.clear()
-            Observable.empty()
-        }
-    }
-
-
-    override fun getPopularMoviesFromNetwork(): Observable<Movie> {
-        val popularObservable = tmdbApiInterface.getMovies(SORT_ORDER_POPULAR, 1)
+    override fun getMovies(sort: String, page: Int): Observable<Movie> {
+        val moviesObservable = tmdbApiInterface.getMovies(sort, page)
 
         // extract movies from response
         // use concat map to preserve order
-        return popularObservable.concatMap {
+        return moviesObservable.concatMap {
             tmdbResponse: TmdbResponse -> Observable.fromIterable(tmdbResponse.results)
-        }.doOnNext {
-            // save movies to the cache
-            movie: Movie -> popularMovies.add(movie)
         }
-    }
-
-
-    override fun getPopularMovies(): Observable<Movie> {
-        return getPopularMoviesFromMemory().switchIfEmpty(getPopularMoviesFromNetwork())
-    }
-
-
-    companion object {
-        const val VALID_TIME = 60 * 1000    // time after cache expired
     }
 }

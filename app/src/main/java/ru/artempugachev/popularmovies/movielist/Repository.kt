@@ -4,11 +4,10 @@ import io.reactivex.Observable
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 /**
- * Cache movie data in memory
+ * For now, just pass query to network.
+ * We can add memory or db cache here.
  * */
 interface Repository {
-    fun getPopularMoviesFromMemory(): Observable<Movie>
-    fun getPopularMoviesFromNetwork(): Observable<Movie>
-
-    fun getPopularMovies(): Observable<Movie>
+    fun getMovies(sort: String, page: Int): Observable<Movie>
 }
+
