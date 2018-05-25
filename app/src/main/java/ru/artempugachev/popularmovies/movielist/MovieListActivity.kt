@@ -31,7 +31,6 @@ class MovieListActivity : AppCompatActivity(),
         MovieListMvpContract.View {
 
 
-
     private var sortOrderId = DEFAULT_SORT_ORDER
     private var currentPage = DEFAULT_PAGE_NUMBER
 
@@ -87,12 +86,20 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
-    override fun showMovies() {
-    }
-
-
+    /**
+     * Show progress indicator while loading movies
+     * */
     override fun showProgress() {
     }
+
+
+    /**
+     * Hide progress indicator when movies are loaded
+     * */
+    override fun hideProgress() {
+
+    }
+
 
 
     override fun showMovieDetail() {

@@ -13,8 +13,8 @@ interface MovieListMvpContract {
      * */
     interface View {
         fun updateMovies(movie: Movie)
-        fun showMovies()
         fun showProgress()
+        fun hideProgress()
         fun showMovieDetail()
         fun showErrorLoadingMovies()
     }
