@@ -17,6 +17,11 @@ interface MovieListMvpContract {
         fun hideProgress()
         fun showMovieDetail()
         fun showErrorLoadingMovies()
+
+        /**
+         * Empty movies list
+         * */
+        fun emptyMovies()
     }
 
 
@@ -34,10 +39,11 @@ interface MovieListMvpContract {
         /**
          * We implement endless scroll
          * Call this method when need to load more movies
-         * @param sort How movies are sorted: popular or top rated
          * @param page Page number
          * */
-        fun loadMore(sort: String, page: Int)
+        fun loadMore(page: Int)
+
+        fun sortOrderChange(newSortOrder: String)
 
         fun unsubscribeRx()
     }

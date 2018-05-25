@@ -86,6 +86,12 @@ class MovieListAdapter(private val context: Context, private val moviesClickList
     }
 
 
+    fun empty() {
+        movies.clear()
+        notifyDataSetChanged()
+    }
+
+
     inner class MoviePosterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val movieImageView: ImageView
 

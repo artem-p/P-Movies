@@ -1,15 +1,19 @@
 package ru.artempugachev.popularmovies.movielist
 
+import android.support.v4.content.Loader
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : MovieListMvpContract.Presenter {
     private var subscription: Disposable? = null
     private var view: MovieListMvpContract.View? = null
     private var currentPage = 1
+    private var sortOrder = DEFAULT_SORT_ORDER
+
 
     /**
      * Load movies from Tmdb
@@ -39,7 +43,7 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
     }
 
 
-    override fun loadMore(sort: String, nextPage: Int) {
+    override fun loadMore(nextPage: Int) {
         var nextPage = nextPage
             // after rotation maybe problem with pagination.
             // if pages are the same, load next
@@ -49,7 +53,26 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
 
             currentPage = nextPage
 
-        loadMovies(sort, nextPage)
+        loadMovies(sortOrder, nextPage)
+    }
+
+
+    /**
+     * Handle sort order changing
+     * */
+    override fun sortOrderChange(newSortOrder: String) {
+        // clean list
+        view?.emptyMovies()
+
+
+        movieListAdapter!!.notifyDataSetChanged()
+        scrollListener!!.resetState()
+
+        this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
+
+        val loader: Loader<Any>? = supportLoaderManager.getLoader(MovieListActivity.MOVIES_GRID_LOADER_ID)
+        val moviesGridLoader = loader as MovieListLoader
+        moviesGridLoader.changeSortOrder(this.sortOrderId)
     }
 
 
@@ -62,5 +85,12 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
         if (subscription?.isDisposed == false) {
             subscription?.dispose()
         }
+    }
+
+
+    companion object {
+        const val SORT_ORDER_POPULAR = "popular"
+        const val SORT_ORDER_TOP_RATED = "top_rated"
+        const val DEFAULT_SORT_ORDER = SORT_ORDER_POPULAR
     }
 }

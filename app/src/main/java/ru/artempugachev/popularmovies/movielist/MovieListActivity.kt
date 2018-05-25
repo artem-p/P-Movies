@@ -21,16 +21,14 @@ import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.moviedetails.MovieDetailsActivity
+import ru.artempugachev.popularmovies.movielist.MovieListPresenterImpl.Companion.DEFAULT_SORT_ORDER
 import ru.artempugachev.popularmovies.movielist.api.Movie
 import javax.inject.Inject
 
 class MovieListActivity : AppCompatActivity(),
-        LoaderManager.LoaderCallbacks<List<Movie>>,
         MovieListAdapter.MoviesGridClickListener,
         SortOrderDialog.SortOrderDialogListener,
-        MovieListLoader.MoviesLoadListener,
         MovieListMvpContract.View {
-
 
     private var sortOrderId = DEFAULT_SORT_ORDER
     private var currentPage = DEFAULT_PAGE_NUMBER
@@ -53,8 +51,6 @@ class MovieListActivity : AppCompatActivity(),
         setUpComponents()
 
         setUpViews()
-
-//        setUpLoader(savedInstanceState)
     }
 
 
@@ -65,12 +61,12 @@ class MovieListActivity : AppCompatActivity(),
         presenter.loadMovies(DEFAULT_SORT_ORDER, 1)
 
         // if sort order is favorite, restart loader to maintain possible changes in favorites
-        if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
-            movieListAdapter!!.setData(ArrayList())
-            val loaderBundle = Bundle()
-            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-            supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
-        }
+//        if (sortOrderId == getString(R.string.sort_order_id_favorites)) {
+//            movieListAdapter!!.setData(ArrayList())
+//            val loaderBundle = Bundle()
+//            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
+//            supportLoaderManager.restartLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
+//        }
     }
 
 
@@ -82,6 +78,11 @@ class MovieListActivity : AppCompatActivity(),
 
 
     // implement view methods
+    override fun emptyMovies() {
+        movieListAdapter?.empty()
+    }
+
+
     override fun updateMovies(movie: Movie) {
         movieListAdapter?.addMovie(movie)
     }
@@ -162,7 +163,7 @@ class MovieListActivity : AppCompatActivity(),
 
         scrollListener = object : EndlessRecyclerViewScrollListener(moviesLayoutManager) {
             override fun onLoadMore(nextPage: Int, totalItemsCount: Int, view: RecyclerView) {
-                presenter.loadMore(DEFAULT_SORT_ORDER, nextPage)
+                presenter.loadMore(nextPage)
 
 //                var nextPage = nextPage
 //                if (sortOrderId != getString(R.string.sort_order_id_favorites)) {
@@ -192,26 +193,24 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
-    private fun setUpLoader(savedInstanceState: Bundle?) {
-        val loaderBundle = Bundle()
-
-        movieListAdapter!!.setData(ArrayList())
-
-        if (savedInstanceState != null) {
-            currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
-            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER)
-
-            loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage)
-            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
-
-            val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
-
-            movieListAdapter!!.setData(savedMovies)
-            scrollListener!!.resetState()
-        }
-
-        supportLoaderManager.initLoader(MOVIES_GRID_LOADER_ID, loaderBundle, this)
-    }
+//    private fun setUpLoader(savedInstanceState: Bundle?) {
+//        val loaderBundle = Bundle()
+//
+//        movieListAdapter!!.setData(ArrayList())
+//
+//        if (savedInstanceState != null) {
+//            currentPage = savedInstanceState.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
+//            sortOrderId = savedInstanceState.getString(SORT_ORDER_KEY, DEFAULT_SORT_ORDER)
+//
+//            loaderBundle.putInt(PAGE_NUMBER_KEY, currentPage)
+//            loaderBundle.putString(SORT_ORDER_KEY, sortOrderId)
+//
+//            val savedMovies = savedInstanceState.getParcelableArrayList<Movie>(MOVIES_LIST_KEY)
+//
+//            movieListAdapter!!.setData(savedMovies)
+//            scrollListener!!.resetState()
+//        }
+//    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -244,50 +243,50 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<Movie>> {
-        noFavoritesTextView!!.visibility = View.INVISIBLE
-        when (id) {
-            MOVIES_GRID_LOADER_ID -> {
-                var pageNumber = 1
-                var sortOrder = resources.getString(R.string.sort_order_id_popular)
-                if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
-                    pageNumber = args.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
-                }
+//    override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<Movie>> {
+//        noFavoritesTextView!!.visibility = View.INVISIBLE
+//        when (id) {
+//            MOVIES_GRID_LOADER_ID -> {
+//                var pageNumber = 1
+//                var sortOrder = resources.getString(R.string.sort_order_id_popular)
+//                if (args != null && args.containsKey(PAGE_NUMBER_KEY)) {
+//                    pageNumber = args.getInt(PAGE_NUMBER_KEY, DEFAULT_PAGE_NUMBER)
+//                }
+//
+//                if (args != null && args.containsKey(SORT_ORDER_KEY)) {
+//                    sortOrder = args.getString(SORT_ORDER_KEY, resources.getString(R.string.sort_order_id_popular))
+//                }
+//
+//                return MovieListLoader(this, this, pageNumber, sortOrder)
+//            }
+//            else -> throw RuntimeException("Loader not implemented: $id")
+//        }
+//    }
 
-                if (args != null && args.containsKey(SORT_ORDER_KEY)) {
-                    sortOrder = args.getString(SORT_ORDER_KEY, resources.getString(R.string.sort_order_id_popular))
-                }
-
-                return MovieListLoader(this, this, pageNumber, sortOrder)
-            }
-            else -> throw RuntimeException("Loader not implemented: $id")
-        }
-    }
-
-    override fun onLoadFinished(loader: Loader<List<Movie>>, movies: List<Movie>?) {
-
-
-        if (movies != null && !movies.isEmpty()) {
-            if (movieListAdapter!!.itemCount != 0) {
-                movieListAdapter!!.addData(movies)
-            } else {
-                movieListAdapter!!.setData(movies)
-            }
-        } else {
-            if (this.sortOrderId != getString(R.string.sort_order_id_favorites)) {
-                // popular, top rated. Just toast
-                Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show()
-            } else {
-                // favorites. Show message about no favorites
-                noFavoritesTextView!!.visibility = View.VISIBLE
-            }
-        }
-    }
+//    override fun onLoadFinished(loader: Loader<List<Movie>>, movies: List<Movie>?) {
+//
+//
+////        if (movies != null && !movies.isEmpty()) {
+////            if (movieListAdapter!!.itemCount != 0) {
+////                movieListAdapter!!.addData(movies)
+////            } else {
+////                movieListAdapter!!.setData(movies)
+////            }
+////        } else {
+////            if (this.sortOrderId != getString(R.string.sort_order_id_favorites)) {
+////                // popular, top rated. Just toast
+////                Toast.makeText(this, R.string.no_movies_data_message, Toast.LENGTH_SHORT).show()
+////            } else {
+////                // favorites. Show message about no favorites
+////                noFavoritesTextView!!.visibility = View.VISIBLE
+////            }
+////        }
+//    }
 
 
-    override fun onLoaderReset(loader: Loader<List<Movie>>) {
-        noFavoritesTextView!!.visibility = View.INVISIBLE
-    }
+//    override fun onLoaderReset(loader: Loader<List<Movie>>) {
+//        noFavoritesTextView!!.visibility = View.INVISIBLE
+//    }
 
 
     override fun onMovieClick(position: Int, v: View) {
@@ -305,25 +304,29 @@ class MovieListActivity : AppCompatActivity(),
 
 
     override fun onSortOrderChange(posInDialog: Int) {
-        movieListAdapter!!.setData(ArrayList())
-        movieListAdapter!!.notifyDataSetChanged()
-        scrollListener!!.resetState()
+        val sortOrder = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
 
-        this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
+        presenter.sortOrderChange(sortOrder)
 
-        val loader: Loader<Any>? = supportLoaderManager.getLoader(MOVIES_GRID_LOADER_ID)
-        val moviesGridLoader = loader as MovieListLoader
-        moviesGridLoader.changeSortOrder(this.sortOrderId)
+//        movieListAdapter!!.setData(ArrayList())
+//        movieListAdapter!!.notifyDataSetChanged()
+//        scrollListener!!.resetState()
+//
+//        this.sortOrderId = resources.getStringArray(R.array.sort_orders_id)[posInDialog]
+//
+//        val loader: Loader<Any>? = supportLoaderManager.getLoader(MOVIES_GRID_LOADER_ID)
+//        val moviesGridLoader = loader as MovieListLoader
+//        moviesGridLoader.changeSortOrder(this.sortOrderId)
     }
 
-    override fun onStartLoadingMovies() {
-        noFavoritesTextView!!.visibility = View.INVISIBLE
-        progressBar!!.visibility = View.VISIBLE
-    }
-
-    override fun onFinishLoadingMovies() {
-        progressBar!!.visibility = View.INVISIBLE
-    }
+//    override fun onStartLoadingMovies() {
+//        noFavoritesTextView!!.visibility = View.INVISIBLE
+//        progressBar!!.visibility = View.VISIBLE
+//    }
+//
+//    override fun onFinishLoadingMovies() {
+//        progressBar!!.visibility = View.INVISIBLE
+//    }
 
     companion object {
 
@@ -333,9 +336,6 @@ class MovieListActivity : AppCompatActivity(),
         private val PAGE_NUMBER_KEY = "page_number"
         private val SORT_ORDER_KEY = "sorting"
         private val MOVIES_LIST_KEY = "movies"
-        const val SORT_ORDER_POPULAR = "popular"
-        const val SORT_ORDER_TOP_RATED = "top_rated"
-        val DEFAULT_SORT_ORDER = SORT_ORDER_POPULAR
         val DEFAULT_PAGE_NUMBER = 1
     }
 }
