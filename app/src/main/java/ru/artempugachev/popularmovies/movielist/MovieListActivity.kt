@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.content_main.*
 import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
@@ -90,6 +91,8 @@ class MovieListActivity : AppCompatActivity(),
      * Show progress indicator while loading movies
      * */
     override fun showProgress() {
+        if (moviesGridProgressBar.visibility == View.INVISIBLE)
+            moviesGridProgressBar.visibility = View.VISIBLE
     }
 
 
@@ -97,9 +100,8 @@ class MovieListActivity : AppCompatActivity(),
      * Hide progress indicator when movies are loaded
      * */
     override fun hideProgress() {
-
+        moviesGridProgressBar.visibility = View.INVISIBLE
     }
-
 
 
     override fun showMovieDetail() {

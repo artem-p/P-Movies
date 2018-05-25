@@ -21,17 +21,19 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
                 .subscribeWith(object : DisposableObserver<Movie>() {
                     override fun onNext(movie: Movie) {
                         view?.updateMovies(movie)
+                        view?.showProgress()
                     }
 
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
+                        view?.hideProgress()
                         view?.showErrorLoadingMovies()
                     }
 
 
                     override fun onComplete() {
-
+                        view?.hideProgress()
                     }
                 })
     }
