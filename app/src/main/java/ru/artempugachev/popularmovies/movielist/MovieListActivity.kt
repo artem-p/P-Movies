@@ -3,8 +3,6 @@ package ru.artempugachev.popularmovies.movielist
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -94,8 +92,14 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
-    override fun showMovieDetail() {
+    override fun showMovieDetail(movie: Movie, adapterView: View) {
+        val movieDetailsActivityIntent = Intent(this@MovieListActivity, MovieDetailsActivity::class.java)
+        movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie)
 
+        val ivPosterInGrid = adapterView.findViewById<View>(R.id.posterImage)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                ivPosterInGrid, getString(R.string.poster_transition))
+        startActivity(movieDetailsActivityIntent, options.toBundle())
     }
 
 
@@ -194,17 +198,8 @@ class MovieListActivity : AppCompatActivity(),
     }
 
 
-    override fun onMovieClick(position: Int, v: View) {
-        val movie = movieListAdapter!!.getMovie(position)
-        if (movie != null) {
-            val movieDetailsActivityIntent = Intent(this@MovieListActivity, MovieDetailsActivity::class.java)
-            movieDetailsActivityIntent.putExtra(MOVIE_EXTRA, movie)
-
-            val ivPosterInGrid = v.findViewById<View>(R.id.posterImage)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                    ivPosterInGrid, getString(R.string.poster_transition))
-            startActivity(movieDetailsActivityIntent, options.toBundle())
-        }
+    override fun onMovieClick(movie: Movie, adapterView: View) {
+        presenter.onMovieClick(movie, adapterView)
     }
 
 

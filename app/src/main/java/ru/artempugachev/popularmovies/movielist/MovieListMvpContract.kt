@@ -1,5 +1,6 @@
 package ru.artempugachev.popularmovies.movielist
 
+import android.view.View
 import io.reactivex.Observable
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
@@ -15,7 +16,7 @@ interface MovieListMvpContract {
         fun updateMovies(movie: Movie)
         fun showProgress()
         fun hideProgress()
-        fun showMovieDetail()
+        fun showMovieDetail(movie: Movie, adapterView: android.view.View)
         fun showErrorLoadingMovies()
 
         /**
@@ -46,6 +47,12 @@ interface MovieListMvpContract {
         fun sortOrderChange(newSortOrder: String)
 
         fun unsubscribeRx()
+
+
+        /**
+         * Handle click on movie in grid
+         * */
+        fun onMovieClick(movie: Movie, adapterView: android.view.View)
     }
 
 

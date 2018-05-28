@@ -1,11 +1,10 @@
 package ru.artempugachev.popularmovies.movielist
 
-import android.support.v4.content.Loader
+import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : MovieListMvpContract.Presenter {
@@ -78,6 +77,11 @@ class MovieListPresenterImpl(private val model: MovieListMvpContract.Model) : Mo
         if (subscription?.isDisposed == false) {
             subscription?.dispose()
         }
+    }
+
+
+    override fun onMovieClick(movie: Movie, adapterView: View) {
+        view?.showMovieDetail(movie, adapterView)
     }
 
 

@@ -101,12 +101,12 @@ class MovieListAdapter(private val context: Context, private val moviesClickList
         }
 
         override fun onClick(v: View) {
-            moviesClickListener.onMovieClick(adapterPosition, v)
+            moviesClickListener.onMovieClick(movies[adapterPosition], v)
         }
     }
 
     interface MoviesGridClickListener {
-        fun onMovieClick(position: Int, v: View)
+        fun onMovieClick(movie: Movie, adapterView: View)
     }
 
 }
