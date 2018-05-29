@@ -1,6 +1,7 @@
 package ru.artempugachev.popularmovies.moviedetails
 
 import android.content.Intent
+import io.reactivex.Observable
 import ru.artempugachev.popularmovies.movielist.api.Movie
 import ru.artempugachev.popularmovies.moviedetails.api.Review
 import ru.artempugachev.popularmovies.moviedetails.api.Video
@@ -35,7 +36,7 @@ interface MovieDetailsMvpContract {
      * */
     interface Model {
         fun getMovie(): Movie
-        fun getTrailers(): List<Video>
-        fun getReviews(): List<Review>
+        fun getTrailers(): Observable<Video>
+        fun getReviews(): Observable<Review>
     }
 }
