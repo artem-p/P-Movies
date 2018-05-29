@@ -21,7 +21,7 @@ interface MovieDetailsMvpContract {
 
 
     interface Presenter {
-        fun getMovieFromIntent(intent: Intent): Movie
+        fun getMovieFromIntent(intent: Intent)
         fun loadTrailers(movie: Movie)
         fun loadReviews(movie: Movie)
 
