@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,18 +22,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import ru.artempugachev.popularmovies.BuildConfig;
 import ru.artempugachev.popularmovies.R;
 import ru.artempugachev.popularmovies.data.MovieContract;
 import ru.artempugachev.popularmovies.movielist.api.Movie;
-import ru.artempugachev.popularmovies.movielist.api.Review;
-import ru.artempugachev.popularmovies.movielist.api.Video;
-import ru.artempugachev.popularmovies.movielist.api.VideoResponse;
+import ru.artempugachev.popularmovies.moviedetails.api.Review;
+import ru.artempugachev.popularmovies.moviedetails.api.Video;
 import ru.artempugachev.popularmovies.movielist.MovieListActivity;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
 
 
 public class MovieDetailsActivity extends AppCompatActivity implements TrailersAdapter.TrailerClickListener,

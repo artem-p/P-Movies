@@ -1,4 +1,4 @@
-package ru.artempugachev.popularmovies.movielist.api
+package ru.artempugachev.popularmovies.moviedetails.api
 
 import com.google.gson.annotations.SerializedName
 

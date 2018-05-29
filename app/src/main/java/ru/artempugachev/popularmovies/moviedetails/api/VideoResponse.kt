@@ -1,8 +1,8 @@
-package ru.artempugachev.popularmovies.movielist.api
+package ru.artempugachev.popularmovies.moviedetails.api
 
 import com.google.gson.annotations.SerializedName
 
-import ru.artempugachev.popularmovies.movielist.api.Video
+import ru.artempugachev.popularmovies.moviedetails.api.Video
 
 /**
  * Data class for video response

@@ -2,8 +2,8 @@ package ru.artempugachev.popularmovies.moviedetails
 
 import android.content.Intent
 import ru.artempugachev.popularmovies.movielist.api.Movie
-import ru.artempugachev.popularmovies.movielist.api.Review
-import ru.artempugachev.popularmovies.movielist.api.Video
+import ru.artempugachev.popularmovies.moviedetails.api.Review
+import ru.artempugachev.popularmovies.moviedetails.api.Video
 
 
 /**

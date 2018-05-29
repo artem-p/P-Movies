@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.artempugachev.popularmovies.movielist.api.TmdbResponse
-import ru.artempugachev.popularmovies.movielist.api.ReviewResponse
-import ru.artempugachev.popularmovies.movielist.api.VideoResponse
+import ru.artempugachev.popularmovies.moviedetails.api.ReviewResponse
+import ru.artempugachev.popularmovies.moviedetails.api.VideoResponse
 
 /**
  * Retrofit TMDB API Interface

@@ -5,13 +5,7 @@ import android.support.v4.content.Loader;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import ru.artempugachev.popularmovies.BuildConfig;
-import ru.artempugachev.popularmovies.movielist.api.Review;
-import ru.artempugachev.popularmovies.movielist.api.ReviewResponse;
-import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface;
+import ru.artempugachev.popularmovies.moviedetails.api.Review;
 
 /**
  * Loader for reviews
