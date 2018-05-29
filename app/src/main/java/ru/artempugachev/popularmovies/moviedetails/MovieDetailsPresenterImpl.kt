@@ -6,7 +6,7 @@ import ru.artempugachev.popularmovies.movielist.MovieListActivity
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 
-class MovieDetailsPresenterImpl : MovieDetailsMvpContract.Presenter {
+class MovieDetailsPresenterImpl(model: MovieDetailsMvpContract.Model) : MovieDetailsMvpContract.Presenter {
     private var view: MovieDetailsMvpContract.View? = null
     private var movie: Movie? = null
     private var trailersSubscription: Disposable? = null

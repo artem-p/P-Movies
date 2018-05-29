@@ -34,7 +34,8 @@ interface MovieDetailsMvpContract {
      * Store movie in the model
      * */
     interface Model {
-        fun setMovie(movie: Movie)
         fun getMovie(): Movie
+        fun getTrailers(): List<Video>
+        fun getReviews(): List<Review>
     }
 }
