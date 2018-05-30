@@ -6,7 +6,7 @@ import ru.artempugachev.popularmovies.moviedetails.api.Video
 import ru.artempugachev.popularmovies.movielist.api.Movie
 
 
-interface Repository {
+interface DetailsRepository {
     fun getMovie(): Movie
     fun getTrailers(): Observable<Video>
     fun getReviews(): Observable<Review>
