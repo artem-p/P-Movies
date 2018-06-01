@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_details_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:clipToPadding="false"
-    >
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
             >
 
             <ImageView
-                android:id="@+id/details_poster"
+                android:id="@+id/detailsPoster"
                 android:transitionName="@string/poster_transition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,13 +37,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/details_title_default"
+                tools:text="@string/details_title_default"
                 android:scrollHorizontally="false"
-                android:id="@+id/details_title"
+                android:id="@+id/detailsTitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                app:layout_constraintLeft_toRightOf="@+id/details_poster"
+                app:layout_constraintLeft_toRightOf="@+id/detailsPoster"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/details_poster"
+                app:layout_constraintTop_toTopOf="@+id/detailsPoster"
                 app:layout_constraintWidth_default="wrap"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -52,40 +51,40 @@
                 />
 
             <TextView
-                android:id="@+id/details_year"
+                android:id="@+id/detailsYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                android:text="@string/details_year_default"
-                app:layout_constraintLeft_toLeftOf="@+id/details_title"
-                app:layout_constraintTop_toBottomOf="@+id/details_title" />
+                tools:text="@string/details_year_default"
+                app:layout_constraintLeft_toLeftOf="@+id/detailsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/detailsTitle" />
 
             <TextView
-                android:id="@+id/details_rating"
+                android:id="@+id/detailsRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
                 android:text="@string/details_rating_default"
-                app:layout_constraintLeft_toLeftOf="@+id/details_title"
-                app:layout_constraintTop_toBottomOf="@+id/details_year" />
+                app:layout_constraintLeft_toLeftOf="@+id/detailsTitle"
+                app:layout_constraintTop_toBottomOf="@+id/detailsYear" />
 
             <Button
-                android:id="@+id/add_to_favorites"
+                android:id="@+id/addToFaforites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_to_favorites"
-                app:layout_constraintLeft_toLeftOf="@id/details_rating"
-                app:layout_constraintTop_toBottomOf="@id/details_rating"
+                app:layout_constraintLeft_toLeftOf="@id/detailsRating"
+                app:layout_constraintTop_toBottomOf="@id/detailsRating"
                 />
 
             <TextView
-                android:id="@+id/details_overview"
+                android:id="@+id/detailsOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                android:text="@string/details_synopsis_default"
+                tools:text="@string/details_synopsis_default"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/details_poster"
+                app:layout_constraintTop_toBottomOf="@+id/detailsPoster"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 />
@@ -103,23 +102,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/trailers_label"
-                android:text="@string/trailers"
+                android:id="@+id/trailersLabel"
+                tools:text="@string/trailers"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                 />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/trailers_recycler_view">
+                android:id="@+id/trailersRecycler">
 
             </android.support.v7.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/reviews_label"
+                android:id="@+id/reviewsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reviews"
+                tools:text="@string/reviews"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
                 />
 
@@ -129,7 +128,7 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/reviews_recycler"
+                    android:id="@+id/reviewsRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -139,8 +138,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/no_reviews_text_view"
-                    android:text="@string/no_reviews_for_this_movie"
+                    android:id="@+id/noRewiewsTextView"
+                    tools:text="@string/no_reviews_for_this_movie"
                     android:visibility="invisible"
                     />
             </FrameLayout>
