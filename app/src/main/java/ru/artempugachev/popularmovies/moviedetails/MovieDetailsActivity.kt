@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.content_movie_details.*
+import ru.artempugachev.popularmovies.MoviesApplication
 
 import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.data.MovieContract
@@ -21,6 +22,7 @@ import ru.artempugachev.popularmovies.movielist.api.Movie
 import ru.artempugachev.popularmovies.moviedetails.api.Review
 import ru.artempugachev.popularmovies.moviedetails.api.Video
 import ru.artempugachev.popularmovies.movielist.MovieListActivity
+import javax.inject.Inject
 
 
 class MovieDetailsActivity : AppCompatActivity(), TrailersAdapter.TrailerClickListener, MovieDetailsMvpContract.View {
@@ -32,10 +34,15 @@ class MovieDetailsActivity : AppCompatActivity(), TrailersAdapter.TrailerClickLi
     private var movie: Movie? = null
     private var isMovieInFavorites: Boolean? = null
 
+    @Inject
+    lateinit var presenter: MovieDetailsMvpContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
+
+        (application as MoviesApplication).getMovieDetailsComponent().inject(this)
+
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
