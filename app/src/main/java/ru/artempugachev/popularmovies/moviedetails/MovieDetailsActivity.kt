@@ -19,10 +19,11 @@ import ru.artempugachev.popularmovies.R
 import ru.artempugachev.popularmovies.data.MovieContract
 import ru.artempugachev.popularmovies.movielist.api.Movie
 import ru.artempugachev.popularmovies.moviedetails.api.Review
+import ru.artempugachev.popularmovies.moviedetails.api.Video
 import ru.artempugachev.popularmovies.movielist.MovieListActivity
 
 
-class MovieDetailsActivity : AppCompatActivity(), TrailersAdapter.TrailerClickListener {
+class MovieDetailsActivity : AppCompatActivity(), TrailersAdapter.TrailerClickListener, MovieDetailsMvpContract.View {
     private var reviewsAdapter: ReviewsAdapter? = null
     private var reviewsLayoutManager: LinearLayoutManager? = null
     private var trailersLayoutManager: LinearLayoutManager? = null
@@ -70,6 +71,30 @@ class MovieDetailsActivity : AppCompatActivity(), TrailersAdapter.TrailerClickLi
                 removeFromFavorites()
             }
         }
+    }
+
+
+    /**
+     * View methods
+     * */
+    override fun showDetails(movie: Movie) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showTrailers(trailers: List<Video>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showReviews(reviews: List<Review>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showTrailersError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showReviewsError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
