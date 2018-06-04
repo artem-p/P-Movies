@@ -9,7 +9,7 @@ import ru.artempugachev.popularmovies.tmdb.TmdbApiInterface
 /**
  * Implement {@link Repository}
  * */
-class RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
+class `RepositoryImpl(val tmdbApiInterface: TmdbApiInterface): Repository {
     override fun getMovies(sort: String, page: Int): Observable<Movie> {
         val moviesObservable = tmdbApiInterface.getMovies(sort, page)
 

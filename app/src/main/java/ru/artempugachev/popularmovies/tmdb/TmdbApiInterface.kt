@@ -22,5 +22,5 @@ interface TmdbApiInterface {
     fun getVideos(@Path("id") id: String): Observable<VideoResponse>
 
     @GET("movie/{id}/reviews")
-    fun getReviews(@Path("id") id: String): Call<ReviewResponse>
+    fun getReviews(@Path("id") id: String): Observable<ReviewResponse>
 }
